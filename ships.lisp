@@ -1,16 +1,16 @@
 (in-package :yashmup)
 
 ;;; Ships
-(defclass ship (game-object) 
+(defclass ship (sprite) 
   ((x-vel :initform 4)
-   (y-vel :initform 4)))
+   (y-vel :initform 4)
+   (shots :initform nil :accessor shots)))
 
 (defclass player-ship (ship)
   ((x-loc :initform (/ *screen-width* 2))
    (y-loc :initform (- *screen-height* 100))
-   (graphic :initform *player-ship-image*)
-   (firing-p :initform nil :accessor firing-p)
-   (shots :initform nil :accessor shots)))
+   (firing-p :initform nil :accessor firing-p)))
+
 
 (defmethod update ((ship player-ship))
   (with-slots ((x x-loc)
@@ -19,20 +19,22 @@
 	       (dy y-vel))
       ship
     (when (key-down-p :sdl-key-left)
-      (unless (>= -20 x)
-       (decf x dx)))
+      (decf x dx))
     (when (key-down-p :sdl-key-right)
-      (unless (<= (- *screen-width* 30) x)
-	(incf x dx)))
+      (incf x dx))
     (when (key-down-p :sdl-key-up)
-      (unless (>= -30 y)
-       (decf y dy)))
+      (decf y dy))
     (when (key-down-p :sdl-key-down)
-      (unless (<= (- *screen-height* 40) y)
-       (incf y dy)))
+      (incf y dy))
     (if (key-down-p :sdl-key-space)
 	(setf (firing-p ship) t)
-	(setf (firing-p ship) nil))))
+	(setf (firing-p ship) nil))
+    (when (firing-p ship)
+      (push (make-instance 'laser
+			   :x-loc (+ 25 (x-loc ship))
+			   :y-loc (+ (y-loc ship) 35)
+			   :shooter ship)
+	    (shots ship)))))
 
 ;;; pew pew
 (defclass laser (game-object)
