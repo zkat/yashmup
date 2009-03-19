@@ -31,4 +31,4 @@
       obj
     (sdl:draw-surface-at-* graphic x y)))
 
-(defgeneric move (obj))
+(defgeneric update (obj))
