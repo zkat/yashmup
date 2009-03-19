@@ -1,0 +1,2 @@
+(defpackage #:yashmup
+  (:use :cl))
