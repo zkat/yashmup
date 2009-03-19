@@ -1,13 +1,5 @@
 (in-package :yashmup)
 
-(defun load-player-ship-image ()
-  (let ((ship-image-path (merge-pathnames #p"player-ship.png" *resource-path*)))
-    (sdl-image:load-image (namestring ship-image-path) :alpha 255)))
-
-(defun load-laser-image ()
-  (let ((laser-path (merge-pathnames "laser.png" *resource-path*)))
-    (sdl-image:load-image (namestring laser-path) :alpha 255)))
-
 (defun main ()
   (setf *running* t)
   (sdl:with-init (sdl:sdl-init-video)
@@ -17,10 +9,14 @@
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
+    (play-game)))
+
+(defun play-game ()
     (let ((*player-ship-image* (load-player-ship-image))
 	   (*laser-image* (load-laser-image)))
       (declare (special *player-ship-image* *laser-image*))
       (let ((player-ship (make-instance 'player-ship)))
+	(declare (special *left-wall* *right-wall* *top-wall* *bottom-wall*))
       	(sdl:with-events ()
 	  (:quit-event () (prog1 t
 			    (setf *running* nil)))
@@ -30,16 +26,11 @@
 			 (handle-key-up key))
 	  (:idle ()
 		 (sdl:clear-display *bg-color*)
-		 (when (firing-p player-ship)
-		   (push (make-instance 'laser
-					:x-loc (+ 25 (x-loc player-ship))
-					:y-loc (+ (y-loc player-ship) 35)
-					:shooter player-ship)
-			 (shots player-ship)))
+
 		 (mapcar #'update (shots player-ship))
 		 (update player-ship)
 		 (mapcar #'draw (shots player-ship))
 		 (draw player-ship)
 		 (sdl:update-display)
 		 (when (not *running*)
-		   (sdl:push-quit-event))))))))
+		   (sdl:push-quit-event)))))))

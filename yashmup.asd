@@ -10,6 +10,7 @@
   ((:file "packages")
    (:file "config")
    (:file "key-events")
-   (:file "game-object")
+   (:file "resources")
+   (:file "sprite")
    (:file "ships")
    (:file "main")))
