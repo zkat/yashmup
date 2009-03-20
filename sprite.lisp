@@ -33,11 +33,12 @@
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
   (loop
      for x1 from (x sprite-1) upto (+ (x sprite-1) (width sprite-1))
-     for x2 from (x sprite-2) upto (+ (x sprite-2) (width sprite-2))
-     when (= x1 x2)
-     do (loop
-	   for y1 from (y sprite-1) upto (+ (y sprite-1) (height sprite-1))
-	   for y2 from (y sprite-2) upto (+ (y sprite-2) (height sprite-2))
-	   when (= y1 y2)
-	   do (return-from collided-p t))
+     do (loop for x2 from (x sprite-2) upto (+ (x sprite-2) (width sprite-2))
+	   when (= x1 x2)
+	   do (loop
+		 for y1 from (y sprite-1) upto (+ (y sprite-1) (height sprite-1))
+		 do (loop
+		       for y2 from (y sprite-2) upto (+ (y sprite-2) (height sprite-2))
+		       when (= y1 y2)
+		       do (return-from collided-p t))))
      finally (return-from collided-p nil)))
