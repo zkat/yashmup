@@ -9,3 +9,10 @@
 (defun load-sound (name)
   ;; todo
   name)
+
+(defun init-resources ()
+  (setf (gethash 'player-ship *resource-table*)
+	(load-image "player-ship"))
+  (setf (gethash 'laser *resource-table*)
+	(load-image "laser")))
+

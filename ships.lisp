@@ -1,20 +1,21 @@
 (in-package :yashmup)
 
+(defvar *projectiles* nil)
+
 ;;; Ships
-(defclass ship (sprite) 
+(defclass ship (moving-sprite) 
   ((x-vel :initform 4)
-   (y-vel :initform 4)
-   (shots :initform nil :accessor shots)))
+   (y-vel :initform 4)))
 
 (defclass player-ship (ship)
-  ((x-loc :initform (/ *screen-width* 2))
-   (y-loc :initform (- *screen-height* 100))
-   (firing-p :initform nil :accessor firing-p)))
-
+  ((x :initform (/ *screen-width* 2))
+   (y :initform (- *screen-height* 100))
+   (firing-p :initform nil :accessor firing-p)
+   (image :initform (gethash 'player-ship *resource-table*))))
 
 (defmethod update ((ship player-ship))
-  (with-slots ((x x-loc)
-	       (y y-loc)
+  (with-slots ((x x)
+	       (y y)
 	       (dx x-vel)
 	       (dy y-vel))
       ship
@@ -31,26 +32,28 @@
 	(setf (firing-p ship) nil))
     (when (firing-p ship)
       (push (make-instance 'laser
-			   :x-loc (+ 25 (x-loc ship))
-			   :y-loc (+ (y-loc ship) 35)
+			   :x (+ 24 x)
+			   :y y
 			   :shooter ship)
-	    (shots ship)))))
+	    *projectiles*))))
 
 ;;; pew pew
-(defclass laser (game-object)
+(defclass projectile (moving-sprite)
+  ((shooter :initarg :shooter :accessor shooter)))
+
+(defclass laser (projectile)
   ((x-vel :initform 0)
    (y-vel :initform -20)
-   (graphic :initform *laser-image*)
-   (shooter :initarg :shooter :accessor shooter)))
+   (image :initform (gethash 'laser *resource-table*))))
 
 (defmethod update ((laser laser))
-  (with-slots ((x x-loc)
-	       (y y-loc)
+  (with-slots ((x x)
+	       (y y)
 	       (dx x-vel)
 	       (dy y-vel))
       laser
     (incf x dx)
     (incf y dy)
     (when (< y -10)
-      (setf (shots (shooter laser))
-	    (delete laser (shots (shooter laser)))))))
+      (setf *projectiles*
+	    (delete laser *projectiles*)))))
