@@ -13,6 +13,11 @@
    (firing-p :initform nil :accessor firing-p)
    (image :initform (gethash 'player-ship *resource-table*))))
 
+(defclass enemy (ship)
+  ((x :initform (/ *screen-width* 2))
+   (y :initform 50)
+   (image :initform (gethash 'enemy *resource-table*))))
+
 (defmethod update ((ship player-ship))
   (with-slots ((x x)
 	       (y y)

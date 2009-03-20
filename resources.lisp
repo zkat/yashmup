@@ -14,5 +14,7 @@
   (setf (gethash 'player-ship *resource-table*)
 	(load-image "player-ship"))
   (setf (gethash 'laser *resource-table*)
-	(load-image "laser")))
+	(load-image "laser"))
+  (setf (gethash 'enemy *resource-table*)
+	(load-image "enemy")))
 
