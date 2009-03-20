@@ -9,6 +9,7 @@
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
+    (init-resources)
     (play-game)))
 
 (defun play-game ()
@@ -16,7 +17,6 @@
 	   (*laser-image* (load-laser-image)))
       (declare (special *player-ship-image* *laser-image*))
       (let ((player-ship (make-instance 'player-ship)))
-	(declare (special *left-wall* *right-wall* *top-wall* *bottom-wall*))
       	(sdl:with-events ()
 	  (:quit-event () (prog1 t
 			    (setf *running* nil)))
@@ -26,10 +26,9 @@
 			 (handle-key-up key))
 	  (:idle ()
 		 (sdl:clear-display *bg-color*)
-
-		 (mapcar #'update (shots player-ship))
+		 (mapcar #'update *projectiles*)
 		 (update player-ship)
-		 (mapcar #'draw (shots player-ship))
+		 (mapcar #'draw *projectiles*)
 		 (draw player-ship)
 		 (sdl:update-display)
 		 (when (not *running*)
