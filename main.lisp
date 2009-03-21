@@ -20,7 +20,8 @@
       (:quit-event () (prog1 t
 			(setf *running* nil)
 			(format t "Total enemy damage: ~a" (damage enemy))
-			(clrhash *keys-held-down*)))
+			(clrhash *keys-held-down*)
+			(setf *projectiles* nil)))
       (:key-down-event (:key key)
 		       (handle-key-down key))
       (:key-up-event (:key key)

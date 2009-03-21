@@ -62,18 +62,22 @@
     (let ((lazors (list (make-instance 'laser
 				       :x (+ 17 x)
 				       :y (- y 3)
+				       :angle 180
 				       :shooter ship)
 			(make-instance 'laser
 				       :x (+ x 8)
 				       :y (+ y 5)
+				       :angle 180
 				       :shooter ship)
 			(make-instance 'laser
 				       :x (+ x 30)
 				       :y (- y 3)
+				       :angle 180
 				       :shooter ship)
 			(make-instance 'laser
 				       :x (+ 40 x)
 				       :y (+ y 5)
+				       :angle 180
 				       :shooter ship))))
       (mapc (lambda (lazor)
 	      (push lazor *projectiles*))
