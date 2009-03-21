@@ -12,5 +12,7 @@
    (:file "key-events")
    (:file "resources")
    (:file "sprite")
+   (:file "background")
    (:file "ships")
+   (:file "projectile")
    (:file "main")))

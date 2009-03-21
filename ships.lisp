@@ -4,8 +4,8 @@
 
 ;;; Ships
 (defclass ship (moving-sprite) 
-  ((x-vel :initform 4)
-   (y-vel :initform 4)))
+  ((x-vel :initform 5)
+   (y-vel :initform 5)))
 
 (defclass player-ship (ship)
   ((x :initform (/ *screen-width* 2))
@@ -16,7 +16,16 @@
 (defclass enemy (ship)
   ((x :initform (/ *screen-width* 2))
    (y :initform 50)
-   (image :initform (gethash 'enemy *resource-table*))))
+   (x-vel :initform -3)
+   (image :initform (gethash 'enemy *resource-table*))
+   (damage :initform 0 :accessor damage)))
+
+(defmethod update ((enemy enemy))
+  (with-slots (x x-vel) enemy
+    (when (or (> x (- *screen-width* 200))
+	      (< x 50))
+      (setf x-vel (* x-vel -1)))
+    (incf x x-vel)))
 
 (defmethod update ((ship player-ship))
   (with-slots ((x x)
@@ -41,24 +50,3 @@
 			   :y y
 			   :shooter ship)
 	    *projectiles*))))
-
-;;; pew pew
-(defclass projectile (moving-sprite)
-  ((shooter :initarg :shooter :accessor shooter)))
-
-(defclass laser (projectile)
-  ((x-vel :initform 0)
-   (y-vel :initform -20)
-   (image :initform (gethash 'laser *resource-table*))))
-
-(defmethod update ((laser laser))
-  (with-slots ((x x)
-	       (y y)
-	       (dx x-vel)
-	       (dy y-vel))
-      laser
-    (incf x dx)
-    (incf y dy)
-    (when (< y -10)
-      (setf *projectiles*
-	    (delete laser *projectiles*)))))
