@@ -29,7 +29,7 @@
       (setf x-vel (* x-vel -1)))
     (incf x x-vel)
     (when (> damage 300)
-      (sdl:draw-string-shaded-* "HAHAHA PUNY HUMAN YOU CANNOT BEAT ME!"
+      (sdl:draw-string-shaded-* "HAHAHA PUNY HUMAN YOU CANNOT HOPE TO DEFEAT ME!"
 				x (- y 10)
 				sdl:*red*
 				sdl:*black*))))
