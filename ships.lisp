@@ -18,16 +18,21 @@
 (defclass enemy (ship)
   ((x :initform (/ *screen-width* 2))
    (y :initform 50)
-   (x-vel :initform -3)
+   (x-vel :initform -2)
    (image :initform (gethash 'enemy *resource-table*))
    (damage :initform 0 :accessor damage)))
 
 (defmethod update ((enemy enemy))
-  (with-slots (x x-vel) enemy
-    (when (or (> x (- *screen-width* 200))
+  (with-slots (x y x-vel damage) enemy
+    (when (or (> x (- *screen-width* 150))
 	      (< x 50))
       (setf x-vel (* x-vel -1)))
-    (incf x x-vel)))
+    (incf x x-vel)
+    (when (> damage 300)
+      (sdl:draw-string-shaded-* "HAHAHA PUNY HUMAN YOU CANNOT BEAT ME!"
+				x (- y 10)
+				sdl:*red*
+				sdl:*black*))))
 
 (defmethod update ((ship player-ship))
   (incf (frames-since-last-shot ship))
