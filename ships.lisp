@@ -4,8 +4,7 @@
 
 ;;; Ships
 (defclass ship (moving-sprite) 
-  ((x-vel :initform 5)
-   (y-vel :initform 5)
+  ((velocity :initform 5)
    (firing-p :initform nil :accessor firing-p)
    (shot-limit :initform 3 :accessor shot-limit)
    (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)))
@@ -18,16 +17,17 @@
 (defclass enemy (ship)
   ((x :initform (/ *screen-width* 2))
    (y :initform 50)
-   (x-vel :initform -2)
+   (velocity :initform 2)
+   (angle :initform 90)
    (image :initform (gethash 'enemy *resource-table*))
    (damage :initform 0 :accessor damage)))
 
 (defmethod update ((enemy enemy))
-  (with-slots (x y x-vel damage) enemy
+  (with-slots (x y angle damage) enemy
     (when (or (> x (- *screen-width* 150))
 	      (< x 50))
-      (setf x-vel (* x-vel -1)))
-    (incf x x-vel)
+      (setf angle (* angle -1)))
+    (incf x (horiz-velocity enemy))
     (when (> damage 300)
       (sdl:draw-string-shaded-* "HAHAHA PUNY HUMAN YOU CANNOT HOPE TO DEFEAT ME!"
 				x (- y 10)
@@ -36,19 +36,19 @@
 
 (defmethod update ((ship player-ship))
   (incf (frames-since-last-shot ship))
-  (with-slots ((x x)
-	       (y y)
-	       (dx x-vel)
-	       (dy y-vel))
-      ship
+  (with-slots (x y) ship
     (when (key-down-p :sdl-key-left)
-      (decf x dx))
+      (setf (angle ship) 270)
+      (incf x (horiz-velocity ship)))
     (when (key-down-p :sdl-key-right)
-      (incf x dx))
+      (setf (angle ship) 90)
+      (incf x (horiz-velocity ship)))
     (when (key-down-p :sdl-key-up)
-      (decf y dy))
+      (setf (angle ship) 180)
+      (incf y (vert-velocity ship)))
     (when (key-down-p :sdl-key-down)
-      (incf y dy))
+      (setf (angle ship) 0)
+      (incf y (vert-velocity ship)))
     (if (key-down-p :sdl-key-space)
 	(setf (firing-p ship) t)
 	(setf (firing-p ship) nil))
