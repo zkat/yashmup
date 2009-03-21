@@ -9,7 +9,6 @@
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
-    (sdl-mixer:open-audio)
     (init-resources)
     (play-game)))
 
@@ -21,8 +20,7 @@
       (:quit-event () (prog1 t
 			(setf *running* nil)
 			(format t "Total enemy damage: ~a" (damage enemy))
-			(clrhash *keys-held-down*)
-			(sdl-mixer:close-audio)))
+			(clrhash *keys-held-down*)))
       (:key-down-event (:key key)
 		       (handle-key-down key))
       (:key-up-event (:key key)

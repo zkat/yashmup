@@ -49,10 +49,25 @@
 	(setf (firing-p ship) nil))
     (when (and (firing-p ship)
 	       (> (frames-since-last-shot ship) (shot-limit ship)))
-      (let ((lazor (make-instance 'laser
-			   :x (+ 24 x)
-			   :y y
-			   :shooter ship)))
-	(push lazor *projectiles*)
-;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
-	(setf (frames-since-last-shot ship) 0)))))
+      (fire! ship))))
+
+(defgeneric fire! (ship))
+(defmethod fire! ((ship player-ship))
+  (with-slots (x y) ship
+    (let ((lazors (list (make-instance 'laser
+				       :x (+ 24 x)
+				       :y y
+				       :shooter ship)
+			(make-instance 'laser
+				       :x x
+				       :y (+ y 5)
+				       :shooter ship)
+			(make-instance 'laser
+				       :x (+ 46 x)
+				       :y (+ y 5)
+				       :shooter ship))))
+      (mapc (lambda (lazor)
+	      (push lazor *projectiles*))
+	    lazors)
+      ;;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
+      (setf (frames-since-last-shot ship) 0))))
