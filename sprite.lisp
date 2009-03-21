@@ -1,13 +1,12 @@
 (in-package :yashmup)
 
+;;;
+;;; Static sprites
+;;;
 (defclass sprite ()
   ((x :initarg :x :initform 0 :accessor x)
    (y :initarg :y :initform 0 :accessor y)
    (image :initarg :image :initform (error "Must provide an image for this sprite") :accessor image)))
-
-(defclass moving-sprite (sprite)
-  ((x-vel :initarg :x-vel :initform 0 :accessor x-vel)
-   (y-vel :initarg :y-vel :initform 0 :accessor y-vel)))
 
 (defmethod width ((sprite sprite))
   (sdl:width (image sprite)))
@@ -29,6 +28,7 @@
 
 (defgeneric update (obj))
 
+;;; Collision detection
 (defgeneric collided-p (obj1 obj2))
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
   (loop
@@ -42,3 +42,22 @@
 		       when (= y1 y2)
 		       do (return-from collided-p t))))
      finally (return-from collided-p nil)))
+
+;;;
+;;; Moving Sprites
+;;;
+(defclass moving-sprite (sprite)
+  ((velocity :initarg :velocity :initform 0 :accessor velocity)
+   (angle :initarg :angle :initform 0 :accessor angle :documentation "Movement angle, in degrees")))
+
+(defun degrees-to-radians (degrees)
+  (* (/ degrees 180) pi))
+
+;; These are FLOORed because SDL shits itself on floats
+(defgeneric horiz-velocity (sprite))
+(defmethod horiz-velocity ((obj moving-sprite))
+  (floor (* (velocity obj) (sin (degrees-to-radians (angle obj))))))
+(defgeneric vert-velocity (sprite))
+(defmethod vert-velocity ((obj moving-sprite))
+  (floor (* (velocity obj) (cos (degrees-to-radians (angle obj))))))
+
