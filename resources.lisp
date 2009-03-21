@@ -2,9 +2,9 @@
 
 (defvar *resource-table* (make-hash-table))
 
-(defun load-image (name)
-  (let ((image-path (merge-pathnames (concatenate 'string name ".png") *resource-path*)))
-    (sdl-image:load-image (namestring image-path) :alpha 255)))
+(defun load-image (name &key (extension ".png") color-key)
+  (let ((image-path (merge-pathnames (concatenate 'string name extension) *resource-path*)))
+    (sdl-image:load-image (namestring image-path) :alpha 255 :color-key color-key)))
 
 (defun load-sound (name)
   (let ((sound-path (merge-pathnames (concatenate 'string name ".wav") *resource-path*)))
@@ -14,9 +14,9 @@
   (setf (gethash 'background *resource-table*)
 	(load-image "background"))
   (setf (gethash 'player-ship *resource-table*)
-	(load-image "player-ship"))
+	(load-image "sweet-ship" :color-key (sdl:color :r 255 :g 255 :b 255)))
   (setf (gethash 'laser *resource-table*)
-	(load-image "laser"))
+	(load-image "laser" :extension ".gif"))
   (setf (gethash 'enemy *resource-table*)
 	(load-image "enemy")))
 
