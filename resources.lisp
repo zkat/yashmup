@@ -18,7 +18,5 @@
   (setf (gethash 'laser *resource-table*)
 	(load-image "laser"))
   (setf (gethash 'enemy *resource-table*)
-	(load-image "enemy"))
-  (setf (gethash 'pew *resource-table*)
-	(load-sound "pew")))
+	(load-image "enemy")))
 
