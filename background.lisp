@@ -3,13 +3,13 @@
 (defclass background (sprite)
   ((y :initform -1600)
    (image :initform (gethash 'background *resource-table*))
-   (scroll-speed :initform 10 :accessor scroll-speed)))
+   (scroll-speed :initform 5 :accessor scroll-speed)))
 
 (defmethod update ((bg background))
   (with-slots (y scroll-speed) bg
     (if (<= 0 y)
-	(setf y -1600)
-	(incf y scroll-speed))))
+  	(setf y -1600)
+  	(incf y scroll-speed))))
 
 (defmethod draw ((bg background))
   (with-slots (image x y)
