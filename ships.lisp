@@ -60,15 +60,19 @@
 (defmethod fire! ((ship player-ship))
   (with-slots (x y) ship
     (let ((lazors (list (make-instance 'laser
-				       :x (+ 24 x)
-				       :y y
+				       :x (+ 17 x)
+				       :y (- y 3)
 				       :shooter ship)
 			(make-instance 'laser
-				       :x x
+				       :x (+ x 8)
 				       :y (+ y 5)
 				       :shooter ship)
 			(make-instance 'laser
-				       :x (+ 46 x)
+				       :x (+ x 30)
+				       :y (- y 3)
+				       :shooter ship)
+			(make-instance 'laser
+				       :x (+ 40 x)
 				       :y (+ y 5)
 				       :shooter ship))))
       (mapc (lambda (lazor)
