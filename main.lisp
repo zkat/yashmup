@@ -2,13 +2,14 @@
 
 (defun main ()
   (setf *running* t)
-  (sdl:with-init (sdl:sdl-init-video)
+  (sdl:with-init (sdl:sdl-init-video sdl:sdl-init-audio)
     (sdl:initialise-default-font)
     (sdl:window *screen-width* *screen-height*
 		:title-caption "PEW PEW"
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
+    (sdl-mixer:open-audio)
     (init-resources)
     (play-game)))
 
@@ -19,7 +20,9 @@
     (sdl:with-events ()
       (:quit-event () (prog1 t
 			(setf *running* nil)
-			(format t "Total enemy damage: ~a" (damage enemy))))
+			(format t "Total enemy damage: ~a" (damage enemy))
+			(clrhash *keys-held-down*)
+			(sdl-mixer:close-audio)))
       (:key-down-event (:key key)
 		       (handle-key-down key))
       (:key-up-event (:key key)

@@ -7,8 +7,8 @@
     (sdl-image:load-image (namestring image-path) :alpha 255)))
 
 (defun load-sound (name)
-  ;; todo
-  name)
+  (let ((sound-path (merge-pathnames (concatenate 'string name ".wav") *resource-path*)))
+    (sdl-mixer:load-sample (namestring sound-path))))
 
 (defun init-resources ()
   (setf (gethash 'background *resource-table*)
@@ -18,5 +18,7 @@
   (setf (gethash 'laser *resource-table*)
 	(load-image "laser"))
   (setf (gethash 'enemy *resource-table*)
-	(load-image "enemy")))
+	(load-image "enemy"))
+  (setf (gethash 'pew *resource-table*)
+	(load-sound "pew")))
 

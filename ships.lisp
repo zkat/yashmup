@@ -5,12 +5,14 @@
 ;;; Ships
 (defclass ship (moving-sprite) 
   ((x-vel :initform 5)
-   (y-vel :initform 5)))
+   (y-vel :initform 5)
+   (firing-p :initform nil :accessor firing-p)
+   (shot-limit :initform 3 :accessor shot-limit)
+   (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)))
 
 (defclass player-ship (ship)
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 100))
-   (firing-p :initform nil :accessor firing-p)
    (image :initform (gethash 'player-ship *resource-table*))))
 
 (defclass enemy (ship)
@@ -28,6 +30,7 @@
     (incf x x-vel)))
 
 (defmethod update ((ship player-ship))
+  (incf (frames-since-last-shot ship))
   (with-slots ((x x)
 	       (y y)
 	       (dx x-vel)
@@ -44,9 +47,12 @@
     (if (key-down-p :sdl-key-space)
 	(setf (firing-p ship) t)
 	(setf (firing-p ship) nil))
-    (when (firing-p ship)
-      (push (make-instance 'laser
+    (when (and (firing-p ship)
+	       (> (frames-since-last-shot ship) (shot-limit ship)))
+      (let ((lazor (make-instance 'laser
 			   :x (+ 24 x)
 			   :y y
-			   :shooter ship)
-	    *projectiles*))))
+			   :shooter ship)))
+	(push lazor *projectiles*)
+;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
+	(setf (frames-since-last-shot ship) 0)))))
