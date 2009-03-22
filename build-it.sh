@@ -1,0 +1,1 @@
+sbcl --script "sbcl-setup.lisp"
