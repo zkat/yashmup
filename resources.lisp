@@ -1,3 +1,8 @@
+;; This file is part of yashmup
+
+;; resources.lisp
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
 (defun load-image (name &key (extension ".bmp") color-key)

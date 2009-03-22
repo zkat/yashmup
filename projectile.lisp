@@ -1,3 +1,8 @@
+;; This file is part of yashmup
+
+;; projectile.lisp
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
 (defclass projectile (moving-sprite)
