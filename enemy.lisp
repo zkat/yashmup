@@ -9,7 +9,7 @@
 (defclass enemy (ship)
   ((x :initform (random 450))
    (y :initform -30)
-   (velocity :initform 2)
+   (velocity :initform 3)
    (angle :initform 0)
    (image :initform (gethash 'enemy-small *resource-table*))))
 
@@ -20,8 +20,9 @@
     (when (> frames-since-last-shot 30)
       (fire! enemy))
     (when (or (> y 800)
-	      (> damage 10))
+	      (> damage 5))
       (setf (enemies *game*) (delete enemy (enemies *game*)))
+      (display-message "KABOOM" (- x 15) y 60)
       (incf (score (player *game*))))
     (when (collided-p (player *game*)
 		      enemy)
@@ -37,12 +38,12 @@
     (let ((lazors (list (make-instance 'enemy-laser
 				       :x (+ 15 x)
 				       :y (+ y 23)
-				       :velocity 3
+				       :velocity 5
 				       :shooter enemy)
 			(make-instance 'enemy-laser
 				       :x (+ x 8)
 				       :y (+ y 23)
-				       :velocity 3
+				       :velocity 5
 				       :shooter enemy))))
       (setf (projectiles *game*)
 	    (append lazors (projectiles *game*)))

@@ -13,16 +13,41 @@
    (background :initform (make-instance 'background) :accessor background)
    (projectiles :initform nil :accessor projectiles)
    (enemies :initform nil :accessor enemies)
+   (messages :initform nil :accessor messages)
    (enemy-counter :initform 0 :accessor enemy-counter)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (paused-p :initform nil :accessor paused-p)))
 
+(defclass message ()
+  ((x :initarg :x :initform 0 :accessor x)
+   (y :initarg :y :initform 0 :accessor y)
+   (times-displayed :initform 0 :accessor times-displayed)
+   (display-limit :initarg :limit :initform 60 :accessor display-limit)
+   (message-string :initarg :msg :initform "" :accessor message-string)))
+
+(defmethod update ((msg message))
+  (with-slots (x y times-displayed display-limit message-string) msg
+    (if (and display-limit 
+	       (>= times-displayed display-limit))
+	(setf (messages *game*)
+	      (delete msg (messages *game*)))
+	(incf times-displayed))))
+
+(defmethod draw ((msg message))
+  (with-slots (x y message-string) msg
+   (sdl:draw-string-shaded-* message-string x y sdl:*red* (sdl:color :a 0))))
+
+(defun display-message (message x y &optional display-limit)
+  (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
+    (push msg (messages *game*))))
+
 (defmethod update ((game game))
-  (with-slots (running-p player background projectiles enemies enemy-counter) game
+  (with-slots (running-p player background projectiles enemies messages enemy-counter) game
     (update background)
     (mapc #'update projectiles)
     (mapc #'update enemies)
     (update player)
+    (mapc #'update messages)
     (incf enemy-counter)
     (when (> enemy-counter 80)
       (push (make-instance 'enemy) enemies)
@@ -60,6 +85,7 @@
 
 (defmethod draw ((game game))
   (draw (background game))
+  (mapc #'draw (messages game))
   (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage (player game)))
 			    5 5 sdl:*red* (sdl:color :a 0))
   (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player game)))
