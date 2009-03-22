@@ -5,7 +5,8 @@
   ((velocity :initform 5)
    (firing-p :initform nil :accessor firing-p)
    (shot-limit :initform 4 :accessor shot-limit)
-   (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)))
+   (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)
+   (damage :initform 0 :accessor damage)))
 
 (defclass player-ship (ship)
   ((x :initform (/ *screen-width* 2))
@@ -61,8 +62,7 @@
 				       :y (+ y 5)
 				       :angle 180
 				       :shooter ship))))
-      (mapc (lambda (lazor)
-	      (push lazor (projectiles *game*)))
-	    lazors)
-      ;;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
+      (setf (projectiles *game*)
+	    (append lazors (projectiles *game*)))
+            ;;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
       (setf (frames-since-last-shot ship) 0))))
