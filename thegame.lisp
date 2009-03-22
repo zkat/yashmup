@@ -8,14 +8,15 @@
    (projectiles :initform nil :accessor projectiles)
    (enemies :initform nil :accessor enemies)
    (enemy-counter :initform 0 :accessor enemy-counter)
-   (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)))
+   (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
+   (paused-p :initform nil :accessor paused-p)))
 
 (defmethod update ((game game))
   (with-slots (running-p player background projectiles enemies enemy-counter) game
     (update background)
-    (update player)
-    (mapc #'update enemies)
     (mapc #'update projectiles)
+    (mapc #'update enemies)
+    (update player)
     (incf enemy-counter)
     (when (> enemy-counter 80)
       (push (make-instance 'enemy) enemies)
@@ -58,12 +59,16 @@
 	 (error "Unknown key-event type"))))
 
 (defun register-key-press (key game)
-  (with-slots (keys-held-down) game
-    (setf (gethash key keys-held-down) t)))
+  (when (sdl:key= key :sdl-key-p)
+    (toggle-pause))
+  (unless (paused-p *game*)
+   (with-slots (keys-held-down) game
+     (setf (gethash key keys-held-down) t))))
 
 (defun register-key-release (key game)
-  (with-slots (keys-held-down) game
-    (setf (gethash key keys-held-down) nil)))
+  (unless (paused-p *game*)
+   (with-slots (keys-held-down) game
+     (setf (gethash key keys-held-down) nil))))
 
 (defun key-down-p (key &optional (game *game*))
   (with-slots (keys-held-down) game
