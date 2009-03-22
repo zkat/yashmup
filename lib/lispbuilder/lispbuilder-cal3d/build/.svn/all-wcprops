@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/626/trunk/lispbuilder-cal3d/build
+END
+cal3dswig.i
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/626/trunk/lispbuilder-cal3d/build/cal3dswig.i
+END
+cal3d.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/115/trunk/lispbuilder-cal3d/build/cal3d.lisp
+END
+cal3d_wrapper.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/115/trunk/lispbuilder-cal3d/build/cal3d_wrapper.h
+END

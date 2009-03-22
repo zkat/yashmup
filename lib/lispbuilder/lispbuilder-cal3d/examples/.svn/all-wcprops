@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/626/trunk/lispbuilder-cal3d/examples
+END
+cal3d_demo.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/626/trunk/lispbuilder-cal3d/examples/cal3d_demo.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/626/trunk/lispbuilder-cal3d/examples/package.lisp
+END

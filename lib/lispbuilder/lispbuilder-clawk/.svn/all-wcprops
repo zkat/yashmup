@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/851/trunk/lispbuilder-clawk
+END
+license.txt
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/license.txt
+END
+clawk.translations
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/clawk.translations
+END
+lispbuilder-clawk.asd
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/lispbuilder-clawk.asd
+END
+clawk.system
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/clawk.system
+END
+packages.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/631/trunk/lispbuilder-clawk/packages.lisp
+END
+clawk.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/clawk.lisp
+END
+clawktest.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/clawktest.lisp
+END
+emp.data
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/1/trunk/lispbuilder-clawk/emp.data
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/851/trunk/lispbuilder-clawk/index.html
+END

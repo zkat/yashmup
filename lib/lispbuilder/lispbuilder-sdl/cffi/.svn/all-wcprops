@@ -1,0 +1,149 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/999/trunk/lispbuilder-sdl/cffi
+END
+documentation.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/705/trunk/lispbuilder-sdl/cffi/documentation.lisp
+END
+rwops.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/684/trunk/lispbuilder-sdl/cffi/rwops.lisp
+END
+active.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/active.lisp
+END
+util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/util.lisp
+END
+timer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/timer.lisp
+END
+keysym.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/990/trunk/lispbuilder-sdl/cffi/keysym.lisp
+END
+cffi-util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/cffi-util.lisp
+END
+sdl.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/934/trunk/lispbuilder-sdl/cffi/sdl.lisp
+END
+syswm.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/syswm.lisp
+END
+stdinc.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/stdinc.lisp
+END
+version.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/684/trunk/lispbuilder-sdl/cffi/version.lisp
+END
+mouse.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/684/trunk/lispbuilder-sdl/cffi/mouse.lisp
+END
+error.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/error.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/669/trunk/lispbuilder-sdl/cffi/package.lisp
+END
+glue.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/999/trunk/lispbuilder-sdl/cffi/glue.lisp
+END
+endian.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/endian.lisp
+END
+joystick.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/657/trunk/lispbuilder-sdl/cffi/joystick.lisp
+END
+audio.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/986/trunk/lispbuilder-sdl/cffi/audio.lisp
+END
+cffi-translate.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/993/trunk/lispbuilder-sdl/cffi/cffi-translate.lisp
+END
+mutex.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/993/trunk/lispbuilder-sdl/cffi/mutex.lisp
+END
+events.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/events.lisp
+END
+cdrom.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/cdrom.lisp
+END
+library.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/999/trunk/lispbuilder-sdl/cffi/library.lisp
+END
+video.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/cffi/video.lisp
+END

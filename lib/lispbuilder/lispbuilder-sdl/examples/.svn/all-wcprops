@@ -1,0 +1,215 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/1015/trunk/lispbuilder-sdl/examples
+END
+bezier.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1000/trunk/lispbuilder-sdl/examples/bezier.lisp
+END
+audio-mixer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/audio-mixer.lisp
+END
+points-and-lines.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/points-and-lines.lisp
+END
+vertices.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/examples/vertices.lisp
+END
+width-height.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/examples/width-height.lisp
+END
+recursive-rects.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/recursive-rects.lisp
+END
+particles.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1015/trunk/lispbuilder-sdl/examples/particles.lisp
+END
+flood-fill.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/flood-fill.lisp
+END
+mandelbrot.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/mandelbrot.lisp
+END
+mouse-painter.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/mouse-painter.lisp
+END
+objects.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/objects.lisp
+END
+mouse-2d.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/mouse-2d.lisp
+END
+setup-and-draw.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/setup-and-draw.lisp
+END
+functional-geometry.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/945/trunk/lispbuilder-sdl/examples/functional-geometry.lisp
+END
+random-rects.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/random-rects.lisp
+END
+utils.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/examples/utils.lisp
+END
+circle.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/circle.lisp
+END
+stroke.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/stroke.lisp
+END
+input-util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/984/trunk/lispbuilder-sdl/examples/input-util.lisp
+END
+fireworks.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/fireworks.lisp
+END
+squashed.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/squashed.lisp
+END
+simple-font-demo.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/simple-font-demo.lisp
+END
+vecto.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/937/trunk/lispbuilder-sdl/examples/vecto.lisp
+END
+line-drawing.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/line-drawing.lisp
+END
+cl-vectors.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/cl-vectors.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/globals.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/987/trunk/lispbuilder-sdl/examples/package.lisp
+END
+bmp-sample.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/bmp-sample.lisp
+END
+distance-2D.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/distance-2D.lisp
+END
+inbuilt-fonts.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/examples/inbuilt-fonts.lisp
+END
+joystick.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/657/trunk/lispbuilder-sdl/examples/joystick.lisp
+END
+metaballs.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/740/trunk/lispbuilder-sdl/examples/metaballs.lisp
+END
+pixels.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/examples/pixels.lisp
+END
+raw-audio-test.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/1006/trunk/lispbuilder-sdl/examples/raw-audio-test.lisp
+END
+roots.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/713/trunk/lispbuilder-sdl/examples/roots.lisp
+END

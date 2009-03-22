@@ -1,0 +1,76 @@
+9
+
+dir
+1058
+http://lispbuilder.googlecode.com/svn/trunk
+http://lispbuilder.googlecode.com/svn
+
+
+
+2009-03-10T01:54:58.885326Z
+1023
+luke@balooga.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ad8a5436-b7f1-11dd-b55b-2da8d274f894
+
+lispbuilder-sdl-mixer
+dir
+
+lispbuilder-sdl-gfx
+dir
+
+net
+dir
+
+lispbuilder-regex
+dir
+
+lispbuilder-sdl-ttf
+dir
+
+lispbuilder-yacc
+dir
+
+lispbuilder-lexer
+dir
+
+lispbuilder-sdl
+dir
+
+lispbuilder-opengl
+dir
+
+lispbuilder-net
+dir
+
+lispbuilder-cal3d
+dir
+
+lispbuilder-windows
+dir
+
+documentation
+dir
+
+lispbuilder-openrm
+dir
+
+lispbuilder-clawk
+dir
+
+lispbuilder-sdl-image
+dir
+

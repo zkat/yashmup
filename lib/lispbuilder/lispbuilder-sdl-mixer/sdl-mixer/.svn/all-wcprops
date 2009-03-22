@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1022/trunk/lispbuilder-sdl-mixer/sdl-mixer
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/719/trunk/lispbuilder-sdl-mixer/sdl-mixer/package.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/1022/trunk/lispbuilder-sdl-mixer/sdl-mixer/globals.lisp
+END
+mixer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/1022/trunk/lispbuilder-sdl-mixer/sdl-mixer/mixer.lisp
+END

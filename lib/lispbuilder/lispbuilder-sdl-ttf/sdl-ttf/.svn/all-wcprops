@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/935/trunk/lispbuilder-sdl-ttf/sdl-ttf
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/889/trunk/lispbuilder-sdl-ttf/sdl-ttf/package.lisp
+END
+string-shaded.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/889/trunk/lispbuilder-sdl-ttf/sdl-ttf/string-shaded.lisp
+END
+string-solid.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/889/trunk/lispbuilder-sdl-ttf/sdl-ttf/string-solid.lisp
+END
+generics.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/879/trunk/lispbuilder-sdl-ttf/sdl-ttf/generics.lisp
+END
+string-blended.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/889/trunk/lispbuilder-sdl-ttf/sdl-ttf/string-blended.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/879/trunk/lispbuilder-sdl-ttf/sdl-ttf/globals.lisp
+END
+font.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/889/trunk/lispbuilder-sdl-ttf/sdl-ttf/font.lisp
+END
+ttf-font-definition.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/933/trunk/lispbuilder-sdl-ttf/sdl-ttf/ttf-font-definition.lisp
+END
+sdl-util-ttf.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/935/trunk/lispbuilder-sdl-ttf/sdl-ttf/sdl-util-ttf.lisp
+END
+ttf-font-data.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/933/trunk/lispbuilder-sdl-ttf/sdl-ttf/ttf-font-data.lisp
+END

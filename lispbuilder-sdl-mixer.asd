@@ -1,0 +1,1 @@
+lib/lispbuilder/lispbuilder-sdl-mixer/lispbuilder-sdl-mixer.asd

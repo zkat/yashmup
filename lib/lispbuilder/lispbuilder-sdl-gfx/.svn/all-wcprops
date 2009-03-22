@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/1023/trunk/lispbuilder-sdl-gfx
+END
+lispbuilder-sdl-gfx-binaries.asd
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/928/trunk/lispbuilder-sdl-gfx/lispbuilder-sdl-gfx-binaries.asd
+END
+lispbuilder-sdl-gfx-examples.asd
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/712/trunk/lispbuilder-sdl-gfx/lispbuilder-sdl-gfx-examples.asd
+END
+lispbuilder-sdl-gfx.asd
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/732/trunk/lispbuilder-sdl-gfx/lispbuilder-sdl-gfx.asd
+END
+lispbuilder-sdl-gfx-cffi.asd
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/923/trunk/lispbuilder-sdl-gfx/lispbuilder-sdl-gfx-cffi.asd
+END

@@ -1,0 +1,963 @@
+<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
+<html> 
+
+  <head>
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
+      <title>LISPBUILDER-SDL-MIXER - Use SDL_mixer from Common Lisp</title>
+      <style type=\"text/css\">
+	pre { padding:5px; background-color:#e0e0e0 }
+	h3, h4 { text-decoration: underline; }
+	a { text-decoration: none; padding: 1px 2px 1px 2px; }
+	a:visited { text-decoration: none; padding: 1px 2px 1px 2px; }
+	a:hover { text-decoration: none; padding: 1px 1px 1px 1px; border: 1px solid #000000; } 
+	a:focus { text-decoration: none; padding: 1px 2px 1px 2px; border: none; }
+	a.none { text-decoration: none; padding: 0; }
+	a.none:visited { text-decoration: none; padding: 0; } 
+	a.none:hover { text-decoration: none; border: none; padding: 0; } 
+	a.none:focus { text-decoration: none; border: none; padding: 0; } 
+	a.noborder { text-decoration: none; padding: 0; } 
+	a.noborder:visited { text-decoration: none; padding: 0; } 
+	a.noborder:hover { text-decoration: none; border: none; padding: 0; } 
+	a.noborder:focus { text-decoration: none; border: none; padding: 0; }  
+	pre.none { padding:5px; background-color:#ffffff }
+	/* code for examples, code and pathnames*/
+      
+	div.code, div.path {
+	color: black;
+	}
+
+	div.repl {
+	color: Green;
+	}      
+
+      </style>
+    </head>
+    
+    <body bgcolor=white>
+      
+      <h2> LISPBUILDER-SDL-MIXER - Use SDL_mixer from Common Lisp</h2>
+      
+      <blockquote>
+	<br>&nbsp;</br><h3><a name=abstract class=none>Abstract</a></h3>
+	
+	<p>
+	  LISPBUILDER-SDL-MIXER provides a Common Lisp binding to the
+	  <a href="http://www.libsdl.org/projects/SDL_mixer/">SDL_mixer</a> library. 
+	  The library mixes multiple samples into one or more audio output channels.
+	  Lisp callbacks provide the capability to implement custom mixing algorithms and  
+	  custom audio effects over and above the distance attenuation, panning and 
+	  reverse stereo effects provided by the SDL_mixer library. 
+	  WAVE, MOD, MIDI, OGG, AIFF, RIFF and VOC formats are supported.
+	</p>
+
+	<p>
+	  LISPBUILDER-SDL-MIXER has a dependency on <a href="http://lispbuilder.sourceforge.net/lispbuilder-sdl.html">LISPBUILDER-SDL</a>.
+	</p>
+	
+	<p>
+	  The code comes with
+	  a <a href="http://en.wikipedia.org/wiki/MIT_License">MIT-style license</a> so you can basically 
+	  do with it whatever you want.
+	</p>
+	
+	<p>
+	  <font color=red>Download shortcut:</font> <a href="http://www.balooga.com/lispbuilder/lispbuilder-sdl-mixer.tgz">http://www.balooga.com/lispbuilder/lispbuilder-sdl-mixer.tgz</a>.
+	</p>
+		
+      </blockquote>
+      
+      <br>&nbsp;</br><h3><a class=none name="exampleUsage">Example of Usage</a></h3>
+      <div class="code">
+	<pre>
+;; Load an mp3 music file and play the file continuously.
+(sdl:with-init (sdl:sdl-init-video sdl:sdl-init-audio)
+  (sdl:window 50 10)
+
+  (sdl-mixer:OPEN-AUDIO)
+  (let ((music (sdl-mixer:load-music "sample.mp3")))
+    (sdl-mixer:play-music music :loop t)
+
+    (sdl:with-events ()
+      (:quit-event ()
+		   (sdl-mixer:Halt-Music)
+		   (sdl-mixer:free music)
+		   (sdl-mixer:close-audio)
+		   t)
+      (:idle () (sdl:update-display)))))
+	</pre>
+      </div>
+      
+      <br>&nbsp;</br><h3><a class=none name="contents">Contents</a></h3>
+      <ol>
+	<li><a href="#abstract">Abstract</a></li>
+	<li><a href="#dependencies">Dependencies</a></li>
+	<li><a href="#download">Download</a></li>
+	<li><a href="#installation">Installation</a></li>
+	<li><a href="#usage">Usage</a></li>
+	<li><a href="#examples">Examples</a></li>
+	<li><a href="#support">Support</a></li>
+	<li><a href="#license">License</a></li>
+	<li><a href="#overview">API Overview</a></li>
+	<li><a href="#dictionary">The LISPBUILDER-SDL-MIXER dictionary</a></li>
+	<ul>
+	        <li><a href="#+channel-post+"><code>+channel-post+</code></a></li>
+	        <li><a href="#+channels+"><code>+channels+</code></a></li>
+	        <li><a href="#+default-channels+"><code>+default-channels+</code></a></li>
+	        <li><a href="#+default-format+"><code>+default-format+</code></a></li>
+	        <li><a href="#+default-frequency+"><code>+default-frequency+</code></a></li>
+	        <li><a href="#+default-sample-buffer+"><code>+default-sample-buffer+</code></a></li>
+	        <li><a href="#+max-volume+"><code>+max-volume+</code></a></li>
+	        <li><a href="#allocate-channels"><code>allocate-channels</code></a></li>
+	        <li><a href="#audio-channels-p"><code>audio-channels-p</code></a></li>
+	        <li><a href="#audio-format-p"><code>audio-format-p</code></a></li>
+	        <li><a href="#audio-frequency-p"><code>audio-frequency-p</code></a></li>
+	        <li><a href="#audio-opened-p"><code>audio-opened-p</code></a></li>
+	        <li><a href="#channel-volume"><code>channel-volume</code></a></li>
+	        <li><a href="#chunk"><code>chunk</code></a></li>
+	        <li><a href="#close-audio"><code>close-audio</code></a></li>
+	        <li><a href="#free"><code>free</code></a></li>
+	        <li><a href="#group-channel-p"><code>group-channel-p</code></a></li>
+	        <li><a href="#group-channels"><code>group-channels</code></a></li>
+	        <li><a href="#group-oldest"><code>group-oldest</code></a></li>
+	        <li><a href="#group-recent"><code>group-recent</code></a></li>
+	        <li><a href="#halt-music"><code>halt-music</code></a></li>
+	        <li><a href="#halt-sample"><code>halt-sample</code></a></li>
+	        <li><a href="#linked-version"><code>linked-version</code></a></li>
+	        <li><a href="#load-music"><code>load-music</code></a></li>
+	        <li><a href="#load-sample"><code>load-sample</code></a></li>
+	        <li><a href="#music"><code>music</code></a></li>
+	        <li><a href="#music-fading-p"><code>music-fading-p</code></a></li>
+	        <li><a href="#music-paused-p"><code>music-paused-p</code></a></li>
+	        <li><a href="#music-playing-p"><code>music-playing-p</code></a></li>
+	        <li><a href="#music-position"><code>music-position</code></a></li>
+	        <li><a href="#music-type-of"><code>music-type-of</code></a></li>
+	        <li><a href="#music-type-p"><code>music-type-p</code></a></li>
+	        <li><a href="#music-volume"><code>music-volume</code></a></li>
+	        <li><a href="#open-audio"><code>open-audio</code></a></li>
+	        <li><a href="#pause-music"><code>pause-music</code></a></li>
+	        <li><a href="#play-music"><code>play-music</code></a></li>
+	        <li><a href="#play-sample"><code>play-sample</code></a></li>
+	        <li><a href="#register-music-finished"><code>register-music-finished</code></a></li>
+	        <li><a href="#register-music-mixer"><code>register-music-mixer</code></a></li>
+	        <li><a href="#register-sample-finished"><code>register-sample-finished</code></a></li>
+	        <li><a href="#reserve-channels"><code>reserve-channels</code></a></li>
+	        <li><a href="#rewind-music"><code>rewind-music</code></a></li>
+	        <li><a href="#sample-fading-p"><code>sample-fading-p</code></a></li>
+	        <li><a href="#sample-from-channel"><code>sample-from-channel</code></a></li>
+	        <li><a href="#sample-paused-p"><code>sample-paused-p</code></a></li>
+	        <li><a href="#sample-playing-p"><code>sample-playing-p</code></a></li>
+	        <li><a href="#sample-volume"><code>sample-volume</code></a></li>
+	        <li><a href="#sdl-mixer-version"><code>sdl-mixer-version</code></a></li>
+	        <li><a href="#unregister-music-finished"><code>unregister-music-finished</code></a></li>
+	        <li><a href="#unregister-music-mixer"><code>unregister-music-mixer</code></a></li>
+	        <li><a href="#unregister-sample-finished"><code>unregister-sample-finished</code></a></li>
+	      </ul>
+	<li><a href="#ack">Acknowledgements</a></li>
+      </ol>
+
+      <br>&nbsp;</br><h3><a class=none name="dependencies">Dependencies</a></h3>
+
+      <ul>
+	<li><a href="http://lispbuilder.sourceforge.net/lispbuilder-sdl.html">LISPBUILDER-SDL</a>:
+	  Automatically installed if using <a href="http://www.cliki.net/ASDF-Install">ASDF-INSTALL</a>, or Edi Weitz's Starter Pack. Otherwise,
+	  please refer to the official <a href="http://lispbuilder.sourceforge.net/lispbuilder-sdl.html" title="http://lispbuilder.sourceforge.net/lispbuilder-sdl.html">LISPBUILDER-SDL installation instructions</a>.</li>
+	<li><a href="http://cvs.sourceforge.net/viewcvs.py/*checkout*/cclan/asdf/asdf.lisp?rev=1.92" title="http://cvs.sourceforge.net/viewcvs.py/*checkout*/cclan/asdf/asdf.lisp?rev=1.92">ASDF:</a> 
+	  ASDF is already installed for users of SBCL, OpenMCL, ECL or ACL, or Lispworks and Edi Weitz's Lisp Starter Pack. 
+	  Otherwise, please refer to the official <a href="http://cvs.sourceforge.net/viewcvs.py/*checkout*/cclan/asdf/README?rev=HEAD&content-type=text/plain">ASDF README</a> for installation instructions.</li>
+	<li><a href="http://common-lisp.net/project/cffi" title="http://common-lisp.net/project/cffi">CFFI</a>: 
+	  Automatically installed if using <a href="http://www.cliki.net/ASDF-Install">ASDF-INSTALL</a>, or Edi Weitz's Starter Pack. Otherwise,
+	  please refer to the official <a href="http://common-lisp.net/project/cffi" title="http://common-lisp.net/project/cffi">installation instructions</a>.</li>
+	<li><a href="http://www.libsdl.org" title="http://www.libsdl.org">SDL</a>: 
+	  Automatically installed by Edi Weitz's Lisp Starter Pack. Otherwise, Windows/Mac users should download the binaries from <a href="http://www.libsdl.org" title="http://www.libsdl.org">www.libsdl.org</a>, while
+	  Linux users should use their package managers to install the RPM's or DEBs.</li>
+	<li><a href="http://www.libsdl.org/projects/SDL_mixer/" title="http://www.libsdl.org/projects/SDL_mixer/">SDL_mixer</a>:
+	  Automatically installed by Edi Weitz's Lisp Starter Pack. Otherwise, Windows/Mac users should download the binaries from <a href="http://www.libsdl.org/projects/SDL_mixer/" title="http://www.libsdl.org/projects/SDL_mixer/">www.libsdl.org/projects/SDL_mixer/</a>, while
+	  Linux users should use their package managers to install the RPM's or DEBs.</li>
+      </ul>
+	      
+      <br>&nbsp;</br><h3><a class=none name="download">Download</a></h3>
+
+      <p>
+	<font color=red>Current Version:</font> The latest stable version of LISPBUILDER-SDL-MIXER, together with this documentation can be downloaded from 
+	<a href="http://www.balooga.com.com/lispbuilder/lispbuilder-sdl-mixer.tgz">http://www.balooga.com/lispbuilder/lispbuilder-sdl-mixer.tgz</a>. The
+	current version is 0.2.0.
+      </p>
+
+      <p>
+	<font color="red">Development:</font> The latest developement version is available via anonymous SVN: 
+	<div class="repl">
+	  <pre>svn co https://lispbuilder.svn.sourceforge.net/svnroot/lispbuilder lispbuilder-sdl-mixer</pre>
+	</div>
+      </p>
+	
+      <br>&nbsp;</br><h3><a class=none name="installation">Installation</a></h3>
+      
+      See <a href="http://lispbuilder.sourceforge.net/index.html">the LISPBUILDER documentation</a>
+      for installation instructions for <a href="http://lispbuilder.sourceforge.net/index.html#windows">Windows</a>, 
+      <a href="http://lispbuilder.sourceforge.net/index.html#mac">Mac OS-X</a> and 
+      <a href="http://lispbuilder.sourceforge.net/index.html#linux">Linux</a>.
+
+      <br>&nbsp;</br><h3><a class=none name="usage">Using LISPBUILDER-SDL-MIXER</a></h3>
+
+      Enter the following at the REPL to compile and load the LISPBUILDER-SDL-MIXER package:
+      <div class="repl">
+	<pre>(asdf:operate 'asdf:load-op :lispbuilder-sdl-mixer)</pre>
+      </div>
+      
+      ASDF will automatically load and compile the CFFI and :LISPBUILDER-SDL dependencies. 
+	
+      <br>&nbsp;</br><h3><a class=none name="examples">Included Examples</a></h3>
+
+      Enter the following at the REPL to compile and load the examples included in the 
+      LISPBUILDER-SDL-MIXER-EXAMPLES package:
+
+      <div class="repl">
+	<pre>(asdf:operate 'asdf:load-op :lispbuilder-sdl-mixer-examples)</pre>
+      </div>
+
+      Run the examples by entering any of the following at the REPL:
+
+      <div class="repl">
+	<pre>(SDL-MIXER-EXAMPLES:MIXER)</pre>
+      </div>
+
+      <br>&nbsp;</br><h3><a class=none name="support">Documentation, Support & Mailing Lists</a></h3>
+      
+      Questions answered and help given on the <a href="http://www.lispniks.com/mailman/listinfo/application-builder">lispbuilder discussion list</a>.
+      Documentation for LISPBUILDER-SDL and related packages is available on the <a href="http://lispbuilder.sourceforge.net">LISPBUILDER project page on Sourceforge</a>. 
+      For additional information, look at the <a href="http://wiki.alu.org/Gardeners_Projects">Lisp Gardeners page</a>, and 
+      <a href="http://wiki.alu.org/Application_Builder">Application Builder page</a> 
+      on the ALU's (Association of Lisp Users) wiki.
+
+      <br>&nbsp;</br><h3><a class=none name="license">License</a></h3>
+
+      LISPBUILDER-SDL-MIXER is distributed under the 
+      <a href="http://en.wikipedia.org/wiki/MIT_License">MIT-style license</a>.
+
+      <br>&nbsp;</br><h3><a class=none name="overview">API Overview</a></h3>
+
+      <br>&nbsp;</br><h3><a class=none name="dictionary">The LISPBUILDER-SDL-MIXER dictionary</a></h3>
+
+
+<!-- Entry for +CHANNEL-POST+ -->
+
+<p><br>[Constant]<br><a class=none name='+channel-post+'><b>+channel-post+</b></a>
+<blockquote><br>
+
+<p>Default channel of <code>-2</code> used for post-processing. </p>
+
+</blockquote>
+
+<!-- End of entry for +CHANNEL-POST+ -->
+
+
+<!-- Entry for +CHANNELS+ -->
+
+<p><br>[Constant]<br><a class=none name='+channels+'><b>+channels+</b></a>
+<blockquote><br>
+
+<p>Default number of <code>8</code> mixer channels. </p>
+
+</blockquote>
+
+<!-- End of entry for +CHANNELS+ -->
+
+
+<!-- Entry for +DEFAULT-CHANNELS+ -->
+
+<p><br>[Constant]<br><a class=none name='+default-channels+'><b>+default-channels+</b></a>
+<blockquote><br>
+
+<p>Default number of <code>2</code> sound channels for Stereo output. </p>
+
+</blockquote>
+
+<!-- End of entry for +DEFAULT-CHANNELS+ -->
+
+
+<!-- Entry for +DEFAULT-FORMAT+ -->
+
+<p><br>[Constant]<br><a class=none name='+default-format+'><b>+default-format+</b></a>
+<blockquote><br>
+
+<p>Default SDL audio format; little-endian is <code>SDL:AUDIO-S16LSB</code>, big-endian is <code>SDL:AUDIO-S16MSB</code>. Audio formats are defined in <code>SDL_audio.h</code>; </p><ul><li><code>SDL:AUDIO-U8</code>     : Unsigned 8-bit samples </li>
+<li><code>SDL:AUDIO-S8</code>     : Signed 8-bit samples </li>
+<li><code>SDL:AUDIO-U16LSB</code> : Unsigned 16-bit samples, in little-endian byte order </li>
+<li><code>SDL:AUDIO-S16LSB</code> : Signed 16-bit samples, in little-endian byte order </li>
+<li><code>SDL:AUDIO-U16MSB</code> : Unsigned 16-bit samples, in big-endian byte order </li>
+<li><code>SDL:AUDIO-S16MSB</code> : Signed 16-bit samples, in big-endian byte order </li>
+<li><code>SDL:AUDIO-U16</code>    : same as <code>SDL:AUDIO-U16LSB</code> (for backwards compatability probably) </li>
+<li><code>SDL:AUDIO-S16</code>    : same as <code>SDL:AUDIO-S16LSB</code> (for backwards compatability probably) </li>
+<li><code>SDL:AUDIO-U16SYS</code> : Unsigned 16-bit samples, in system byte order </li>
+<li><code>SDL:AUDIO-S16SYS</code> : Signed 16-bit samples, in system byte order </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for +DEFAULT-FORMAT+ -->
+
+
+<!-- Entry for +DEFAULT-FREQUENCY+ -->
+
+<p><br>[Constant]<br><a class=none name='+default-frequency+'><b>+default-frequency+</b></a>
+<blockquote><br>
+
+<p>Default sampling frequency of <code>22,050hz</code></p>
+
+</blockquote>
+
+<!-- End of entry for +DEFAULT-FREQUENCY+ -->
+
+
+<!-- Entry for +DEFAULT-SAMPLE-BUFFER+ -->
+
+<p><br>[Constant]<br><a class=none name='+default-sample-buffer+'><b>+default-sample-buffer+</b></a>
+<blockquote><br>
+
+<p>Default size of the sample output buffer is <code>4096</code> bytes </p>
+
+</blockquote>
+
+<!-- End of entry for +DEFAULT-SAMPLE-BUFFER+ -->
+
+
+<!-- Entry for +MAX-VOLUME+ -->
+
+<p><br>[Constant]<br><a class=none name='+max-volume+'><b>+max-volume+</b></a>
+<blockquote><br>
+
+<p>Default volume of <code>128</code> for <a href="#chunk">CHUNK</a>, output channels and mix channels. </p>
+
+</blockquote>
+
+<!-- End of entry for +MAX-VOLUME+ -->
+
+
+<!-- Entry for ALLOCATE-CHANNELS -->
+
+<p><br>[Function]<br><a class=none name='allocate-channels'><b>allocate-channels</b> <i>num-channels</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Allocates <code>NUM-CHANNELS</code> to be used for mixing samples. Frees all allocated channnels when <code>NUM-CHANNELS</code> is <code>NIL</code> or <code>0</code>. A negative value for <code>NUM-CHANNELS</code> is  ignored.  Returns the number of channels currently allocated. Can be called multiple times even if samples are currently playing. If the current allocation of channels is greater than <code>NUM-CHANNELS</code>,  then channels greater than <code>NUM-CHANNELS</code> will be stopped and these resources freed.  The callback set by <a href="#register-sample-finished">REGISTER-SAMPLE-FINISHED</a> is called for each channel halted. NOTE: Samples will continue playing when <code>NUM-CHANNELS</code> is <code>0</code>. </p>
+
+</blockquote>
+
+<!-- End of entry for ALLOCATE-CHANNELS -->
+
+
+<!-- Entry for AUDIO-CHANNELS-P -->
+
+<p><br>[Function]<br><a class=none name='audio-channels-p'><b>audio-channels-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the number of output channels used by the audio device, e.g. <code>2</code> for stereo and <code>1</code> for mono. Does not return the number of mixing channels allocated. </p>
+
+</blockquote>
+
+<!-- End of entry for AUDIO-CHANNELS-P -->
+
+
+<!-- Entry for AUDIO-FORMAT-P -->
+
+<p><br>[Function]<br><a class=none name='audio-format-p'><b>audio-format-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the current audio format of the audio device. </p>
+
+</blockquote>
+
+<!-- End of entry for AUDIO-FORMAT-P -->
+
+
+<!-- Entry for AUDIO-FREQUENCY-P -->
+
+<p><br>[Function]<br><a class=none name='audio-frequency-p'><b>audio-frequency-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the current audio frequency of the audio device. </p>
+
+</blockquote>
+
+<!-- End of entry for AUDIO-FREQUENCY-P -->
+
+
+<!-- Entry for AUDIO-OPENED-P -->
+
+<p><br>[Function]<br><a class=none name='audio-opened-p'><b>audio-opened-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the number of times the audio device has been opened by <a href="#open-audio">OPEN-AUDIO</a>, or <code>NIL</code> if the audio device is closed. </p>
+
+</blockquote>
+
+<!-- End of entry for AUDIO-OPENED-P -->
+
+
+<!-- Entry for CHANNEL-VOLUME -->
+
+<p><br>[Accessor]<br><a class=none name='channel-volume'><b>channel-volume</b> <i>channel</i> =&gt; <i>result</i></a>
+<br><a class=none><tt>(setf (</tt><b>channel-volume</b> <i>channel</i><tt>)</tt> <i>volume</i><tt>)</tt></a>
+<blockquote><br>
+
+<p>Returns the volume of <code>CHANNEL</code>, as an <code>INTEGER</code>. Volume can be from 0 to <a href="#+max-volume+">+MAX-VOLUME+</a>. If <code>CHANNEL</code> is NIL then the average volume over all channels is returned. </p>
+
+</blockquote>
+
+<!-- End of entry for CHANNEL-VOLUME -->
+
+
+<!-- Entry for CHUNK -->
+
+<p><br>[Standard class]<br><a class=none name='chunk'><b>chunk</b></a>
+<blockquote><br>
+
+
+
+</blockquote>
+
+<!-- End of entry for CHUNK -->
+
+
+<!-- Entry for CLOSE-AUDIO -->
+
+<p><br>[Function]<br><a class=none name='close-audio'><b>close-audio</b> <i><tt>&amp;optional</tt> all</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Attempts to close the audio device. The audio device can be opened multiple times by <a href="#open-audio">OPEN-AUDIO</a>  and to properly close the audio device, <a href="#close-audio">CLOSE-AUDIO</a> should be called the same number of times.  Optionally <code>ALL</code> when <code>T</code> will forcibly close the audio device, no matter how many times the device was opened. </p>
+
+</blockquote>
+
+<!-- End of entry for CLOSE-AUDIO -->
+
+
+<!-- Entry for FREE -->
+
+<p><br>[Generic function]<br><a class=none name='free'><b>free</b> <i>chunk</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+
+
+</blockquote>
+
+<!-- End of entry for FREE -->
+
+
+<!-- Entry for FREE -->
+
+<p><br>[Method]<br><a class=none><b>free</b> <i>(chunk music)</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Frees the music in <a href="#music">MUSIC</a>. Stops <a href="#music">MUSIC</a> if currently playing.  Will block until any current fade effect completes.   Do not reuse <a href="#music">MUSIC</a> once freed. </p>
+
+</blockquote>
+
+<!-- End of entry for FREE -->
+
+
+<!-- Entry for FREE -->
+
+<p><br>[Method]<br><a class=none><b>free</b> <i>(chunk chunk)</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Frees the sample in <a href="#chunk">CHUNK</a>. Do not reuse a <a href="#chunk">CHUNK</a> once freed. Do not attempt to free a <a href="#chunk">CHUNK</a> that is still being played. </p>
+
+</blockquote>
+
+<!-- End of entry for FREE -->
+
+
+<!-- Entry for GROUP-CHANNEL-P -->
+
+<p><br>[Function]<br><a class=none name='group-channel-p'><b>group-channel-p</b> <i>tag</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the number of reserved channels in the group identified by <code>TAG</code>.  Returns the total number of reserved channels in all groups when <code>NIL</code>. </p>
+
+</blockquote>
+
+<!-- End of entry for GROUP-CHANNEL-P -->
+
+
+<!-- Entry for GROUP-CHANNELS -->
+
+<p><br>[Function]<br><a class=none name='group-channels'><b>group-channels</b> <i>tag <tt>&amp;key</tt> channel end-channel</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Assigns the group <code>TAG</code> to <code>:CHANNEL</code>, or the range of channels from <code>:CHANNEL</code> to <code>:END-CHANNEL</code>. <code>TAG</code> when <code>NIL</code> will remove the <code>TAG</code> from the channels specified  and reassign these channels to the default group. Returns the number of channels grouped on success, or <code>NIL</code> on failure when an invalid or unallocated <code>CHANNEL</code>  or range of channels is specified. Use <a href="#allocate-channels">ALLOCATE-CHANNELS</a> to allocate one or more channels. </p>
+
+</blockquote>
+
+<!-- End of entry for GROUP-CHANNELS -->
+
+
+<!-- Entry for GROUP-OLDEST -->
+
+<p><br>[Function]<br><a class=none name='group-oldest'><b>group-oldest</b> <i>tag</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the oldest actively playing reserved channel in the group identified by <code>TAG</code>.  When <code>T</code> will return the oldest actively playing reserved channel in any group. Returns a channel, or <code>NIL</code> if no channels are actively playing or the group is empty. </p>
+
+</blockquote>
+
+<!-- End of entry for GROUP-OLDEST -->
+
+
+<!-- Entry for GROUP-RECENT -->
+
+<p><br>[Function]<br><a class=none name='group-recent'><b>group-recent</b> <i>tag</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the most recent actively playing reserved channel in the group identifed by <code>TAG</code>. When &#039;T&#039; will return the most recent actively playing reserved channel in any group. Returns a channel, or <code>NIL</code> if no channels are actively playing or the group is empty. </p>
+
+</blockquote>
+
+<!-- End of entry for GROUP-RECENT -->
+
+
+<!-- Entry for HALT-MUSIC -->
+
+<p><br>[Function]<br><a class=none name='halt-music'><b>halt-music</b> <i><tt>&amp;optional</tt> fade</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Stops playing music. The callback set by <a href="#register-music-finished">REGISTER-MUSIC-FINISHED</a> is called when the music stops. </p><h5>Parameters </h5>
+<ul><li><code>FADE</code> is the number of milliseconds to perform the fade-out effect. Will block until any current fade effect completes. Has no effect on paused or halted music. When <code>FADE</code> is NIL the music is stopped and all fade effects are immediately cancelled. The default is NIL. </li>
+</ul><h5>Returns </h5>
+<ul><li>T on success and NIL on failure. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for HALT-MUSIC -->
+
+
+<!-- Entry for HALT-SAMPLE -->
+
+<p><br>[Function]<br><a class=none name='halt-sample'><b>halt-sample</b> <i><tt>&amp;key</tt> channel group fade ticks</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Stops playing the sample on <code>CHANNEL</code>, or stops playback on the reserved channels in <code>GROUP</code>.  The callback set by <a href="#register-sample-finished">REGISTER-SAMPLE-FINISHED</a> is called when the channel stops. </p><h5>Parameters </h5>
+<ul><li><code>CHANNEL</code> specifies the channel to stop playing. When <code>T</code>, will stop playback samples on all channels.  Ignores channels not currently playing out samples. </li>
+<li><code>GROUP</code> specifies the group of reserved channels to stop playing. Use <a href="#reserve-channels">RESERVE-CHANNELS</a> to create a group of  reserved channels.  </li>
+<li><code>FADE</code> is the number of milliseconds to perform the fade-out effect.  When <code>CHANNEL</code> is set, will fade out the sample on the specified channel. When <code>GROUP</code> is set, will fade out the samples on the reserved channels in <code>GROUP</code>. The sample is stopped when fade effect completes. When <code>FADE</code> is <code>NIL</code> or <code>0</code> the fade effect is immediate. Default is <code>NIL</code>. </li>
+<li><code>TICKS</code> is the number of milliseconds until the sample is stopped. When <code>NIL</code> or <code>0</code>, the sample is stopped immediately. Default is <code>NIL</code>. </li>
+</ul><h5>Returns </h5>
+<ul><li>The number of samples fading out, when <code>FADE</code> is set. </li>
+<li>The number of samples halted, when <code>TICKS</code> is set. </li>
+<li>Otherwise, returns T on success and NIL on failure. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for HALT-SAMPLE -->
+
+
+<!-- Entry for LINKED-VERSION -->
+
+<p><br>[Function]<br><a class=none name='linked-version'><b>linked-version</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the version number of the SDL_mixer dynamic library in use as #(<code>MAJOR</code><code>MINOR</code><code>PATCH</code>). </p>
+
+</blockquote>
+
+<!-- End of entry for LINKED-VERSION -->
+
+
+<!-- Entry for LOAD-MUSIC -->
+
+<p><br>[Function]<br><a class=none name='load-music'><b>load-music</b> <i>filepath</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Loads the music file at location <code>FILEPATH</code>. Must be a <code>WAVE</code>, <code>MOD</code>, <code>MIDI</code>, <code>OGG</code> or <code>MP3</code> file. Returns music as a new <a href="#music">MUSIC</a> object, or NIL on error. </p>
+
+</blockquote>
+
+<!-- End of entry for LOAD-MUSIC -->
+
+
+<!-- Entry for LOAD-SAMPLE -->
+
+<p><br>[Function]<br><a class=none name='load-sample'><b>load-sample</b> <i>filepath</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Loads the sample file at location <code>FILEPATH</code>. Must be a <code>WAVE</code>, <code>AIFF</code>, <code>RIFF</code>, <code>OGG</code>, or <code>VOC</code> file. Returns the sample as a new <a href="#chunk">CHUNK</a> object, or NIL on error. </p>
+
+</blockquote>
+
+<!-- End of entry for LOAD-SAMPLE -->
+
+
+<!-- Entry for MUSIC -->
+
+<p><br>[Standard class]<br><a class=none name='music'><b>music</b></a>
+<blockquote><br>
+
+
+
+</blockquote>
+
+<!-- End of entry for MUSIC -->
+
+
+<!-- Entry for MUSIC-FADING-P -->
+
+<p><br>[Function]<br><a class=none name='music-fading-p'><b>music-fading-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the current fade effect on music regardless of the current play or pause state. Returns <code>:FADING-OUT</code> if a fade-out is in effect, <code>:FADING-IN</code> if a fade-in is in effect, or <code>NIL</code> if no fade is in effect. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-FADING-P -->
+
+
+<!-- Entry for MUSIC-PAUSED-P -->
+
+<p><br>[Function]<br><a class=none name='music-paused-p'><b>music-paused-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns T if music is currently paused or was previously paused prior to a halt,  or NIL otherwise. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-PAUSED-P -->
+
+
+<!-- Entry for MUSIC-PLAYING-P -->
+
+<p><br>[Function]<br><a class=none name='music-playing-p'><b>music-playing-p</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns <code>T</code> if music is currently playing or is paused, or <code>NIL</code> if music is halted. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-PLAYING-P -->
+
+
+<!-- Entry for MUSIC-POSITION -->
+
+<p><br>[Function]<br><a class=none name='music-position'><b>music-position</b> <i>position</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Sets the play <code>POSITION</code> of the currently playing music.  Returns <code>T</code> on success and <code>NIL</code> on failure. Applicable only to <code>MOD</code>, <code>OGG</code> and <code>MP3</code> music formats as described below. </p><ul><li><code>MOD</code>, jumps to the pattern number in the module identified by <code>POSITION</code>. <code>0</code> will rewind the module to the beginning. </li>
+<li><code>OGG</code>, jumps to <code>POSITION</code> seconds from the beginning of the song. </li>
+<li><code>MP3</code>, jumps forwards <code>POSITION</code> seconds from the current play position. Negative values are ignored. To rewind, use <a href="#rewind-music">REWIND-MUSIC</a> to jump to the start of the song, then jump forward <code>POSITION</code> seconds using <a href="#music-position">MUSIC-POSITION</a>. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-POSITION -->
+
+
+<!-- Entry for MUSIC-TYPE-OF -->
+
+<p><br>[Function]<br><a class=none name='music-type-of'><b>music-type-of</b> <i>music type</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns <code>T</code> if <a href="#music">MUSIC</a> is of <code>TYPE</code>, returns <code>NIL</code> otherwise.  <code>TYPE</code> may be one of <code>WAV</code>, <code>MOD</code>, <code>MID</code>, <code>OGG</code>, <code>MP3</code>, <code>MP3-MAD</code>, <code>FLAC</code> or <code>CMD</code>. If <a href="#music">MUSIC</a> is <code>NIL</code> returns the type of the currently playing music. Returns <code>NIL</code> is no music is playing. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-TYPE-OF -->
+
+
+<!-- Entry for MUSIC-TYPE-P -->
+
+<p><br>[Function]<br><a class=none name='music-type-p'><b>music-type-p</b> <i>music</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns the format type of <a href="#music">MUSIC</a> as one of <code>WAV</code>, <code>MOD</code>, <code>MID</code>, <code>OGG</code>, <code>MP3</code>, <code>MP3-MAD</code>, <code>FLAC</code> or <code>CMD</code>. Returns the format type of the currently playing music when <a href="#music">MUSIC</a> is <code>NIL</code>. Returns <code>NIL</code> is no music is playing. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-TYPE-P -->
+
+
+<!-- Entry for MUSIC-VOLUME -->
+
+<p><br>[Accessor]<br><a class=none name='music-volume'><b>music-volume</b> <i></i> =&gt; <i>result</i></a>
+<br><a class=none><tt>(setf (</tt><b>music-volume</b> <i></i><tt>)</tt> <i>volume</i><tt>)</tt></a>
+<blockquote><br>
+
+<p>Returns current music volume as an <code>INTEGER</code> from 0 to <a href="#+max-volume+">+MAX-VOLUME+</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for MUSIC-VOLUME -->
+
+
+<!-- Entry for OPEN-AUDIO -->
+
+<p><br>[Function]<br><a class=none name='open-audio'><b>open-audio</b> <i><tt>&amp;key</tt> frequency format channels chunksize</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Initializes the mixer. SDL must be initialized with <a href="#sdl-init-audio">SDL-INIT-AUDIO</a> prior to this call.  <a href="#open-audio">OPEN-AUDIO</a> can be called multiple times, however <code>FORMAT</code> is set on the first call and will not changed on subsequent calls.  The audio device must be closed and re-opened for any change to <code>FORMAT</code> to take effect. <a href="#close-audio">CLOSE-AUDIO</a> must be called the same number of time to close the audio device. Use <a href="#allocate-channels">ALLOCATE-CHANNELS</a> to set the number of mixing channels. <a href="#open-audio">OPEN-AUDIO</a> will allocate <a href="#+channels+">+MIX-CHANNELS+</a> by default.  </p><h5>Parameters </h5>
+<ul><li><code>FREQUENCY</code> is the output sampling frequency in samples per second (Hz). Default is <a href="#+default-frequency+">+DEFAULT-FREQUENCY+</a>. Most games use a <code>FREQUENCY</code> of <a href="#+default-frequency+">+DEFAULT-FREQUENCY+</a>. The higher the <code>FREQUENCY</code> the greater the CPU resource requirements.  (A value of 44100 is the CD audio rate). </li>
+<li><code>FORMAT</code> is the output sample format. Default is <a href="#+default-format+">+DEFAULT-FORMAT+</a>. </li>
+<li><code>CHANNELS</code> sets the number of sound channels in the output. Default is <a href="#+default-channels+">+DEFAULT-CHANNELS+</a>.  This is not the same as <a href="#allocate-channels">ALLOCATE-CHANNELS</a> which sets the number of mixing channels. </li>
+<li><code>CHUNKSIZE</code> is the size in bytes of each mixed sample buffer. Default is <a href="#+default-sample-buffer+">+DEFAULT-SAMPLE-BUFFER+</a> bytes. The smaller the <code>CHUNKSIZE</code>, the more frequenctly the mixer hooks are called.  Increase <code>CHUNKSIZE</code> to decrease CPU resources, if sound skips or if playing music. Decrease <code>CHUNKSIZE</code> to decrease sound lag. </li>
+</ul><h5>Returns </h5>
+<ul><li><code>T</code> on success and <code>NIL</code> on failure. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for OPEN-AUDIO -->
+
+
+<!-- Entry for PAUSE-MUSIC -->
+
+<p><br>[Function]<br><a class=none name='pause-music'><b>pause-music</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Pause music. Music can only be paused if it is actively playing.  You may halt paused music. </p>
+
+</blockquote>
+
+<!-- End of entry for PAUSE-MUSIC -->
+
+
+<!-- Entry for PLAY-MUSIC -->
+
+<p><br>[Function]<br><a class=none name='play-music'><b>play-music</b> <i>music <tt>&amp;key</tt> loop fade position</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Starts playing <a href="#music">MUSIC</a> from <code>POSITION</code>. The music can be faded-in over the number of milliseconds in <code>FADE</code>. Automatically repeats the music when finished the number of time specified in <code>LOOP</code>.  Any previous music will be halted. Will block until any current fade effect completes. </p><h5>Parameters </h5>
+<ul><li><code>MUSIC</code> is the <a href="#music">MUSIC</a> to play. </li>
+<li><code>LOOP</code> is the number of times to play the music. T continuously loops the music. Plays once when <code>NIL</code>, or <code>0</code>. Default is <code>NIL</code>. </li>
+<li><code>FADE</code> is the number of milliseconds to perform the fade-in effect. Default is <code>NIL</code>, no fade effect. Only applies to the first loop. </li>
+<li><code>POSITION</code> is the position in the music to begin playing from. Default is to start playout from the beginning. </li>
+</ul><h5>Returns </h5>
+<ul><li>T on success and NIL on failure. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for PLAY-MUSIC -->
+
+
+<!-- Entry for PLAY-SAMPLE -->
+
+<p><br>[Function]<br><a class=none name='play-sample'><b>play-sample</b> <i>chunk <tt>&amp;key</tt> channel group loop fade ticks</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Plays the sample in <a href="#chunk">CHUNK</a> for <code>TICKS</code> milliseconds, repeated <code>LOOP</code> times. The sample is repeated the number of times specified in <code>LOOP</code>, or until <code>TICKS</code>.  The sample will fade-in over <code>FADE</code> milliseconds.  The callback set by <a href="#register-sample-finished">REGISTER-SAMPLE-FINISHED</a> is called when the sample stops playing. </p><h5>Parameters </h5>
+<ul><li><code>CHUNK</code> is the sample <a href="#chunk">CHUNK</a>. </li>
+<li><code>CHANNEL</code> specifies the channel to play the sample. When <code>T</code>, will perform default mixing and mix the  sample on the first free unreserved channel. </li>
+<li><code>GROUP</code> Attempts to play the sample on the first available (not playing) reserved channel in <code>GROUP</code>.  When <code>T</code>, will search for the first available (not playing) reserved channel in all groups.  If there are no available reserved channels then <a href="#play-sample">PLAY-SAMPLE</a> will fail. If however <code>CHANNEL</code> is also <code>T</code> then the default action is to play the sample on the first unreserved channel. Use <a href="#reserve-channels">RESERVE-CHANNELS</a> to reserve, or exclude, a channel from default mixing. </li>
+<li><code>LOOP</code> is the number of times to loop the sample. Loops continuously when <code>T</code>. Plays once when <code>NIL</code>, or <code>0</code>. Default in <code>NIL</code>. </li>
+<li><code>FADE</code> is the number of milliseconds to perform the fade-in effect. Default is <code>NIL</code>, no fade effect. Only applies to the first loop. </li>
+<li><code>TICKS</code> is the number of milliseconds to play the sample. When <code>T</code> will play the sample from start to finish. Default is <code>T</code>. </li>
+</ul><h5>Returns </h5>
+<ul><li>The channel the sample is playing on, or <code>NIL</code> on failure. </li>
+</ul>
+
+</blockquote>
+
+<!-- End of entry for PLAY-SAMPLE -->
+
+
+<!-- Entry for REGISTER-MUSIC-FINISHED -->
+
+<p><br>[Function]<br><a class=none name='register-music-finished'><b>register-music-finished</b> <i>func</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Sets the callback that is executed when <a href="#music">MUSIC</a> finishes playback or is halted. <code>FUNC</code> is of the format <code>#(lambda ())</code></p><h5>Example </h5>
+<pre><code>(REGISTER-MUSIC-FINISHED 
+    (lambda ()
+      (FORMAT T &amp;quot;MUSIC FINISHED&amp;quot;)))
+</code></pre>
+
+</blockquote>
+
+<!-- End of entry for REGISTER-MUSIC-FINISHED -->
+
+
+<!-- Entry for REGISTER-MUSIC-MIXER -->
+
+<p><br>[Function]<br><a class=none name='register-music-mixer'><b>register-music-mixer</b> <i>func</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Sets the callback that is executed to fill the music audio output buffer. <code>FUNC</code> is of the format <code>#(lambda (user-data stream len))</code></p><h5>Example </h5>
+<pre><code>(REGISTER-MUSIC-MIXER 
+    (lambda (user stream len)
+      &amp;#039;FILL-THE-AUDIO-OUTPUT-BUFFER))
+</code></pre>
+
+</blockquote>
+
+<!-- End of entry for REGISTER-MUSIC-MIXER -->
+
+
+<!-- Entry for REGISTER-SAMPLE-FINISHED -->
+
+<p><br>[Function]<br><a class=none name='register-sample-finished'><b>register-sample-finished</b> <i>func</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Sets the callback that is executed when a sample <a href="#chunk">CHUNK</a> finishes playback or is halted. <code>FUNC</code> is of the format <code>#(lambda (channel))</code></p><h5>Example </h5>
+<pre><code>(REGISTER-SAMPLE-FINISHED 
+    (lambda (channel)
+      (FORMAT T &amp;quot;SAMPLE FINISHED ON CHANNEL: ~A&amp;quot; channel)))
+</code></pre>
+
+</blockquote>
+
+<!-- End of entry for REGISTER-SAMPLE-FINISHED -->
+
+
+<!-- Entry for RESERVE-CHANNELS -->
+
+<p><br>[Function]<br><a class=none name='reserve-channels'><b>reserve-channels</b> <i>channels</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Reserves, or excludes, the number of <code>CHANNELS</code> from default mixing.  The number of channels to reserve is from 0 to <code>(- CHANNELS 1)</code>. Default mixing is performed when when a sample is played on an unreserved channel,  when using <a href="#play-sample">PLAY-SAMPLE</a> with <code>:CHANNEL</code><code>NIL</code>. <code>CHANNEL</code> when <code>NIL</code> or <code>0</code> will remove all reservations. Channels are unreserved unless explicitly reserved by <a href="#reserve-channels">RESERVE-CHANNELS</a>. Returns the number of channels reserved. May return less channels than requested, depending on the  number of channels previously allocated using <a href="#allocate-channels">ALLOCATE-CHANNELS</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for RESERVE-CHANNELS -->
+
+
+<!-- Entry for REWIND-MUSIC -->
+
+<p><br>[Function]<br><a class=none name='rewind-music'><b>rewind-music</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Rewind to the start of music. Safe to use on halted, paused, and currently playing music.  It is not necessary to rewind the music immediately after starting playback,  as it starts at the beginning by default. Only the following streams support rewind: <code>MOD</code>, <code>OGG</code>, <code>MP3</code>, <code>Native MIDI</code>. </p>
+
+</blockquote>
+
+<!-- End of entry for REWIND-MUSIC -->
+
+
+<!-- Entry for SAMPLE-FADING-P -->
+
+<p><br>[Function]<br><a class=none name='sample-fading-p'><b>sample-fading-p</b> <i>channel</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns <code>T</code> if a fade is in effect for the sample on <code>CHANNEL</code>, regardless of the current play or pause state of the sample. Returns <code>:FADING-OUT</code> if a fade-out is in effect, <code>:FADING-IN</code> if a fade-in is in effect, or  <code>NIL</code> if no fade is in effect. </p>
+
+</blockquote>
+
+<!-- End of entry for SAMPLE-FADING-P -->
+
+
+<!-- Entry for SAMPLE-FROM-CHANNEL -->
+
+<p><br>[Function]<br><a class=none name='sample-from-channel'><b>sample-from-channel</b> <i>channel</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns currently playing or most recently played sample on <code>CHANNEL</code> as a new <a href="#chunk">CHUNK</a> object,  or <code>NIL</code> if <code>CHANNEL</code> is not allocated or <code>CHANNEL</code> has not yet played out any samples. NOTE: The sample may already have been freed and therefore the pointer to the foreign object in <a href="#chunk">CHUNK</a> may not be valid. </p>
+
+</blockquote>
+
+<!-- End of entry for SAMPLE-FROM-CHANNEL -->
+
+
+<!-- Entry for SAMPLE-PAUSED-P -->
+
+<p><br>[Function]<br><a class=none name='sample-paused-p'><b>sample-paused-p</b> <i>channel</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns <code>T</code> if the sample on <code>CHANNEL</code> is currently paused or was previously paused  prior to a halt, or <code>NIL</code> otherwise. Returns the number of paused samples when <code>CHANNEL</code> is <code>T</code> or <code>NIL</code>. </p>
+
+</blockquote>
+
+<!-- End of entry for SAMPLE-PAUSED-P -->
+
+
+<!-- Entry for SAMPLE-PLAYING-P -->
+
+<p><br>[Function]<br><a class=none name='sample-playing-p'><b>sample-playing-p</b> <i>channel</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Returns <code>T</code> if a sample is currently playing or is paused on <code>CHANNEL</code>, or <code>NIL</code> if the sample is halted. Returns the number of samples playing or paused when <code>CHANNEL</code> is <code>T</code> or <code>NIL</code>. </p>
+
+</blockquote>
+
+<!-- End of entry for SAMPLE-PLAYING-P -->
+
+
+<!-- Entry for SAMPLE-VOLUME -->
+
+<p><br>[Accessor]<br><a class=none name='sample-volume'><b>sample-volume</b> <i>chunk</i> =&gt; <i>result</i></a>
+<br><a class=none><tt>(setf (</tt><b>sample-volume</b> <i>chunk</i><tt>)</tt> <i>volume</i><tt>)</tt></a>
+<blockquote><br>
+
+<p>Returns the volume of the sample in <a href="#chunk">CHUNK</a>, as an <code>INTEGER</code> from 0 to <a href="#+max-volume+">+MAX-VOLUME+</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for SAMPLE-VOLUME -->
+
+
+<!-- Entry for SDL-MIXER-VERSION -->
+
+<p><br>[Function]<br><a class=none name='sdl-mixer-version'><b>sdl-mixer-version</b> <i>sdl-version</i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Sets the <code>SDL-VERSION</code> structure with the version of the library.. </p>
+
+</blockquote>
+
+<!-- End of entry for SDL-MIXER-VERSION -->
+
+
+<!-- Entry for UNREGISTER-MUSIC-FINISHED -->
+
+<p><br>[Function]<br><a class=none name='unregister-music-finished'><b>unregister-music-finished</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Removes the callback function set by set by <a href="#register-music-finished">REGISTER-MUSIC-FINISHED</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for UNREGISTER-MUSIC-FINISHED -->
+
+
+<!-- Entry for UNREGISTER-MUSIC-MIXER -->
+
+<p><br>[Function]<br><a class=none name='unregister-music-mixer'><b>unregister-music-mixer</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Removes any callback function set by <a href="#register-music-mixer">REGISTER-MUSIC-MIXER</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for UNREGISTER-MUSIC-MIXER -->
+
+
+<!-- Entry for UNREGISTER-SAMPLE-FINISHED -->
+
+<p><br>[Function]<br><a class=none name='unregister-sample-finished'><b>unregister-sample-finished</b> <i></i> =&gt; <i>result</i></a>
+<blockquote><br>
+
+<p>Removes the callback function set by <a href="#register-sample-finished">REGISTER-SAMPLE-FINISHED</a>. </p>
+
+</blockquote>
+
+<!-- End of entry for UNREGISTER-SAMPLE-FINISHED -->
+<br>&nbsp;<br><h3><a class=none name="ack">Acknowledgements</a></h3>
+
+<ul>
+  <li>
+    Documentation prepared using:
+  </li>
+  <ul>
+    <li>
+      Edi Weitz's  
+      <a href="http://weitz.de/documentation-template/">DOCUMENTATION-TEMPLATE</a>.
+    </li>
+    <li>
+      Gary King's 
+      <a href="http://common-lisp.net/project/cl-markdown/">CL-MARKDOWN</a>.
+      </li>
+  </ul>
+</ul>
+
+<p>
+  <a href="index.html">BACK</a>
+</p>
+  
+</body>
+</html>
