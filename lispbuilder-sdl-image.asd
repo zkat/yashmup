@@ -1,1 +1,0 @@
-lib/lispbuilder/lispbuilder-sdl-image/lispbuilder-sdl-image.asd
