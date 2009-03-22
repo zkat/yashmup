@@ -1,3 +1,9 @@
+;; This file is part of yashmup
+
+;; thegame.lisp
+;;
+;; You just lost it
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
 (defvar *game* nil)
