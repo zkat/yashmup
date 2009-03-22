@@ -87,3 +87,8 @@
   (with-slots (keys-held-down) game
     (let ((down-p (gethash key keys-held-down)))
       down-p)))
+
+(defun toggle-pause ()
+  (if (paused-p *game*)
+      (setf (paused-p *game*) nil)
+      (setf (paused-p *game*) t)))
