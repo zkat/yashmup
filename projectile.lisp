@@ -6,18 +6,23 @@
 (in-package :yashmup)
 
 (defclass projectile (moving-sprite)
-  ((shooter :initarg :shooter :accessor shooter)))
+  ((shooter :initarg :shooter :accessor shooter)
+   (image :initform (gethash 'bullet1 *resource-table*))))
 
 (defclass laser (projectile)
   ((velocity :initform 30)
-   (image :initform (gethash 'laser *resource-table*))))
+   (image :initform (gethash 'laser1 *resource-table*))))
 
-(defmethod update ((laser laser))
+(defclass enemy-laser (projectile)
+  ((velocity :initform 3)
+   (image :initform (gethash 'laser2 *resource-table*))))
+
+(defmethod update ((proj projectile))
   (with-slots (x y)
-      laser
-    (incf x (horiz-velocity laser))
-    (incf y (vert-velocity laser))
+      proj
+    (incf x (horiz-velocity proj))
+    (incf y (vert-velocity proj))
     (when (or (< y -10)
 	      (> y 850))
       (setf (projectiles *game*)
-	    (delete laser (projectiles *game*))))))
+	    (delete proj (projectiles *game*))))))
