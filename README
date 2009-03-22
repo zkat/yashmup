@@ -1,0 +1,8 @@
+Building and running yashmup:
+
+On Linux/OSX:
+
+1. Install SBCL (usually through a package manager, or macports)
+2. cd /path/to/yashmup
+3. ./build-it.sh
+4. ./yashmup
