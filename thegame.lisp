@@ -13,9 +13,9 @@
 (defmethod update ((game game))
   (with-slots (running-p player background projectiles enemies enemy-counter) game
     (update background)
-    (mapc #'update projectiles)
     (update player)
     (mapc #'update enemies)
+    (mapc #'update projectiles)
     (incf enemy-counter)
     (when (> enemy-counter 80)
       (push (make-instance 'enemy) enemies)
