@@ -18,5 +18,5 @@
   (setf (gethash 'laser *resource-table*)
 	(load-image "laser" :extension ".gif"))
   (setf (gethash 'enemy *resource-table*)
-	(load-image "enemy" :extension ".png")))
+	(load-image "enemy" :extension ".gif" :color-key (sdl:color :r 255 :g 255 :b 255))))
 

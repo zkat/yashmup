@@ -1,7 +1,5 @@
 (in-package :yashmup)
 
-(defvar *projectiles* nil)
-
 ;;; Ships
 (defclass ship (moving-sprite) 
   ((velocity :initform 5)
@@ -13,26 +11,6 @@
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 100))
    (image :initform (gethash 'player-ship *resource-table*))))
-
-(defclass enemy (ship)
-  ((x :initform (/ *screen-width* 2))
-   (y :initform 50)
-   (velocity :initform 2)
-   (angle :initform 90)
-   (image :initform (gethash 'enemy *resource-table*))
-   (damage :initform 0 :accessor damage)))
-
-(defmethod update ((enemy enemy))
-  (with-slots (x y angle damage) enemy
-    (when (or (> x (- *screen-width* 150))
-	      (< x 50))
-      (setf angle (* angle -1)))
-    (incf x (horiz-velocity enemy))
-    (when (> damage 300)
-      (sdl:draw-string-shaded-* "HAHAHA PUNY HUMAN YOU CANNOT HOPE TO DEFEAT ME!"
-				x (- y 10)
-				sdl:*red*
-				sdl:*black*))))
 
 (defmethod update ((ship player-ship))
   (incf (frames-since-last-shot ship))
@@ -84,7 +62,7 @@
 				       :angle 180
 				       :shooter ship))))
       (mapc (lambda (lazor)
-	      (push lazor *projectiles*))
+	      (push lazor (projectiles *game*)))
 	    lazors)
       ;;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
       (setf (frames-since-last-shot ship) 0))))
