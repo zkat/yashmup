@@ -9,7 +9,7 @@
   :components
   ((:file "packages")
    (:file "config")
-   (:file "key-events")
+   (:file "thegame")
    (:file "resources")
    (:file "sprite")
    (:file "background")
