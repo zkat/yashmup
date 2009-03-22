@@ -38,8 +38,11 @@
 
 (defgeneric take-a-step (game))
 (defmethod take-a-step ((game game))
-  (update game)
-  (draw game))
+  (unless (paused-p game)
+    (update game))
+  (draw game)
+  (when (paused-p game)
+    (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)))
 
 (defmethod draw ((game game))
   (draw (background game))
@@ -61,14 +64,12 @@
 (defun register-key-press (key game)
   (when (sdl:key= key :sdl-key-p)
     (toggle-pause))
-  (unless (paused-p *game*)
-   (with-slots (keys-held-down) game
-     (setf (gethash key keys-held-down) t))))
+  (with-slots (keys-held-down) game
+    (setf (gethash key keys-held-down) t)))
 
 (defun register-key-release (key game)
-  (unless (paused-p *game*)
-   (with-slots (keys-held-down) game
-     (setf (gethash key keys-held-down) nil))))
+  (with-slots (keys-held-down) game
+    (setf (gethash key keys-held-down) nil)))
 
 (defun key-down-p (key &optional (game *game*))
   (with-slots (keys-held-down) game
