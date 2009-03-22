@@ -11,7 +11,7 @@
    (y :initform -30)
    (velocity :initform 2)
    (angle :initform 0)
-   (image :initform (gethash 'enemy *resource-table*))))
+   (image :initform (gethash 'enemy-small *resource-table*))))
 
 (defmethod update ((enemy enemy))
   (with-slots (x y angle damage frames-since-last-shot) enemy
@@ -34,13 +34,13 @@
 
 (defmethod fire! ((enemy enemy))
     (with-slots (x y) enemy
-    (let ((lazors (list (make-instance 'laser
-				       :x (+ 25 x)
+    (let ((lazors (list (make-instance 'enemy-laser
+				       :x (+ 15 x)
 				       :y (+ y 23)
 				       :velocity 3
 				       :shooter enemy)
-			(make-instance 'laser
-				       :x (+ x 3)
+			(make-instance 'enemy-laser
+				       :x (+ x 8)
 				       :y (+ y 23)
 				       :velocity 3
 				       :shooter enemy))))
