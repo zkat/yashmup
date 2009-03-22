@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/925/trunk/lispbuilder-sdl-ttf/examples
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/638/trunk/lispbuilder-sdl-ttf/examples/package.lisp
+END
+font-example.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/925/trunk/lispbuilder-sdl-ttf/examples/font-example.lisp
+END

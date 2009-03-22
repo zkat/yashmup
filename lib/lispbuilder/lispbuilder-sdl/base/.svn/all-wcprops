@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/1019/trunk/lispbuilder-sdl/base
+END
+rwops.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/base/rwops.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/993/trunk/lispbuilder-sdl/base/package.lisp
+END
+surfaces.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/934/trunk/lispbuilder-sdl/base/surfaces.lisp
+END
+util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/731/trunk/lispbuilder-sdl/base/util.lisp
+END
+sdl-util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/990/trunk/lispbuilder-sdl/base/sdl-util.lisp
+END
+pixel.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/947/trunk/lispbuilder-sdl/base/pixel.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/771/trunk/lispbuilder-sdl/base/globals.lisp
+END
+events.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/993/trunk/lispbuilder-sdl/base/events.lisp
+END
+rectangle.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/934/trunk/lispbuilder-sdl/base/rectangle.lisp
+END
+video.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/936/trunk/lispbuilder-sdl/base/video.lisp
+END
+fps.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1019/trunk/lispbuilder-sdl/base/fps.lisp
+END

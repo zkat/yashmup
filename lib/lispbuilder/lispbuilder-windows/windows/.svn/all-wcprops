@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/687/trunk/lispbuilder-windows/windows
+END
+windows.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/630/trunk/lispbuilder-windows/windows/windows.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/552/trunk/lispbuilder-windows/windows/package.lisp
+END
+winuser.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/687/trunk/lispbuilder-windows/windows/winuser.lisp
+END
+util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/552/trunk/lispbuilder-windows/windows/util.lisp
+END
+wingdi.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/630/trunk/lispbuilder-windows/windows/wingdi.lisp
+END
+user32.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/630/trunk/lispbuilder-windows/windows/user32.lisp
+END
+library.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/630/trunk/lispbuilder-windows/windows/library.lisp
+END

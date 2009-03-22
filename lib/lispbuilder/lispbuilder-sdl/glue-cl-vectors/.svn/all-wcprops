@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/glue-cl-vectors
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/glue-cl-vectors/package.lisp
+END
+glue-cl-vectors.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/glue-cl-vectors/glue-cl-vectors.lisp
+END

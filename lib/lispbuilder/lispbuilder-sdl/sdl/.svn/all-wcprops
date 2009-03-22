@@ -1,0 +1,221 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/1017/trunk/lispbuilder-sdl/sdl
+END
+rwops.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/937/trunk/lispbuilder-sdl/sdl/rwops.lisp
+END
+surfaces.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1015/trunk/lispbuilder-sdl/sdl/surfaces.lisp
+END
+keys.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/994/trunk/lispbuilder-sdl/sdl/keys.lisp
+END
+util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/sdl/util.lisp
+END
+string-solid.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/884/trunk/lispbuilder-sdl/sdl/string-solid.lisp
+END
+color.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/744/trunk/lispbuilder-sdl/sdl/color.lisp
+END
+bitmap-font.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/884/trunk/lispbuilder-sdl/sdl/bitmap-font.lisp
+END
+mixer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1015/trunk/lispbuilder-sdl/sdl/mixer.lisp
+END
+bitmap-font-data.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/884/trunk/lispbuilder-sdl/sdl/bitmap-font-data.lisp
+END
+point.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/sdl/point.lisp
+END
+primitives.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/sdl/primitives.lisp
+END
+sdl-util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/sdl/sdl-util.lisp
+END
+generics.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/946/trunk/lispbuilder-sdl/sdl/generics.lisp
+END
+audio.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/993/trunk/lispbuilder-sdl/sdl/audio.lisp
+END
+simple-font-data.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1010/trunk/lispbuilder-sdl/sdl/simple-font-data.lisp
+END
+font.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/884/trunk/lispbuilder-sdl/sdl/font.lisp
+END
+bitmap-font-definition.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/886/trunk/lispbuilder-sdl/sdl/bitmap-font-definition.lisp
+END
+input-util.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/922/trunk/lispbuilder-sdl/sdl/input-util.lisp
+END
+base.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/744/trunk/lispbuilder-sdl/sdl/base.lisp
+END
+pixel.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/738/trunk/lispbuilder-sdl/sdl/pixel.lisp
+END
+image.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1015/trunk/lispbuilder-sdl/sdl/image.lisp
+END
+default-colors.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/744/trunk/lispbuilder-sdl/sdl/default-colors.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1017/trunk/lispbuilder-sdl/sdl/globals.lisp
+END
+simple-font-definition.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/887/trunk/lispbuilder-sdl/sdl/simple-font-definition.lisp
+END
+drawing-primitives.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/934/trunk/lispbuilder-sdl/sdl/drawing-primitives.lisp
+END
+fps.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/1013/trunk/lispbuilder-sdl/sdl/fps.lisp
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1017/trunk/lispbuilder-sdl/sdl/package.lisp
+END
+font-definition.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/887/trunk/lispbuilder-sdl/sdl/font-definition.lisp
+END
+string-shaded.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/884/trunk/lispbuilder-sdl/sdl/string-shaded.lisp
+END
+simple-font.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/936/trunk/lispbuilder-sdl/sdl/simple-font.lisp
+END
+string-blended.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/876/trunk/lispbuilder-sdl/sdl/string-blended.lisp
+END
+init.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/998/trunk/lispbuilder-sdl/sdl/init.lisp
+END
+events.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/997/trunk/lispbuilder-sdl/sdl/events.lisp
+END
+rectangle.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/985/trunk/lispbuilder-sdl/sdl/rectangle.lisp
+END
+video.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/989/trunk/lispbuilder-sdl/sdl/video.lisp
+END
+renderer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/633/trunk/lispbuilder-sdl/sdl/renderer.lisp
+END

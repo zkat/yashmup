@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1022/trunk/lispbuilder-sdl-mixer/examples
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/382/trunk/lispbuilder-sdl-mixer/examples/package.lisp
+END
+globals.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/382/trunk/lispbuilder-sdl-mixer/examples/globals.lisp
+END
+mixer.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1022/trunk/lispbuilder-sdl-mixer/examples/mixer.lisp
+END
+music.ogg
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/382/trunk/lispbuilder-sdl-mixer/examples/music.ogg
+END
+music.mp3
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/383/trunk/lispbuilder-sdl-mixer/examples/music.mp3
+END
+phaser.wav
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/699/trunk/lispbuilder-sdl-mixer/examples/phaser.wav
+END

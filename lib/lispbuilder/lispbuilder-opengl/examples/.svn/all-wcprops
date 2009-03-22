@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/632/trunk/lispbuilder-opengl/examples
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/632/trunk/lispbuilder-opengl/examples/package.lisp
+END
+SDL_examples_1_4 (gears).lisp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/483/trunk/lispbuilder-opengl/examples/SDL_examples_1_4%20(gears).lisp
+END

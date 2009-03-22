@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/636/trunk/lispbuilder-openrm
+END
+lispbuilder-openrm.asd
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/636/trunk/lispbuilder-openrm/lispbuilder-openrm.asd
+END
+trivial-garbage.asd
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage.asd
+END
+lispbuilder-openrm-cffi.asd
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/636/trunk/lispbuilder-openrm/lispbuilder-openrm-cffi.asd
+END
+lispbuilder-openrm-examples.asd
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/636/trunk/lispbuilder-openrm/lispbuilder-openrm-examples.asd
+END

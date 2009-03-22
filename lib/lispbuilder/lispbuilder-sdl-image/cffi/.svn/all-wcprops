@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/924/trunk/lispbuilder-sdl-image/cffi
+END
+package.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/629/trunk/lispbuilder-sdl-image/cffi/package.lisp
+END
+translate.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/629/trunk/lispbuilder-sdl-image/cffi/translate.lisp
+END
+image.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/629/trunk/lispbuilder-sdl-image/cffi/image.lisp
+END
+library.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/924/trunk/lispbuilder-sdl-image/cffi/library.lisp
+END

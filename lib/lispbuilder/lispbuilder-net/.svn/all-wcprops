@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/627/trunk/lispbuilder-net
+END
+lispbuilder-net-examples.asd
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/627/trunk/lispbuilder-net/lispbuilder-net-examples.asd
+END
+lispbuilder-net.asd
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/627/trunk/lispbuilder-net/lispbuilder-net.asd
+END
+lispbuilder-net-cffi.asd
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/627/trunk/lispbuilder-net/lispbuilder-net-cffi.asd
+END

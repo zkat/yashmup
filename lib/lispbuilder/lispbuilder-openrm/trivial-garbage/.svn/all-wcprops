@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage
+END
+trivial-garbage.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage/trivial-garbage.lisp
+END
+tests.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage/tests.lisp
+END
+release.sh
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage/release.sh
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/548/trunk/lispbuilder-openrm/trivial-garbage/README
+END

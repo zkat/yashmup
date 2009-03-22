@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/854/trunk/lispbuilder-yacc
+END
+lispbuilder-yacc.asd
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/lispbuilder-yacc.asd
+END
+cl-yacc.texi
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/cl-yacc.texi
+END
+yacc-tests.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/yacc-tests.lisp
+END
+yacc.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/yacc.lisp
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/COPYING
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/854/trunk/lispbuilder-yacc/index.html
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/1/trunk/lispbuilder-yacc/README
+END
