@@ -1,4 +1,5 @@
 (require 'asdf)
+(require 'sb-posix)
 (push (merge-pathnames "lib/") asdf:*central-registry*)
 
 (require 'yashmup)
@@ -7,7 +8,7 @@
 				      (sb-posix:putenv
 				       (format nil "SBCL_HOME=~A" 
 					       #.(sb-ext:posix-getenv "SBCL_HOME")))
-				      (main)
+				      (yashmup::main)
 				      0)
 			  :executable t)
 
