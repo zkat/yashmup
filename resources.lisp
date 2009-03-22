@@ -5,6 +5,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
+(defvar *resource-table* (make-hash-table :test #'eq))
+
 (defun load-image (name &key (extension ".bmp") color-key)
   (let ((image-path (merge-pathnames (concatenate 'string name extension) *resource-path*)))
     (sdl-image:load-image (namestring image-path) :alpha 255 :color-key color-key)))
