@@ -14,5 +14,6 @@
    (:file "sprite")
    (:file "background")
    (:file "ships")
+   (:file "enemy")
    (:file "projectile")
    (:file "main")))

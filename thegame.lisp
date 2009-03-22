@@ -25,8 +25,9 @@
 (defun resolve-collisions (game)
   (loop for enemy in (enemies game)
        do (loop for projectile in (projectiles game)
-	       when (eql (player game)
-			 (shooter projectile))
+	       when (and (eql (player game)
+			      (shooter projectile))
+			 (collided-p projectile enemy))
 	       do (progn (incf (damage enemy))
 			 (setf (projectiles game) (delete projectile (projectiles game)))))))
 
