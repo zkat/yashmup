@@ -11,7 +11,11 @@
 (defclass player-ship (ship)
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 100))
-   (image :initform (gethash 'player-ship *resource-table*))))
+   (image :initform (gethash 'player-ship *resource-table*))
+   (hitbox-x-offset :initform 24)
+   (hitbox-y-offset :initform 35)
+   (hitbox-height :initform 3)
+   (hitbox-width :initform 3)))
 
 (defmethod update ((ship player-ship))
   (incf (frames-since-last-shot ship))
