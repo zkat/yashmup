@@ -12,6 +12,7 @@
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 100))
    (image :initform (gethash 'player-ship *resource-table*))
+   (score :initform 0 :accessor score)
    (hitbox-x-offset :initform 24)
    (hitbox-y-offset :initform 35)
    (hitbox-height :initform 3)

@@ -42,10 +42,22 @@
     (update game))
   (draw game)
   (when (paused-p game)
-    (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)))
+    (draw-pause-screen)))
+
+(defun draw-pause-screen ()
+  (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
+  (sdl:draw-string-shaded-* "PAUSED" 
+			    (/ *screen-width* 2)
+			    (/ *screen-height* 2)
+			    sdl:*red*
+			    (sdl:color :a 0)))
 
 (defmethod draw ((game game))
   (draw (background game))
+  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage (player game)))
+			    5 5 sdl:*red* (sdl:color :a 0))
+  (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player game)))
+			    5 15 sdl:*red* (sdl:color :a 0))
   (draw (player game))
   (mapc #'draw (enemies game))
   (mapc #'draw (projectiles game)))
