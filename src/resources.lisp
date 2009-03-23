@@ -15,9 +15,14 @@
   (let ((sound-path (merge-pathnames (concatenate 'string name ".wav") *resource-path*)))
     (sdl-mixer:load-sample (namestring sound-path))))
 
-(defun load-music (name &key (extension ".ogg"))
+(defun load-music (name &key (extension ".ogg") errorp)
   (let ((music-path (merge-pathnames (concatenate 'string name extension) *resource-path*)))
-    (sdl-mixer:load-music (namestring music-path))))
+    (handler-case
+	(sdl-mixer:load-music (namestring music-path))
+      (simple-error ()
+	(if errorp
+	    (error "Couldn't load music resource")
+	    nil)))))
 
 (defun find-resource (name)
   (if (symbolp name)

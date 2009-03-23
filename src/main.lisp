@@ -16,7 +16,9 @@
     (sdl:clear-display *bg-color*)
     (init-resources)
     (setf *game* (make-instance 'game))
-    (sdl-mixer:play-music (find-resource 'music))
+    (let ((music (find-resource 'music)))
+      (when music
+	(sdl-mixer:play-music music)))
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
