@@ -18,6 +18,7 @@
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (event-queue :initform (make-priority-queue :key #'exec-time) :accessor event-queue)
    (last-frame-time :initform (get-internal-real-time) :accessor last-frame-time)
+   (framerate :initform *default-framerate* :accessor framerate)
    (paused-p :initform nil :accessor paused-p)))
 
 (defclass message ()
