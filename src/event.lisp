@@ -16,10 +16,10 @@
     :initarg :payload
     :accessor payload
     :documentation "A function, that contains the code to be executed.")
-   (exec-time
-    :initarg :exec-time
-    :initform (get-internal-real-time)
-    :accessor exec-time
+   (exec-frame
+    :initarg :exec-frame
+    :initform (current-frame *game*)
+    :accessor exec-frame
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
 
@@ -27,11 +27,10 @@ By default, all events are immediately cooked.")))
   "Creates a new event, with PAYLOAD being a function that contains everything to be executed.
 It also accepts a DELAY, in milliseconds, until the event is ready to go. Otherwise, it's
 ready immediately."
-  (let ((internal-delay-time (* delay (/ internal-time-units-per-second 1000))))
-    (push-event (make-instance 'event
-			       :payload payload 
-			       :exec-time (+ (get-internal-real-time) internal-delay-time))
-		*game*)))
+  (push-event (make-instance 'event
+			     :payload payload 
+			     :exec-frame (+ delay (current-frame *game*)))
+	      *game*))
 
 ;;;
 ;;; Event-queue
@@ -57,7 +56,7 @@ ready immediately."
 
 (defmethod clear-events ((game game))
   (let ((pause-state (paused-p game)))
-   (setf (event-queue game) (make-priority-queue :key #'exec-time))
+   (setf (event-queue game) (make-priority-queue :key #'exec-frame))
    (setf (paused-p game) pause-state)))
 
 ;;;
@@ -87,8 +86,8 @@ ready immediately."
 
 (defmethod cooked-p ((event event))
   "Simply checks that it doesn't shoot its load prematurely.."
-  (let  ((time-difference (time-difference (exec-time event))))
-    (when (>= time-difference 0)
+  (let  ((frame-difference (- (exec-frame event) (current-frame *game*))))
+    (when (<= frame-difference 0)
       t)))
 
 (defmethod execute-event ((event event))

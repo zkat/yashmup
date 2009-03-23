@@ -49,3 +49,4 @@
 	    (append lazors (projectiles *game*)))
       ;; (play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
       (setf (frames-since-last-shot enemy) 0))))
+

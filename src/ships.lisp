@@ -17,6 +17,7 @@
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 100))
    (image :initform (gethash 'player-ship *resource-table*))
+   (pew :initform (gethash 'laser-sample *resource-table*) :accessor pew)
    (score :initform 0 :accessor score)
    (hitbox-x-offset :initform 24)
    (hitbox-y-offset :initform 35)
@@ -74,5 +75,5 @@
 				       :shooter ship))))
       (setf (projectiles *game*)
 	    (append lazors (projectiles *game*)))
-            ;;	(play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
+            (sdl-mixer:play-sample (pew ship))
       (setf (frames-since-last-shot ship) 0))))
