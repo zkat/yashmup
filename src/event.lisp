@@ -8,22 +8,8 @@
 (in-package :yashmup)
 
 ;;;
-;;; Event & Queue
+;;; Events
 ;;;
-
-(defclass event-queue ()
-  ((priority-queue
-    :initarg :priority-queue
-    :initform (make-priority-queue :key #'exec-time)
-    :accessor priority-queue)
-   (paused-p
-    :initarg :paused-p
-    :initform nil
-    :accessor paused-p)
-   (locked-p
-    :initarg :locked-p
-    :initform nil
-    :accessor locked-p)))
 
 (defclass event ()
   ((payload
@@ -37,65 +23,32 @@
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
 
-
-
 ;;;
 ;;; Event-queue
 ;;;
 
 ;;; Generics
-(defgeneric push-event (event event-queue))
-(defgeneric peek-next-event (event-queue))
-(defgeneric pop-next-event (event-queue))
-(defgeneric pause (event-queue))
-(defgeneric unpause (event-queue))
-(defgeneric toggle-pause (event-queue))
-(defgeneric clear (event-queue)
+(defgeneric push-event (event game))
+(defgeneric peek-next-event (game))
+(defgeneric pop-next-event (game))
+(defgeneric clear-events (game)
   (:documentation "Clears all events off the event queue"))
-(defgeneric lock (event-queue))
-(defgeneric unlock (event-queue))
-(defgeneric toggle-lock (event-queue))
 
 ;;; Methods
-(defmethod push-event ((event event) (queue event-queue))
-  (priority-queue-insert (priority-queue queue) event)
+(defmethod push-event ((event event) (game game))
+  (priority-queue-insert (event-queue game) event)
   t)
 
-(defmethod peek-next-event ((queue event-queue))
-  (priority-queue-minimum (priority-queue queue)))
+(defmethod peek-next-event ((game game))
+  (priority-queue-minimum (event-queue game)))
 
-(defmethod pop-next-event ((queue event-queue))
-  (priority-queue-extract-minimum (priority-queue queue)))
+(defmethod pop-next-event ((game game))
+  (priority-queue-extract-minimum (event-queue game)))
 
-(defmethod pause ((event-queue event-queue))
-  (setf (paused-p event-queue) t))
-
-(defmethod unpause ((event-queue event-queue))
-  (setf (paused-p event-queue) nil))
-
-(defmethod toggle-pause ((event-queue event-queue))
-  (if (paused-p event-queue)
-      (unpause event-queue)
-      (pause event-queue)))
-
-(defmethod clear ((queue event-queue))
-  (let ((pause-state (paused-p queue)))
-   (setf (priority-queue queue) (make-instance 'event-queue))
-   (setf (paused-p queue) pause-state)))
-
-(defmethod lock ((queue event-queue))
-  (setf (locked-p queue) t))
-
-(defmethod unlock ((queue event-queue))
-  (setf (locked-p queue) t))
-
-(defmethod toggle-lock ((queue event-queue))
-  (if (locked-p queue)
-      (unlock queue)
-      (lock queue)))
-
-
-
+(defmethod clear-events ((game game))
+  (let ((pause-state (paused-p game)))
+   (setf (event-queue queue) (make-priority-queue :key #'exec-time))
+   (setf (paused-p game) pause-state)))
 
 ;;;
 ;;; Event processing
@@ -113,13 +66,13 @@ By default, all events are immediately cooked.")))
 
 ;;; Methods
 
-(defmethod process-next-event ((event-queue event-queue))
+(defmethod process-next-event ((game game))
   "Processes the next event in EVENT-QUEUE, executing it if it's 'baked'."
-  (unless (paused-p event-queue)
-    (let ((next-event (peek-next-event event-queue)))
+  (unless (paused-p game)
+    (let ((next-event (peek-next-event game)))
       (when (and next-event
 		 (cooked-p next-event))
-	(let ((event (pop-next-event event-queue)))
+	(let ((event (pop-next-event game)))
 	  (execute-event event))))))
 
 (defmethod cooked-p ((event event))
@@ -131,8 +84,3 @@ By default, all events are immediately cooked.")))
 (defmethod execute-event ((event event))
   "Executes a standard event. Nothing fancy, just a funcall."
   (funcall (payload event)))
-
-;;;
-;;; Util
-;;;
-
