@@ -5,7 +5,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
-(defparameter *screen-height* 800)
+(defparameter *screen-height* 600)
 (defparameter *screen-width* 500)
 (defparameter *bg-color* sdl:*black*)
 (defvar *running* nil)
