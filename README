@@ -2,7 +2,13 @@ Building and running yashmup:
 
 On Linux/OSX:
 
-1. Install SBCL (usually through a package manager, or macports)
+1. Install a lisp (sbcl or clisp)
 2. cd /path/to/yashmup
-3. ./build-it.sh
+3. load make-image.lisp with your chosen lisp:
+   a. With SBCL: sbcl --script make-image.lisp
+   b. With CLISP: clisp make-image.lisp
 4. ./yashmup
+
+On Windows:
+
+Lol i dunno. It works, but I can't be arsed atm.
