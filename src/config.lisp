@@ -9,7 +9,7 @@
 (defparameter *screen-width* 500)
 (defparameter *bg-color* sdl:*black*)
 (defvar *running* nil)
-(defparameter *default-fps* 60)
+(defparameter *default-framerate* 60)
 (defparameter *resource-path*
   (merge-pathnames "resources/" 
 		   #+sbcl(values *default-pathname-defaults*)
