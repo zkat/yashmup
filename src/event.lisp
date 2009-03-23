@@ -18,7 +18,7 @@
     :documentation "A function, that contains the code to be executed.")
    (exec-time
     :initarg :exec-time
-    :initform (get-internal-real-time)
+    :initform (/ (* (get-internal-real-time) internal-time-units-per-second) 1000)
     :accessor exec-time
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
@@ -78,7 +78,7 @@ By default, all events are immediately cooked.")))
 (defmethod cooked-p ((event event))
   "Simply checks that it doesn't shoot its load prematurely.."
   (when (<= (exec-time event)
-	    (get-internal-real-time))
+	    (/ (* (get-internal-real-time) internal-time-units-per-second) 1000))
     t))
 
 (defmethod execute-event ((event event))
