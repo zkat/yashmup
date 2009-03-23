@@ -11,7 +11,7 @@
     (sdl:window *screen-width* *screen-height*
 		:title-caption "PEW PEW"
 		:icon-caption "PEW PEW")
-    (setf (sdl:frame-rate) 60)
+    (setf (sdl:frame-rate) 0)
     (sdl:clear-display *bg-color*)
     (init-resources)
     (setf *game* (make-instance 'game))
@@ -23,8 +23,14 @@
       (:key-up-event (:key key)
 		     (handle-key-event key *game* :event-type :key-up))
       (:idle ()
-	     (take-a-step *game*)
-	     (sdl:update-display)
+	     (let* ((the-time (get-internal-real-time))
+	     	    (seconds-since-last-frame (/ (- the-time (last-frame-time *game*)) 
+	     					 internal-time-units-per-second)))
+	       (when (> seconds-since-last-frame
+	     		(/ 1 *fps*))
+	     	 (setf (last-frame-time *game*) the-time)
+	     	 (take-a-step *game*)
+		 (sdl:update-display)))
 	     (when (not (running-p *game*))
 	       (sdl:push-quit-event))))))
 
