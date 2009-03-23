@@ -14,7 +14,8 @@
 	     (:module util
 		      :serial t
 		      :components 
-		      ((:file "priority-queue")))
+		      ((:file "utils")
+		       (:file "priority-queue")))
 	     (:file "config")
 	     (:file "thegame")
 	     (:file "event")
