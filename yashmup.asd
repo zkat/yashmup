@@ -7,13 +7,20 @@
   :depends-on (lispbuilder-sdl lispbuilder-sdl-image lispbuilder-sdl-mixer)
   :serial t
   :components
-  ((:file "packages")
-   (:file "config")
-   (:file "thegame")
-   (:file "resources")
-   (:file "sprite")
-   (:file "background")
-   (:file "ships")
-   (:file "enemy")
-   (:file "projectile")
-   (:file "main")))
+  ((:module src
+	    :serial t
+	    :components
+	    ((:module util
+		      :serial t
+		      :components 
+		      ((:file "priority-queue")))
+	     (:file "packages")
+	     (:file "config")
+	     (:file "thegame")
+	     (:file "resources")
+	     (:file "sprite")
+	     (:file "background")
+	     (:file "ships")
+	     (:file "enemy")
+	     (:file "projectile")
+	     (:file "main")))))
