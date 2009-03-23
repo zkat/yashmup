@@ -18,7 +18,7 @@
     (setf *game* (make-instance 'game))
     (let ((music (find-resource 'music)))
       (when music
-	(sdl-mixer:play-music music)))
+	(sdl-mixer:play-music music :loop t)))
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
