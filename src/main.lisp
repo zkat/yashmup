@@ -23,15 +23,12 @@
       (:key-up-event (:key key)
 		     (handle-key-event key *game* :event-type :key-up))
       (:idle ()
-	     ;; (execute-next-event (event-queue *game*)) <-- this is what I should be aiming at
-	     (if (and (framerate *game*) (> (framerate *game*) 0))
-		 (multiple-value-bind (seconds-since-last-frame the-time)
-		     (time-difference (last-frame-time *game*))
-		   (when (> seconds-since-last-frame
-			    (/ 1 (framerate *game*)))
-		     (setf (last-frame-time *game*) the-time)
-		     (take-a-step *game*)
-		     (sdl:update-display)))
-		 (progn (take-a-step *game*) (sdl:update-display)))
-	     (when (not (running-p *game*))
-	       (sdl:push-quit-event))))))
+;;	     (execute-next-event (event-queue *game*)) <-- this is what I should be aiming at
+	     (take-a-step *game*)
+	     (sdl:update-display)
+	     (sleep (/ 1 (framerate *game*)))))))
+
+
+
+
+
