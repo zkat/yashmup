@@ -16,6 +16,7 @@
    (messages :initform nil :accessor messages)
    (enemy-counter :initform 0 :accessor enemy-counter)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
+   (event-queue :initform (make-priority-queue :key #'exec-time) :accessor event-queue)
    (paused-p :initform nil :accessor paused-p)))
 
 (defclass message ()

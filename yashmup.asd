@@ -16,8 +16,8 @@
 		      :components 
 		      ((:file "priority-queue")))
 	     (:file "config")
-	     (:file "event")
 	     (:file "thegame")
+	     (:file "event")
 	     (:file "resources")
 	     (:file "sprite")
 	     (:file "background")
