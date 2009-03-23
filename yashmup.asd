@@ -10,12 +10,13 @@
   ((:module src
 	    :serial t
 	    :components
-	    ((:module util
+	    ((:file "packages")
+	     (:module util
 		      :serial t
 		      :components 
 		      ((:file "priority-queue")))
-	     (:file "packages")
 	     (:file "config")
+	     (:file "event")
 	     (:file "thegame")
 	     (:file "resources")
 	     (:file "sprite")
