@@ -24,9 +24,12 @@
 			 (setf (running-p *game*) nil)
 			 (sdl-mixer:halt-music)
 			 (sdl-mixer:free (find-resource 'music))
-			 (let ((laser-sample (find-resource 'laser-sample)))
+			 (let ((music (find-resource 'music))
+			       (laser-sample (find-resource 'laser-sample)))
+			   (when music
+			     (sdl-mixer:free music))
 			   (when laser-sample
-			     (sdl-mixer:free (gethash 'laser-sample *resource-table*))))
+			     (sdl-mixer:free laser-sample)))
 			 (sdl-mixer:close-audio)))
        (:key-down-event (:key key)
 			(handle-key-event key *game*))
