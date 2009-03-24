@@ -21,29 +21,15 @@
    (current-frame :initform 0 :accessor current-frame)
    (paused-p :initform nil :accessor paused-p)))
 
-(defclass message ()
-  ((x :initarg :x :initform 0 :accessor x)
-   (y :initarg :y :initform 0 :accessor y)
-   (times-displayed :initform 0 :accessor times-displayed)
-   (display-limit :initarg :limit :initform 60 :accessor display-limit)
-   (message-string :initarg :msg :initform "" :accessor message-string)))
+;;;
+;;; Generic functions
+;;;
+(defgeneric take-a-step (game))
+(defgeneric resolve-collisions (game))
+(defgeneric pause-screen (game))
+(defgeneric handle-key-event (key game &key))
 
-(defmethod update ((msg message))
-  (with-slots (x y times-displayed display-limit message-string) msg
-    (if (and display-limit 
-	       (>= times-displayed display-limit))
-	(setf (messages *game*)
-	      (delete msg (messages *game*)))
-	(incf times-displayed))))
-
-(defmethod draw ((msg message))
-  (with-slots (x y message-string) msg
-   (sdl:draw-string-shaded-* message-string x y sdl:*red* (sdl:color :a 0))))
-
-(defun display-message (message x y &optional display-limit)
-  (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
-    (push msg (messages *game*))))
-
+;;; Game methods
 (defmethod update ((game game))
   (with-slots (running-p player background projectiles enemies messages enemy-counter) game
     (update background)
@@ -52,36 +38,6 @@
     (update player)
     (mapc #'update messages)
     (resolve-collisions game)))
-
-(defun resolve-collisions (game)
-  (loop for enemy in (enemies game)
-       do (loop for projectile in (projectiles game)
-	     do (cond ((and (eql (player game)
-				 (shooter projectile))
-			    (collided-p projectile enemy))
-		       (incf (damage enemy))
-		       (setf (projectiles game) (delete projectile (projectiles game))))
-		      ((collided-p projectile (player game))
-		       (incf (damage (player game)))
-		       (setf (projectiles game) (delete projectile (projectiles game))))
-		      (t (values))))))
-
-(defgeneric take-a-step (game))
-(defmethod take-a-step ((game game))
-  (unless (paused-p game)
-    (update game)
-    (incf (current-frame game)))
-  (draw game)
-  (when (paused-p game)
-    (draw-pause-screen)))
-
-(defun draw-pause-screen ()
-  (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
-  (sdl:draw-string-shaded-* "PAUSED" 
-			    (/ *screen-width* 2)
-			    (/ *screen-height* 2)
-			    sdl:*red*
-			    (sdl:color :a 0)))
 
 (defmethod draw ((game game))
   (draw (background game))
@@ -94,10 +50,46 @@
   (mapc #'draw (enemies game))
   (mapc #'draw (projectiles game)))
 
-;;;
+(defmethod take-a-step ((game game))
+  (unless (paused-p game)
+    (update game)
+    (incf (current-frame game)))
+  (draw game)
+  (when (paused-p game)
+    (draw-pause-screen)))
+
+(defmethod resolve-collisions ((game game))
+  (loop for enemy in (enemies game)
+       do (loop for projectile in (projectiles game)
+	     do (cond ((and (eql (player game)
+				 (shooter projectile))
+			    (collided-p projectile enemy))
+		       (incf (damage enemy))
+		       (setf (projectiles game) (delete projectile (projectiles game))))
+		      ((collided-p projectile (player game))
+		       (incf (damage (player game)))
+		       (setf (projectiles game) (delete projectile (projectiles game))))
+		      (t (values))))))
+
+(defmethod pause-screen ((game game))
+  (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
+  (sdl:draw-string-shaded-* "PAUSED" 
+			    (/ *screen-width* 2)
+			    (/ *screen-height* 2)
+			    sdl:*red*
+			    (sdl:color :a 0)))
+
+(defun toggle-pause ()
+  (if (paused-p *game*)
+      (progn
+	(sdl-mixer::resume-music)
+	(setf (paused-p *game*) nil))
+      (progn
+	(sdl-mixer:pause-music)
+	(setf (paused-p *game*) t))))
+
 ;;; Key event handling
-;;;
-(defun handle-key-event (key game &key (event-type :key-down))
+(defmethod handle-key-event (key game &key (event-type :key-down))
   (cond ((eql event-type :key-down)
 	 (register-key-press key game))
 	((eql event-type :key-up)
@@ -120,11 +112,28 @@
     (let ((down-p (gethash key keys-held-down)))
       down-p)))
 
-(defun toggle-pause ()
-  (if (paused-p *game*)
-      (progn
-	(sdl-mixer::resume-music)
-	(setf (paused-p *game*) nil))
-      (progn
-	(sdl-mixer:pause-music)
-	(setf (paused-p *game*) t))))
+;;;
+;;; Messages
+;;;
+(defclass message ()
+  ((x :initarg :x :initform 0 :accessor x)
+   (y :initarg :y :initform 0 :accessor y)
+   (times-displayed :initform 0 :accessor times-displayed)
+   (display-limit :initarg :limit :initform 60 :accessor display-limit)
+   (message-string :initarg :msg :initform "" :accessor message-string)))
+
+(defmethod update ((msg message))
+  (with-slots (x y times-displayed display-limit message-string) msg
+    (if (and display-limit 
+	       (>= times-displayed display-limit))
+	(setf (messages *game*)
+	      (delete msg (messages *game*)))
+	(incf times-displayed))))
+
+(defmethod draw ((msg message))
+  (with-slots (x y message-string) msg
+   (sdl:draw-string-shaded-* message-string x y sdl:*red* (sdl:color :a 0))))
+
+(defun display-message (message x y &optional display-limit)
+  (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
+    (push msg (messages *game*))))
