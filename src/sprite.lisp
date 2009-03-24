@@ -47,8 +47,12 @@
   (:documentation "Unregisters OBJ from GAME, effectively removing GAME's reference to it."))
 (defgeneric collided-p (obj1 obj2)
   (:documentation "Performs a collision check between two objects. Returns T or NIL"))
-(defgeneric horiz-velocity (obj))
-(defgeneric vert-velocity (obj))
+(defgeneric horiz-velocity (obj)
+  (:documentation "Returns a fixnum approximating the current horizontal velocity of OBJ"))
+(defgeneric vert-velocity (obj)
+  (:documentation "Returns a fixnum approximating the current vertical velocity of OBJ"))
+(defgeneric crashed! (obj1 obj2)
+  (:documentation "Runs whatever happens when obj1 and obj2 crash"))
 
 ;;; Sprite methods
 (defmethod width ((sprite sprite))
@@ -93,6 +97,10 @@
 			 when (= y1 y2)
 			 do (return-from collided-p t))))
        finally (return-from collided-p nil))))
+
+(defmethod crashed! ((obj1 sprite) (obj2 sprite))
+  (incf (damage obj1) 10)
+  (incf (damage obj2) 10))
 
 (defmethod horiz-velocity ((obj sprite))
   (floor (* (velocity obj) (sin (degrees-to-radians (angle obj))))))

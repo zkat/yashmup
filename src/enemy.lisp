@@ -34,10 +34,6 @@
       (crashed! (player *game*) enemy)
       (incf (score (player *game*))))))
 
-(defun crashed! (obj1 obj2)
-  (incf (damage obj1) 10)
-  (incf (damage obj2) 10))
-
 (defmethod fire! ((enemy enemy))
     (with-slots (x y) enemy
     (let ((lazors (list (make-instance 'enemy-laser
@@ -50,7 +46,5 @@
 				       :y (+ y 23)
 				       :velocity 5
 				       :shooter enemy))))
-      (dolist (lazor lazors) (append lazor *game*))
-      ;; (play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
+      (dolist (lazor lazors) (attach lazor *game*))
       (setf (frames-since-last-shot enemy) 0))))
-
