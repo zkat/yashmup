@@ -11,7 +11,9 @@
    (firing-p :initform nil :accessor firing-p)
    (shot-limit :initform 4 :accessor shot-limit)
    (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)
-   (damage :initform 0 :accessor damage)))
+   (damage-taken :initform 0 :accessor damage-taken)))
 
 ;;; Generic functions
 (defgeneric fire! (ship))
+(defgeneric explode! (ship)
+  (:documentation "Destroys the ship"))
