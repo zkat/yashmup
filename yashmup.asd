@@ -20,6 +20,7 @@
 	     (:file "thegame")
 	     (:file "event")
 	     (:file "resources")
+	     (:file "game-object")
 	     (:file "sprite")
 	     (:file "background")
 	     (:file "ships")
