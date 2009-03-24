@@ -24,9 +24,7 @@
     (incf y (vert-velocity enemy))
     (incf frames-since-last-shot)
     (when (> damage-taken 5)
-      (detach enemy *game*)
-      (display-message "KABOOM" (- x 15) y 60)
-      (incf (score (player *game*))))
+      (explode! enemy))
     (when (collided-p (player *game*)
 		      enemy)
       (crashed! (player *game*) enemy)
@@ -46,3 +44,9 @@
 				       :shooter enemy))))
       (dolist (lazor lazors) (attach lazor *game*))
       (setf (frames-since-last-shot enemy) 0))))
+
+(defmethod explode! ((enemy enemy))
+  (with-slots (x y) enemy
+   (detach enemy *game*)
+   (display-message "KABOOM" (- x 15) y 60)
+   (incf (score (player *game*)))))
