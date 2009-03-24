@@ -41,9 +41,3 @@
 		 do (execute-event (pop-next-event *game*)))
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
-
-
-
-
-
-

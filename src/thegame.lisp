@@ -127,5 +127,9 @@
 
 (defun toggle-pause ()
   (if (paused-p *game*)
-      (setf (paused-p *game*) nil)
-      (setf (paused-p *game*) t)))
+      (progn
+	(sdl-mixer::resume-music)
+	(setf (paused-p *game*) nil))
+      (progn
+	(sdl-mixer:pause-music)
+	(setf (paused-p *game*) t))))
