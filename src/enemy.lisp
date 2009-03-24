@@ -5,7 +5,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
-(defvar *enemies* nil)
 (defclass enemy (ship)
   ((x :initform (random 450))
    (y :initform -30)
@@ -13,18 +12,23 @@
    (angle :initform 0)
    (image :initform (gethash 'enemy-small *resource-table*))))
 
+(defmethod attach ((enemy enemy) (game game))
+  (push enemy (enemies game)))
+
+(defmethod detach ((enemy enemy) (game game))
+  (setf (enemies game)
+	(delete enemy (enemies game))))
+
 (defmethod update ((enemy enemy))
   (with-slots (x y angle damage frames-since-last-shot) enemy
     (incf y (vert-velocity enemy))
     (incf frames-since-last-shot)
-    (when (> frames-since-last-shot 30)
-      (fire! enemy))
     (when (> damage 5)
-      (setf (enemies *game*) (delete enemy (enemies *game*)))
+      (detach enemy *game*)
       (display-message "KABOOM" (- x 15) y 60)
       (incf (score (player *game*))))
-    (when (> y 800)
-      (setf (enemies *game*) (delete enemy (enemies *game*))))
+    (when (> y 800) ;; this will only stay until the cascade stops
+      (detach enemy *game*))
     (when (collided-p (player *game*)
 		      enemy)
       (crashed! (player *game*) enemy)
@@ -46,8 +50,7 @@
 				       :y (+ y 23)
 				       :velocity 5
 				       :shooter enemy))))
-      (setf (projectiles *game*)
-	    (append lazors (projectiles *game*)))
+      (dolist (lazor lazors) (append lazor *game*))
       ;; (play-sound lazor) ;; fucking sdl doesn't seem to like sound >:(
       (setf (frames-since-last-shot enemy) 0))))
 
