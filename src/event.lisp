@@ -100,5 +100,5 @@ ready immediately."
     `(dotimes (,loop-var ,repeat)
        (push-event (make-instance 'event 
 				  :payload (lambda () ,@body)
-				  :exec-frame (+ (* ,delay ,loop-var) (current-frame *game*)))
+				  :exec-frame (+ (* ,delay (1+ ,loop-var)) (current-frame *game*)))
 		   *game*))))
