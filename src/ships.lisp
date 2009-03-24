@@ -6,7 +6,7 @@
 (in-package :yashmup)
 
 ;;; Ships
-(defclass ship (moving-sprite) 
+(defclass ship (sprite) 
   ((velocity :initform 5)
    (firing-p :initform nil :accessor firing-p)
    (shot-limit :initform 4 :accessor shot-limit)
@@ -23,6 +23,11 @@
    (hitbox-y-offset :initform 35)
    (hitbox-height :initform 3)
    (hitbox-width :initform 3)))
+
+(defmethod attach ((player player-ship) (game game))
+  (setf (player game) player))
+(defmethod detach ((player player-ship) (game game))
+  (setf (player game) nil))
 
 (defmethod update ((ship player-ship))
   (incf (frames-since-last-shot ship))
@@ -73,7 +78,6 @@
 				       :y (+ y 5)
 				       :angle 180
 				       :shooter ship))))
-      (setf (projectiles *game*)
-	    (append lazors (projectiles *game*)))
-            (sdl-mixer:play-sample (pew ship))
+      (dolist (lazor lazors) (append lazor *game*))
+      (sdl-mixer:play-sample (pew ship))
       (setf (frames-since-last-shot ship) 0))))

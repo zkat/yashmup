@@ -14,7 +14,6 @@
    (projectiles :initform nil :accessor projectiles)
    (enemies :initform nil :accessor enemies)
    (messages :initform nil :accessor messages)
-   (enemy-counter :initform 0 :accessor enemy-counter)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (event-queue :initform (make-priority-queue :key #'exec-frame) :accessor event-queue)
    (last-frame-time :initform (get-internal-real-time) :accessor last-frame-time)
@@ -52,10 +51,6 @@
     (mapc #'update enemies)
     (update player)
     (mapc #'update messages)
-    (incf enemy-counter)
-    (when (> enemy-counter 80)
-      (push (make-instance 'enemy) enemies)
-      (setf enemy-counter 0))
     (resolve-collisions game)))
 
 (defun resolve-collisions (game)
