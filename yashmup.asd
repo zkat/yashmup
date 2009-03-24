@@ -25,4 +25,5 @@
 	     (:file "ships")
 	     (:file "enemy")
 	     (:file "projectile")
+	     (:file "scripting")
 	     (:file "main")))))
