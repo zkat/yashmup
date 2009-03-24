@@ -20,15 +20,13 @@
 	(delete enemy (enemies game))))
 
 (defmethod update ((enemy enemy))
-  (with-slots (x y angle damage frames-since-last-shot) enemy
+  (with-slots (x y angle damage-taken frames-since-last-shot) enemy
     (incf y (vert-velocity enemy))
     (incf frames-since-last-shot)
-    (when (> damage 5)
+    (when (> damage-taken 5)
       (detach enemy *game*)
       (display-message "KABOOM" (- x 15) y 60)
       (incf (score (player *game*))))
-    (when (> y 800) ;; this will only stay until the cascade stops
-      (detach enemy *game*))
     (when (collided-p (player *game*)
 		      enemy)
       (crashed! (player *game*) enemy)
