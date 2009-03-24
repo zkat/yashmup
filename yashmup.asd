@@ -23,6 +23,7 @@
 	     (:file "sprite")
 	     (:file "background")
 	     (:file "ships")
+	     (:file "player")
 	     (:file "enemy")
 	     (:file "projectile")
 	     (:file "scripting")
