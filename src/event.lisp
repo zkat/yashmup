@@ -95,11 +95,10 @@ ready immediately."
   (funcall (payload event)))
 
 (defmacro fork ((&key (delay 0) (repeat 1)) &body body)
-  (let ((body `(push-event (make-instance 'event 
-					  :payload (lambda () ,@body)
-					  :exec-frame (+ ,delay (current-frame *game*)))
-			   *game*)))
-    (if (> repeat 1)
-	`(dotimes (,(gensym "loop-var") ,repeat)
-	   ,body)
-	`,body)))
+  "Turns BODY into one or more event-loop events."
+  (let ((loop-var (gensym "loop-var")))
+    `(dotimes (,loop-var ,repeat)
+       (push-event (make-instance 'event 
+				  :payload (lambda () ,@body)
+				  :exec-frame (+ (* ,delay ,loop-var) (current-frame *game*)))
+		   *game*))))

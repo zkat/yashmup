@@ -23,7 +23,6 @@
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
 			 (sdl-mixer:halt-music)
-			 (sdl-mixer:free (find-resource 'music))
 			 (let ((music (find-resource 'music))
 			       (laser-sample (find-resource 'laser-sample)))
 			   (when music
