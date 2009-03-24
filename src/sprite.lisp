@@ -8,17 +8,13 @@
 ;;;
 ;;; Sprite classes
 ;;;
-(defclass sprite ()
-  ((x :initarg :x :initform 0 :accessor x)
-   (y :initarg :y :initform 0 :accessor y)
-   (image :initarg :image :initform (error "Must provide an image for this sprite") :accessor image)
+(defclass sprite (game-object)
+  ((image :initarg :image :initform (error "Must provide an image for this sprite") :accessor image)
    (hitbox-x-offset :initform 0 :accessor hitbox-x-offset)
    (hitbox-y-offset :initform 0 :accessor hitbox-y-offset)
    (hitbox-width :accessor hitbox-width)
    (hitbox-height :accessor hitbox-height)
-   (draw-hitbox-p :initform nil :accessor draw-hitbox-p)
-   (velocity :initarg :velocity :initform 0 :accessor velocity)
-   (angle :initarg :angle :initform 0 :accessor angle :documentation "Movement angle, in degrees")))
+   (draw-hitbox-p :initform nil :accessor draw-hitbox-p)))
 
 (defmethod initialize-instance :after ((sprite sprite) 
 				       &key hitbox-width hitbox-height)
@@ -34,23 +30,10 @@
 ;;;
 ;;; Generic functions
 ;;;
-(defgeneric center (obj)
-  (:documentation "Returns an SDL:POINT object containing the coordinates that
- should be used as OBJ's center point"))
-(defgeneric draw (obj)
+(defgeneric draw (sprite)
   (:documentation "Draws OBJ and whatever it has attached to it that should be drawn."))
-(defgeneric update (obj)
-  (:documentation "Run once per frame, this function does a one-step update OBJ"))
-(defgeneric attach (obj game)
-  (:documentation "Registers OBJ with GAME"))
-(defgeneric detach (obj game)
-  (:documentation "Unregisters OBJ from GAME, effectively removing GAME's reference to it."))
 (defgeneric collided-p (obj1 obj2)
   (:documentation "Performs a collision check between two objects. Returns T or NIL"))
-(defgeneric horiz-velocity (obj)
-  (:documentation "Returns a fixnum approximating the current horizontal velocity of OBJ"))
-(defgeneric vert-velocity (obj)
-  (:documentation "Returns a fixnum approximating the current vertical velocity of OBJ"))
 (defgeneric crashed! (obj1 obj2)
   (:documentation "Runs whatever happens when obj1 and obj2 crash"))
 
@@ -101,9 +84,3 @@
 (defmethod crashed! ((obj1 sprite) (obj2 sprite))
   (incf (damage obj1) 10)
   (incf (damage obj2) 10))
-
-(defmethod horiz-velocity ((obj sprite))
-  (floor (* (velocity obj) (sin (degrees-to-radians (angle obj))))))
-
-(defmethod vert-velocity ((obj sprite))
-  (floor (* (velocity obj) (cos (degrees-to-radians (angle obj))))))
