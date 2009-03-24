@@ -12,6 +12,6 @@
 (defparameter *default-framerate* 60)
 (defparameter *resource-path*
   (merge-pathnames "resources/" 
+		   #+ccl(concatenate 'string (ccl::current-directory-name) "/")
 		   #+sbcl(values *default-pathname-defaults*)
-		   #+ccl(ccl::current-directory-name)
 		   #+clisp(ext:default-directory)))

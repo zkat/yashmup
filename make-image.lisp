@@ -16,21 +16,22 @@
 					    0)
 				:executable t)
 
-#+ccl(ccl::save-application "yashmup"
-			    :toplevel-function
-			    (lambda ()
-			      (cffi:define-foreign-library sdl
-				(t (:default "libSDL")))
-			      (cffi:define-foreign-library sdl-mixer
-				(t (:default "libSDL_mixer")))
-			      (cffi:define-foreign-library sdl-image
-				(t (:default "libSDL_image")))
-			      (cffi:use-foreign-library sdl)
-			      (cffi:use-foreign-library sdl-mixer)
-			      (cffi:use-foreign-library sdl-image)
-			      (yashmup::main)
-			      (ccl::quit))
-			    :prepend-kernel t)
+#+ccl(progn 
+       (ccl::save-application "yashmup"
+			      :toplevel-function
+			      (lambda ()
+				(cffi:define-foreign-library sdl
+				  (t (:default "libSDL")))
+				(cffi:define-foreign-library sdl-mixer
+				  (t (:default "libSDL_mixer")))
+				(cffi:define-foreign-library sdl-image
+				  (t (:default "libSDL_image")))
+				(cffi:use-foreign-library sdl)
+				(cffi:use-foreign-library sdl-mixer)
+				(cffi:use-foreign-library sdl-image)
+				(yashmup::main)
+				(ccl::quit))
+			      :prepend-kernel t))
 
 #+clisp(ext:saveinitmem "yashmup"
 			:init-function (lambda ()
