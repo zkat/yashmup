@@ -93,3 +93,13 @@ ready immediately."
 (defmethod execute-event ((event event))
   "Executes a standard event. Nothing fancy, just a funcall."
   (funcall (payload event)))
+
+(defmacro fork ((&key (delay 0) (repeat 1)) &body body)
+  (let ((body `(push-event (make-instance 'event 
+					  :payload (lambda () ,@body)
+					  :exec-frame (+ ,delay (current-frame *game*)))
+			   *game*)))
+    (if (> repeat 1)
+	`(dotimes (,(gensym "loop-var") ,repeat)
+	   ,body)
+	`,body)))
