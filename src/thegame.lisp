@@ -9,7 +9,7 @@
 (defvar *game* nil)
 (defclass game ()
   ((running-p :initform t :accessor running-p)
-   (player :initform (make-instance 'player-ship) :accessor player)
+   (player :initform (make-instance 'player) :accessor player)
    (background :initform (make-instance 'background) :accessor background)
    (projectiles :initform nil :accessor projectiles)
    (enemies :initform nil :accessor enemies)
