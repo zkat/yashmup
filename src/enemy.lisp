@@ -26,6 +26,7 @@
 (defmethod update ((enemy enemy))
   (with-slots (x y angle damage-taken frames-since-last-shot) enemy
     (incf y (vert-velocity enemy))
+    (incf x (horiz-velocity enemy))
     (incf frames-since-last-shot)
     (when (> damage-taken 5)
       (explode! enemy))
