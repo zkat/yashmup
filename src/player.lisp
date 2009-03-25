@@ -10,7 +10,7 @@
 ;;;
 (defclass player (ship)
   ((x :initform (/ *screen-width* 2))
-   (y :initform (- *screen-height* 50))
+   (y :initform (- *screen-height* 80))
    (image :initform (gethash 'player-ship *resource-table*))
    (pew :initform (gethash 'laser-sample *resource-table*) :accessor pew)
    (score :initform 0 :accessor score)
