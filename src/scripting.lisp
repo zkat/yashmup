@@ -13,12 +13,10 @@
 	       *game*))
 
 
-(defun move-in-curve (obj &optional (angle-delta 1))
-  (dotimes (i 600)
-    (fork (:delay (1+ i))
-      (incf (angle obj) angle-delta)))
-  (fork (:delay 600)
-    (detach obj *game*)))
+(defun move-in-curve (obj &key (angle-delta 1) (num-frames 1))
+  (dotimes (i num-frames)
+    (fork (:delay i)
+      (incf (angle obj) angle-delta))))
 
 ;; HA HA. NO
 ;; (defun move-in-rose (obj center-x center-y &optional (k 5))
