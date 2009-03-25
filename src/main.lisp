@@ -23,12 +23,7 @@
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
 			 (sdl-mixer:halt-music)
-			 (let ((music (find-resource 'music))
-			       (laser-sample (find-resource 'laser-sample)))
-			   (when music
-			     (sdl-mixer:free music))
-			   (when laser-sample
-			     (sdl-mixer:free laser-sample)))
+			 (free-audio)
 			 (sdl-mixer:close-audio)))
        (:key-down-event (:key key)
 			(handle-key-event key *game*))
@@ -41,3 +36,11 @@
 		 do (execute-event (pop-next-event *game*)))
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
+
+(defun free-audio ()
+  (let ((music (find-resource 'music))
+	(laser-sample (find-resource 'laser-sample)))
+    (when music
+      (sdl-mixer:free music))
+    (when laser-sample
+      (sdl-mixer:free laser-sample))))
