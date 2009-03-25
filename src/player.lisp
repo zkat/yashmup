@@ -30,7 +30,7 @@
   (with-slots (x y) player
     (when (key-down-p :sdl-key-left)
       (unless (>= 0 x)
-       (setf (slot-value player 'angle) 270)
+       (setf (slot-value player 'angle) -90)
        (incf x (horiz-velocity player))))
     (when (key-down-p :sdl-key-right)
       (unless (<= *screen-width* (+ x (width player)))

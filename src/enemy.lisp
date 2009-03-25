@@ -5,6 +5,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
+;;;
+;;; Enemy class
+;;;
 (defclass enemy (ship)
   ((x :initform (random 450))
    (y :initform -30)
@@ -12,6 +15,7 @@
    (angle :initform 0)
    (image :initform (gethash 'enemy-small *resource-table*))))
 
+;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
   (push enemy (enemies game)))
 

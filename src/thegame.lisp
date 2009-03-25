@@ -42,7 +42,7 @@
 (defmethod draw ((game game))
   (draw (background game))
   (mapc #'draw (messages game))
-  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage (player game)))
+  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player game)))
 			    5 5 sdl:*red* (sdl:color :a 0))
   (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player game)))
 			    5 15 sdl:*red* (sdl:color :a 0))
@@ -115,10 +115,8 @@
 ;;;
 ;;; Messages
 ;;;
-(defclass message ()
-  ((x :initarg :x :initform 0 :accessor x)
-   (y :initarg :y :initform 0 :accessor y)
-   (times-displayed :initform 0 :accessor times-displayed)
+(defclass message (game-object)
+  ((times-displayed :initform 0 :accessor times-displayed)
    (display-limit :initarg :limit :initform 60 :accessor display-limit)
    (message-string :initarg :msg :initform "" :accessor message-string)))
 
