@@ -56,7 +56,7 @@
     (incf (current-frame game)))
   (draw game)
   (when (paused-p game)
-    (draw-pause-screen)))
+    (pause-screen game)))
 
 (defmethod resolve-collisions ((game game))
   (loop for enemy in (enemies game)
@@ -64,10 +64,10 @@
 	     do (cond ((and (eql (player game)
 				 (shooter projectile))
 			    (collided-p projectile enemy))
-		       (incf (damage enemy))
+		       (incf (damage-taken enemy))
 		       (setf (projectiles game) (delete projectile (projectiles game))))
 		      ((collided-p projectile (player game))
-		       (incf (damage (player game)))
+		       (incf (damage-taken (player game)))
 		       (setf (projectiles game) (delete projectile (projectiles game))))
 		      (t (values))))))
 

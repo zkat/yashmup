@@ -82,5 +82,5 @@
        finally (return-from collided-p nil))))
 
 (defmethod crashed! ((obj1 sprite) (obj2 sprite))
-  (incf (damage obj1) 10)
-  (incf (damage obj2) 10))
+  (incf (damage-taken obj1) 10)
+  (incf (damage-taken obj2) 10))
