@@ -29,6 +29,15 @@
 (let ((the-enemy (make-instance 'enemy)))
   (move-in-a-circle the-enemy))
 
+(defun move-in-curve (obj)
+  (fork (:delay 2 :repeat 300)
+    (if (or (<= 360 (angle obj))
+	    (>= -360 (angle obj)))
+	(setf (angle obj) 0)
+	(incf (angle obj) 2)))
+  (fork (:delay 500)
+    (detach obj *game*)))
+
 (defun move-in-a-circle (obj)
   (let ((circle-velocity (* 50 2 pi 1/240))
 	(delta-angle 360/250)
