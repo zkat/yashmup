@@ -12,11 +12,14 @@
 			      :exec-frame (+ ,delay (current-frame *game*)))
 	       *game*))
 
-
 (defun move-in-curve (obj &key (angle-delta 1) (num-frames 1))
-  (dotimes (i num-frames)
-    (fork (:delay i)
-      (incf (angle obj) angle-delta))))
+  (if (<= num-frames 0)
+      nil
+      (progn
+       (fork (:delay 1)
+	 (incf (angle obj) angle-delta))
+       (fork (:delay 1)
+	 (move-in-curve obj :angle-delta angle-delta :num-frames (1- num-frames))))))
 
 ;; HA HA. NO
 ;; (defun move-in-rose (obj center-x center-y &optional (k 5))
