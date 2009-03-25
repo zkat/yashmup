@@ -13,21 +13,21 @@
 	       *game*))
 
 
-(defun move-in-curve (obj &optional (delta-theta 1))
+(defun move-in-curve (obj &optional (angle-delta 1))
   (dotimes (i 600)
     (fork (:delay (1+ i))
-      (incf (angle obj) delta-theta)))
+      (incf (angle obj) angle-delta)))
   (fork (:delay 600)
     (detach obj *game*)))
 
-(defun move-in-rose (obj center-x center-y &optional (k 5))
-  (with-slots (x y angle velocity) obj
-   (let* ((initial-radius radius)
-	  (r (sqrt (+ (expt (- x center-x) 2)) (expt (- y center-y) 2)))
-	  (theta (atan y x)))
-     (dotimes (i 600)
-       (fork (:delay (* i))
-	 (incf theta)
-	 (setf radius (* initial-radius (cos (* k (degrees-to-radians theta)))))))))
-  (fork (:delay 600)
-    (detach obj *game*)))
+;; HA HA. NO
+;; (defun move-in-rose (obj center-x center-y &optional (k 5))
+;;   (with-slots (x y angle velocity) obj
+;;    (let* ((initial-radius (sqrt (+ (expt (- x center-x) 2)) (expt (- y center-y) 2)))
+;; 	  (theta (atan y x)))
+;;      (dotimes (i 600)
+;;        (fork (:delay (* i))
+;; 	 (incf theta)
+;; 	 (setf r (* initial-radius (cos (* k (degrees-to-radians theta)))))))))
+;;   (fork (:delay 600)
+;;     (detach obj *game*)))
