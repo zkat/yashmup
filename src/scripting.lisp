@@ -7,7 +7,7 @@
 
 (defmacro fork ((&key (delay 0) (repeat 0)) &body body)
   "Turns BODY into one or more event-loop events."
-  (if (<= delay 0)
+  (if (<= (eval delay) 0)
       `(push-event (make-instance 'event 
 				  :payload (lambda () ,@body)
 				  :exec-frame (+ ,delay (current-frame *game*)))
