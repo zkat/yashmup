@@ -9,16 +9,9 @@
 (defvar *game* nil)
 (defclass game ()
   ((running-p :initform t :accessor running-p)
-   (player :initform (make-instance 'player) :accessor player)
-   (background :initform (make-instance 'background) :accessor background)
-   (projectiles :initform nil :accessor projectiles)
-   (enemies :initform nil :accessor enemies)
-   (messages :initform nil :accessor messages)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
-   (event-queue :initform (make-priority-queue :key #'exec-frame) :accessor event-queue)
    (last-frame-time :initform (get-internal-real-time) :accessor last-frame-time)
-   (framerate :initform *default-framerate* :accessor framerate)
-   (current-frame :initform 0 :accessor current-frame)
+   (current-level :initform nil :accessor current-level)
    (paused-p :initform nil :accessor paused-p)))
 
 ;;;
@@ -30,25 +23,14 @@
 (defgeneric handle-key-event (key game &key))
 
 ;;; Game methods
+(defmethod current-frame ((game game))
+  (current-frame (current-level game)))
+
 (defmethod update ((game game))
-  (with-slots (running-p player background projectiles enemies messages enemy-counter) game
-    (update background)
-    (mapc #'update projectiles)
-    (mapc #'update enemies)
-    (update player)
-    (mapc #'update messages)
-    (resolve-collisions game)))
+  (update (current-level game)))
 
 (defmethod draw ((game game))
-  (draw (background game))
-  (mapc #'draw (messages game))
-  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player game)))
-			    5 5 sdl:*red* (sdl:color :a 0))
-  (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player game)))
-			    5 15 sdl:*red* (sdl:color :a 0))
-  (draw (player game))
-  (mapc #'draw (enemies game))
-  (mapc #'draw (projectiles game)))
+  (draw (current-level game)))
 
 (defmethod take-a-step ((game game))
   (unless (paused-p game)
