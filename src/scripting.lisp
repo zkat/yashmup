@@ -21,6 +21,32 @@
        (fork (:delay 1)
 	 (move-in-curve obj :angle-delta angle-delta :num-frames (1- num-frames))))))
 
+(defun chase (obj target &key (num-frames 100))
+  (if (<= num-frames 0)
+      nil
+      (progn
+	(fork (:delay 1)
+	  (setf (angle obj) (angle-from obj target)))
+	(fork (:delay 1)
+	  (chase obj target :num-frames (1- num-frames))))))
+
+(defun move-in-orbit (obj target &key (keep-distance 100) (num-frames 100))
+  (if (<= num-frames 0)
+      nil
+      (progn
+	(fork (:delay 1)
+	  (let ((dist-difference (- (distance obj target)
+				    keep-distance)))
+	    (cond ((> dist-difference (+ 5 (velocity obj)))
+		   (setf (angle obj) (+ 1 (angle-from obj target))))
+		  ((< dist-difference 0)
+		   (setf (angle obj) (- (angle-from target obj) 1)))
+		  (t
+		   (setf (angle obj) (+ (angle-from obj target) 90))))))
+	
+	(fork (:delay 1)
+	  (move-in-orbit obj target :keep-distance keep-distance :num-frames (1- num-frames))))))
+
 ;; HA HA. NO
 ;; (defun move-in-rose (obj center-x center-y &optional (k 5))
 ;;   (with-slots (x y angle velocity) obj

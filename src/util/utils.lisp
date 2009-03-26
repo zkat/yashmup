@@ -9,3 +9,6 @@ Returns both the difference in time and the current-time used in the computation
 
 (defun degrees-to-radians (degrees)
   (* (/ degrees 180) pi))
+
+(defun radians-to-degrees (radians)
+  (/ (* radians 180) pi))
