@@ -44,7 +44,7 @@
       (spawn-an-enemy))))
 
 (defun spawn-an-enemy ()
-  (let ((an-enemy (make-instance 'enemy :velocity 2)))
+  (let ((an-enemy (make-instance 'enemy :velocity 2 :x 10 :y 10)))
     (move-in-orbit an-enemy (player *game*) :num-frames 10000)
     (fork (:delay 10001)
       (detach an-enemy *game*))
