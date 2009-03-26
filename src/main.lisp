@@ -19,7 +19,7 @@
     (let ((music (find-resource 'music)))
       (when music
 	(sdl-mixer:play-music music :loop t)))
-    (add-lots-of-enemies 36)
+    (add-lots-of-enemies 5)
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
@@ -44,8 +44,8 @@
       (spawn-an-enemy))))
 
 (defun spawn-an-enemy ()
-  (let ((an-enemy (make-instance 'enemy :x 70 :y 300)))
-    (move-in-curve an-enemy :num-frames 10000)
+  (let ((an-enemy (make-instance 'enemy :velocity 6)))
+    (move-in-orbit an-enemy (player *game*) :keep-distance 200 :num-frames 10000)
     (fork (:delay 10001)
       (detach an-enemy *game*))
     (attach an-enemy *game*)))

@@ -36,6 +36,8 @@
   (:documentation "Performs a collision check between two objects. Returns T or NIL"))
 (defgeneric crashed! (obj1 obj2)
   (:documentation "Runs whatever happens when obj1 and obj2 crash"))
+(defgeneric distance (sprite1 sprite2))
+(defgeneric angle-from (sprite1 sprite2))
 
 ;;; Sprite methods
 (defmethod width ((sprite sprite))
@@ -47,8 +49,29 @@
 (defmethod center ((sprite sprite))
   (with-slots (image x y)
       sprite
-    (sdl:point :x (floor (+ x (/ (sdl:width image) 2)))
-	       :y (floor (+ y (/ (sdl:height image) 2))))))
+    (sdl:point :x (floor (+ x (/ (hitbox-x-offset sprite) 2)))
+	       :y (floor (+ y (/ (hitbox-y-offset sprite) 2))))))
+
+(defmethod distance ((sprite1 sprite) (sprite2 sprite))
+  (let* ((s1-center (center sprite1))
+	 (s2-center (center sprite2))
+	 (x1 (sdl:x s1-center))
+	 (y1 (sdl:y s1-center))
+	 (x2 (sdl:x s2-center))
+	 (y2 (sdl:y s2-center)))
+    (sqrt (+ (expt (- x2 x1) 2) (expt (- y2 y1) 2)))))
+
+(defmethod angle-from ((sprite1 sprite) (sprite2 sprite))
+  (let* ((s1-center (center sprite1))
+	 (s2-center (center sprite2))
+	 (x1 (sdl:x s1-center))
+	 (y1 (sdl:y s1-center))
+	 (x2 (sdl:x s2-center))
+	 (y2 (sdl:y s2-center)))
+    (let ((x (- x1 x2))
+	  (y (- y1 y2)))
+      (- (radians-to-degrees (* -1 (atan y x)))
+	 90))))
 
 (defmethod draw ((sprite sprite))
   (with-slots (image x y)
