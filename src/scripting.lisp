@@ -12,8 +12,8 @@
 				  :payload (lambda () ,@body)
 				  :exec-frame (+ ,delay (current-frame *game*)))
 		   *game*)
-      `(labels ((make-one (repeat)
-		  (if (<= repeat 0)
+      `(labels ((recurse (times)
+		  (if (<= times 0)
 		      nil
 		      (progn
 			(push-event (make-instance 'event
@@ -23,10 +23,10 @@
 				    *game*)
 			(push-event (make-instance 'event
 						   :payload (lambda ()
-							      (make-one (1- repeat)))
+							      (recurse (1- times)))
 						   :exec-frame (+ ,delay (current-frame *game*)))
 				    *game*)))))
-	 (make-one ,repeat))))
+	 (recurse ,repeat))))
 
 (defun move-in-curve (obj &key (angle-delta 1) (num-frames 1))
   (fork (:delay 1 :repeat num-frames)
