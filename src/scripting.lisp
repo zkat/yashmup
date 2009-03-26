@@ -43,7 +43,6 @@
 		   (setf (angle obj) (- (angle-from target obj) 1)))
 		  (t
 		   (setf (angle obj) (+ (angle-from obj target) 90))))))
-	
 	(fork (:delay 1)
 	  (move-in-orbit obj target :keep-distance keep-distance :num-frames (1- num-frames))))))
 
