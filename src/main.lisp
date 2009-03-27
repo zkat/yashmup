@@ -19,7 +19,6 @@
     (let ((music (find-resource 'music)))
       (when music
 	(sdl-mixer:play-music music :loop t)))
-    (add-lots-of-enemies 30)
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
@@ -37,18 +36,6 @@
 		 do (execute-event (pop-next-event *game*)))
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
-
-(defun add-lots-of-enemies (&optional (num-enemies 10))
-  (dotimes (i num-enemies)
-    (fork (:delay (* i 10))
-      (spawn-an-enemy))))
-
-(defun spawn-an-enemy ()
-  (let ((an-enemy (make-instance 'enemy :velocity 2 :x 10 :y 10)))
-    (orbit (player *game*) an-enemy :num-frames 10000)
-    (fork (:delay 10001)
-      (detach an-enemy *game*))
-    (attach an-enemy *game*)))
 
 (defun free-audio ()
   (let ((music (find-resource 'music))
