@@ -97,6 +97,7 @@
 ;;;
 ;;; Messages
 ;;;
+;;; These are mostly here temporarily. Basically, they're text-based sprites.
 (defclass message (game-object)
   ((times-displayed :initform 0 :accessor times-displayed)
    (display-limit :initarg :limit :initform 60 :accessor display-limit)
@@ -117,3 +118,19 @@
 (defun display-message (message x y &optional display-limit)
   (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
     (push msg (messages *game*))))
+
+;;; These are mostly temporary, for now
+(defmethod event-queue ((game game))
+  (event-queue (current-level game)))
+(defmethod current-frame ((game game))
+  (current-frame (current-level game)))
+(defmethod player ((game game))
+  (player-queue (current-level game)))
+(defmethod background ((game game))
+  (background (current-level game)))
+(defmethod projectiles ((game game))
+  (projectiles (current-level game)))
+(defmethod enemies ((game game))
+  (enemies (current-level game)))
+(defmethod messages ((game game))
+  (messages (current-level game)))
