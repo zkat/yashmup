@@ -1,1 +1,0 @@
-./cffi/cffi-tests.asd
