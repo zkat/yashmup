@@ -27,5 +27,6 @@
 	     (:file "player")
 	     (:file "enemy")
 	     (:file "projectile")
+	     (:file "level")
 	     (:file "scripting")
 	     (:file "main")))))
