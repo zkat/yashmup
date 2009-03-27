@@ -11,7 +11,7 @@
   ((running-p :initform t :accessor running-p)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (last-frame-time :initform (get-internal-real-time) :accessor last-frame-time)
-   (current-level :initform nil :accessor current-level)
+   (current-level :initform (make-instance 'level) :accessor current-level)
    (paused-p :initform nil :accessor paused-p)))
 
 ;;;
@@ -39,19 +39,6 @@
   (draw game)
   (when (paused-p game)
     (pause-screen game)))
-
-(defmethod resolve-collisions ((game game))
-  (loop for enemy in (enemies game)
-       do (loop for projectile in (projectiles game)
-	     do (cond ((and (eql (player game)
-				 (shooter projectile))
-			    (collided-p projectile enemy))
-		       (incf (damage-taken enemy))
-		       (setf (projectiles game) (delete projectile (projectiles game))))
-		      ((collided-p projectile (player game))
-		       (incf (damage-taken (player game)))
-		       (setf (projectiles game) (delete projectile (projectiles game))))
-		      (t (values))))))
 
 (defmethod pause-screen ((game game))
   (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
@@ -122,15 +109,35 @@
 ;;; These are mostly temporary, for now
 (defmethod event-queue ((game game))
   (event-queue (current-level game)))
-(defmethod current-frame ((game game))
+(defmethod (setf event-queue) (new-value (game game))
+  (setf (event-queue (current-level game)) new-value))
+
+(defmethod (setf current-frame) (new-value (game game))
+  (setf (current-frame (current-level game)) new-value))
+(defmethod current-frame ( (game game))
   (current-frame (current-level game)))
+
 (defmethod player ((game game))
-  (player-queue (current-level game)))
+  (player (current-level game)))
+(defmethod (setf player) (new-value (game game))
+  (setf (player (current-level game)) new-value))
+
 (defmethod background ((game game))
   (background (current-level game)))
+(defmethod (setf background) (new-value (game game))
+  (setf (background (current-level game)) new-value))
+
 (defmethod projectiles ((game game))
   (projectiles (current-level game)))
+(defmethod (setf projectiles) (new-value (game game))
+  (setf (projectiles (current-level game)) new-value))
+
 (defmethod enemies ((game game))
   (enemies (current-level game)))
+(defmethod (setf enemies) (new-value (game game))
+  (setf (enemies (current-level game)) new-value))
+
 (defmethod messages ((game game))
   (messages (current-level game)))
+(defmethod (setf messages) (new-value (game game))
+  (setf (messages (current-level game)) new-value))

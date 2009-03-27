@@ -43,10 +43,10 @@
   (fork (:delay 1 :repeat num-frames)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
-      (cond ((> dist-difference (+ 5 (velocity obj)))
-	     (setf (angle obj) (+ 1 (angle-from obj target))))
+      (cond ((> dist-difference (+  (velocity obj)))
+	     (setf (angle obj) (+ 30 (angle-from obj target))))
 	    ((< dist-difference 0)
-	     (setf (angle obj) (- (angle-from target obj) 1)))
+	     (setf (angle obj) (- (angle-from target obj) 30)))
 	    (t
 	     (setf (angle obj) (+ (angle-from obj target) 90)))))))
 
