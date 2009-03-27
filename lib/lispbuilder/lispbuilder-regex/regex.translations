@@ -1,6 +1,0 @@
-
-;;; change to your own path
-
-(setf (logical-pathname-translations "LISPBUILDER-REGEX")
-      '(("REGEX:SYS;*" "d:/lisp/*")
-        ("REGEX:SRC;*" "d:/lisp/regex/*")))

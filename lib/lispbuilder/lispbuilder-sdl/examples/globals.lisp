@@ -1,5 +1,0 @@
-
-(in-package #:sdl-examples) 
-
-
-
