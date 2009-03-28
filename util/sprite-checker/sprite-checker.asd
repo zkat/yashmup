@@ -7,4 +7,4 @@
   :depends-on (lispbuilder-sdl lispbuilder-sdl-image)
   :serial t
   :components
-  ((:file "sprite-checker.lisp")))
+  ((:file "sprite-checker")))
