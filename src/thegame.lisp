@@ -3,6 +3,11 @@
 ;; thegame.lisp
 ;;
 ;; You just lost it
+;;
+;; TODO -
+;; * Clean up this file a bit.
+;; * Finish refactoring of LEVEL-related stuff. Make sure to update other dependent files.
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
@@ -60,7 +65,8 @@
 	(setf (paused-p *game*) t))))
 
 ;;; Key event handling
-(defmethod handle-key-event (key game &key (event-type :key-down))
+(defmethod handle-key-event (key (game game) &key (event-type :key-down))
+  ;; This seems a bit ugly. I'll think about it...
   (cond ((eql event-type :key-down)
 	 (register-key-press key game))
 	((eql event-type :key-up)
@@ -68,13 +74,13 @@
 	(t
 	 (error "Unknown key-event type"))))
 
-(defun register-key-press (key game)
+(defmethod register-key-press (key (game game))
   (when (sdl:key= key :sdl-key-p)
     (toggle-pause))
   (with-slots (keys-held-down) game
     (setf (gethash key keys-held-down) t)))
 
-(defun register-key-release (key game)
+(defmethod register-key-release (key (game game))
   (with-slots (keys-held-down) game
     (setf (gethash key keys-held-down) nil)))
 

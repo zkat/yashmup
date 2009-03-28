@@ -35,6 +35,8 @@ ready immediately."
 ;;;
 ;;; Event-queue
 ;;;
+(defun make-event-queue ()
+  (make-priority-queue :key #'exec-frame))
 
 ;;; Generics
 (defgeneric push-event (event game)
@@ -61,7 +63,7 @@ Returns NIL if there is nothing in the queue."))
 
 (defmethod clear-events ((game game))
   (let ((pause-state (paused-p game)))
-   (setf (event-queue game) (make-priority-queue :key #'exec-frame))
+   (setf (event-queue game) (make-event-queue))
    (setf (paused-p game) pause-state)))
 
 ;;;
