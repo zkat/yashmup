@@ -4,7 +4,7 @@
 (require 'lispbuilder-sdl-image)
 
 (load "sprite-check.lisp")
-(sb-ext:save-lisp-and-die "check-sprite"
+(sb-ext:save-lisp-and-die "sprite-checker"
 			  :toplevel (lambda ()
 				      (sb-posix:putenv
 				       (format nil "SBCL_HOME=~A" 
