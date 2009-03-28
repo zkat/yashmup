@@ -9,7 +9,8 @@
 
 (defun load-image (name &key (ext ".bmp") color-key)
   (let ((image-path (merge-pathnames (concatenate 'string name ext) *resource-path*)))
-    (sdl-image:load-image (namestring image-path) :alpha 255 :color-key color-key)))
+    (sdl-image:load-and-convert-image (namestring image-path) :alpha 255 :color-key color-key
+				      :image-type ".bmp")))
 
 (defun load-sample (name &key (ext ".wav"))
   (let ((sound-path (merge-pathnames (concatenate 'string name ext) *resource-path*)))
@@ -55,7 +56,7 @@
 	(let ((sample (load-sample "pew")))
 	  (setf (sdl-mixer:sample-volume sample) 30)
 	  sample))
+  (setf (gethash 'explosion *resource-table*)
+	(load-image "explosion" :ext ".gif" :color-key (sdl:color :r 255 :b 255)))
   (setf (gethash 'music *resource-table*)
 	(load-music "game-music" :ext ".mp3")))
-
-

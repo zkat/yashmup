@@ -16,6 +16,16 @@
    (hitbox-height :accessor hitbox-height)
    (draw-hitbox-p :initform nil :accessor draw-hitbox-p)))
 
+(defclass animated-sprite (sprite)
+  ((frame-x-size :accessor frame-x-size)
+   (frame-y-size :accessor frame-y-size)
+   (current-frame :initform 0 :accessor current-frame)))
+
+;; TODO
+;; (defmethod next-frame ((sprite animated-sprite))
+;;   (with-accessors ((img image)) sprite
+;;     ))
+
 (defmethod initialize-instance :after ((sprite sprite) 
 				       &key hitbox-width hitbox-height)
   (if hitbox-width
