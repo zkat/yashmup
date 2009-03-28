@@ -4,6 +4,7 @@
 (setf 
  ;; Filenames of images to load
  *filename* "explosion.gif"
+ *color-key* (sdl:color :r 255 :b 255) ; this color is keyed to transparent
  *background-image-filename* nil ; set this to a string filename to have a bg
 
  ;; Height and width of the focused cell, in pixels
@@ -20,10 +21,12 @@
  *pause-between-loops* 5
 
  ;; SDL config variables
- *frame-rate* 15
  *screen-width* 200
  *screen-height* 200
 
+ ;; remember, yashmup runs at 60fps.
+ ;; I'll have a way to limit how fast sprites are -actually- played, though.
+ *frame-rate* 60
 
  ;; You can set a custom background color by replacing sdl:*color* with (sdl:color :r x :g y :b z :a w)
  ;; x y z and w being any int from 0-255.
