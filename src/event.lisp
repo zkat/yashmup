@@ -37,9 +37,14 @@ ready immediately."
 ;;;
 
 ;;; Generics
-(defgeneric push-event (event game))
-(defgeneric peek-next-event (game))
-(defgeneric pop-next-event (game))
+(defgeneric push-event (event game)
+  (:documentation "Adds EVENT to GAME's event-queue"))
+(defgeneric peek-next-event (game)
+  (:documentation "Peeks at the next event in GAME's event-queue without removing it.
+Returns NIL if there are no queued events."))
+(defgeneric pop-next-event (game)
+  (:documentation "Returns the next available event, and removes it from GAME's event-queue.
+Returns NIL if there is nothing in the queue."))
 (defgeneric clear-events (game)
   (:documentation "Clears all events off the event queue"))
 
@@ -64,8 +69,14 @@ ready immediately."
 ;;;
 
 ;;; Generics
-(defgeneric process-next-event (event-queue)
-  (:documentation "Grabs the next event from the event queue and executes it."))
+(defgeneric process-next-event (game)
+  (:documentation "Grabs the next event from GAME's event queue and executes it."))
+
+(defgeneric process-cooked-events (game)
+  (:documentation "Processes all cooked events in GAME"))
+
+(defgeneric event-available-p (game)
+  (:documentation "Is there a cooked event available?"))
 
 (defgeneric execute-event (event)
   (:documentation "Takes care of executing a particular event."))
@@ -73,16 +84,21 @@ ready immediately."
 (defgeneric cooked-p (event)
   (:documentation "Is the event ready to fire?"))
 
+
 ;;; Methods
 
+;; Why am I not using this in main.lisp? ffs.
 (defmethod process-next-event ((game game))
   "Processes the next event in EVENT-QUEUE, executing it if it's 'baked'."
-  (unless (paused-p game)
-    (let ((next-event (peek-next-event game)))
-      (when (and next-event
-		 (cooked-p next-event))
-	(let ((event (pop-next-event game)))
-	  (execute-event event))))))
+  (when (event-available-p game)
+    (let ((event (pop-next-event game)))
+      (execute-event event))))
+
+(defmethod event-available-p ((game game))
+  "Simply peeks to see if there's an event in the queue, and if it's cooked."
+  (when (and (peek-next-event game)
+	     (cooked-p (peek-next-event game)))
+    t))
 
 (defmethod cooked-p ((event event))
   "Simply checks that it doesn't shoot its load prematurely.."
@@ -94,3 +110,7 @@ ready immediately."
   "Executes a standard event. Nothing fancy, just a funcall."
   (funcall (payload event)))
 
+(defmethod process-cooked-events ((game game))
+  (loop
+     while (event-available-p *game*)
+     do (process-next-event *game*)))
