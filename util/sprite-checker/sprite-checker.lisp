@@ -4,6 +4,7 @@
 (in-package :sprite-checker)
 
 (defparameter *filename* "explosion.gif")
+(defparameter *background-image-filename* nil)
 (defparameter *cell-width* 15)
 (defparameter *cell-height* 14)
 
@@ -38,12 +39,17 @@ of the sprite. If there is, play with this and see if it helps.")
     (let* ((image (sdl-image:load-image
 		   (namestring (merge-pathnames *filename*))
 		  :color-key (sdl:color :r 255 :b 255)))
+	   (background (when *background-image-filename*
+			 (sdl-image:load-image (namestring 
+						(merge-pathnames *background-image-filename*)))))
 	   (num-frames (1- (/ (sdl:width image) *cell-width*))))
      (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (sdl:free image)))
        (:idle ()
-	      (sdl:clear-display *bg-color*)
+	      (if background
+		  (sdl:draw-surface background)
+	      (sdl:clear-display *bg-color*))
 	      (sdl:set-cell (sdl:rectangle 
 			     :x (* *current-cell* *cell-width*) 
 			     :y *y-offset*
