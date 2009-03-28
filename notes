@@ -1,7 +1,0 @@
-Useful maths:
-
-bullets -
-Give them a velocity and an angle
-
-horiz-velocity = (* velocity (sin angle))
-vert-velocity = (* velocity (cos angle))
