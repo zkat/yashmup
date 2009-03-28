@@ -8,8 +8,8 @@
 (defparameter *cell-width* 15)
 (defparameter *cell-height* 14)
 (defparameter *cell-row* 0)
-
-(defparameter *frame-rate* 20)
+(defparameter *number-of-frames* 15)
+(defparameter *frame-rate* 60)
 (defparameter *screen-width* 500)
 (defparameter *screen-height* 500)
 (defparameter *bg-color* sdl:*black*)
@@ -21,7 +21,6 @@
   (let ((config-file (merge-pathnames "config.lisp")))
     (load config-file)))
 
-(defvar *current-cell* 0)
 (defvar *running* t)
 (defun main ()
   (load-config)
@@ -38,7 +37,8 @@
 		  :color-key (sdl:color :r 255 :b 255)))
 	   (background (when *background-image-filename*
 			 (sdl-image:load-image (namestring 
-						(merge-pathnames *background-image-filename*))))))
+						(merge-pathnames *background-image-filename*)))))
+	   (current-cell 0))
      (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (sdl:free image)))
@@ -47,15 +47,15 @@
 		  (sdl:draw-surface background)
 	      (sdl:clear-display *bg-color*))
 	      (sdl:set-cell (sdl:rectangle 
-			     :x (* *current-cell* *cell-width*) 
+			     :x (* current-cell *cell-width*) 
 			     :y (* *cell-row* *cell-height*)
 			     :w *cell-width*
 			     :h *cell-height*)
 			    :surface image)
 	      (sdl:draw-surface-at-* image (/ *screen-width* 2) (/ *screen-height* 2))
-	      (if (< (+ *pause-between-loops* *num-frames*) *current-cell*)
-		  (setf *current-cell* 0)
-		  (incf *current-cell*))
+	      (if (< (+ *pause-between-loops* *number-of-frames*) current-cell)
+		  (setf current-cell 0)
+		  (incf current-cell))
 	      (sdl:update-display)
 	      (when (not *running*)
 		(sdl:push-quit-event)))))))
