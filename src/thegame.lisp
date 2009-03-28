@@ -35,6 +35,7 @@
 
 (defmethod take-a-step ((game game))
   (unless (paused-p game)
+    (process-cooked-events *game*)
     (update game)
     (incf (current-frame game)))
   (draw game)

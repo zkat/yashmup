@@ -30,10 +30,7 @@
        (:key-up-event (:key key)
 		      (handle-key-event key *game* :event-type :key-up))
        (:idle ()
-	      (loop
-		 until (not (and (peek-next-event *game*)
-				 (cooked-p (peek-next-event *game*))))
-		 do (execute-event (pop-next-event *game*)))
+	      (process-cooked-events *game*)
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
 
