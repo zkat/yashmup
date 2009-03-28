@@ -9,6 +9,7 @@
 (defvar *game* nil)
 (defclass game ()
   ((running-p :initform t :accessor running-p)
+   (player :initform (make-instance 'player) :accessor player)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (last-frame-time :initform (get-internal-real-time) :accessor last-frame-time)
    (current-level :initform (make-instance 'level) :accessor current-level)
@@ -116,11 +117,6 @@
   (setf (current-frame (current-level game)) new-value))
 (defmethod current-frame ( (game game))
   (current-frame (current-level game)))
-
-(defmethod player ((game game))
-  (player (current-level game)))
-(defmethod (setf player) (new-value (game game))
-  (setf (player (current-level game)) new-value))
 
 (defmethod background ((game game))
   (background (current-level game)))

@@ -11,7 +11,6 @@
 (defclass level ()
   ((event-queue :initform (make-priority-queue :key #'exec-frame) :accessor event-queue)
    (current-frame :initform 0 :accessor current-frame)
-   (player :initform (make-instance 'player) :accessor player)
    (background :initform (make-instance 'background) :accessor background)
    (projectiles :initform nil :accessor projectiles)
    (enemies :initform nil :accessor enemies)
@@ -28,22 +27,22 @@
 
 ;;; Methods
 (defmethod update ((level level))
-  (with-slots (player background projectiles enemies messages) level
+  (with-slots (background projectiles enemies messages) level
     (update background)
     (mapc #'update projectiles)
     (mapc #'update enemies)
-    (update player)
+    (update (player *game*))
     (mapc #'update messages)
     (resolve-collisions level)))
 
 (defmethod draw ((level level))
   (draw (background level))
   (mapc #'draw (messages level))
-  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player level)))
+  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player *game*)))
 			    5 5 sdl:*red* (sdl:color :a 0))
-  (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player level)))
+  (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player *game*)))
 			    5 15 sdl:*red* (sdl:color :a 0))
-  (draw (player level))
+  (draw (player *game*))
   (mapc #'draw (enemies level))
   (mapc #'draw (projectiles level)))
 
