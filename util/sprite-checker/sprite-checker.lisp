@@ -7,10 +7,7 @@
 (defparameter *background-image-filename* nil)
 (defparameter *cell-width* 15)
 (defparameter *cell-height* 14)
-
-(defparameter *y-offset* 0
-  "You shouldn't need to change this at all unless there's something weird with the y-position
-of the sprite. If there is, play with this and see if it helps.")
+(defparameter *cell-row* 0)
 
 (defparameter *frame-rate* 20)
 (defparameter *screen-width* 500)
@@ -41,8 +38,7 @@ of the sprite. If there is, play with this and see if it helps.")
 		  :color-key (sdl:color :r 255 :b 255)))
 	   (background (when *background-image-filename*
 			 (sdl-image:load-image (namestring 
-						(merge-pathnames *background-image-filename*)))))
-	   (num-frames (1- (/ (sdl:width image) *cell-width*))))
+						(merge-pathnames *background-image-filename*))))))
      (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (sdl:free image)))
@@ -52,12 +48,12 @@ of the sprite. If there is, play with this and see if it helps.")
 	      (sdl:clear-display *bg-color*))
 	      (sdl:set-cell (sdl:rectangle 
 			     :x (* *current-cell* *cell-width*) 
-			     :y *y-offset*
+			     :y (* *cell-row* *cell-height*)
 			     :w *cell-width*
 			     :h *cell-height*)
 			    :surface image)
 	      (sdl:draw-surface-at-* image (/ *screen-width* 2) (/ *screen-height* 2))
-	      (if (< (+ *pause-between-loops* num-frames) *current-cell*)
+	      (if (< (+ *pause-between-loops* *num-frames*) *current-cell*)
 		  (setf *current-cell* 0)
 		  (incf *current-cell*))
 	      (sdl:update-display)
