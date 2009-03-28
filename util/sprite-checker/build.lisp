@@ -3,7 +3,7 @@
 (require 'lispbuilder-sdl)
 (require 'lispbuilder-sdl-image)
 
-(load "sprite-check.lisp")
+(load "sprite-checker.lisp")
 (sb-ext:save-lisp-and-die "sprite-checker"
 			  :toplevel (lambda ()
 				      (sb-posix:putenv
