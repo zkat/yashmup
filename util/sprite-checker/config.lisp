@@ -1,6 +1,5 @@
 (in-package :sprite-checker)
 
-
 (setf 
  ;; Filenames of images to load
  *filename* "explosion.gif"
