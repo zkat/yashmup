@@ -16,6 +16,9 @@ of the sprite. If there is, play with this and see if it helps.")
 (defparameter *screen-height* 500)
 (defparameter *bg-color* sdl:*black*)
 
+(defparameter *pause-between-loops* 5
+  "Number of frames to pause between loops")
+
 (defun load-config ()
   (let ((config-file (merge-pathnames "config.lisp")))
     (load config-file)))
@@ -48,7 +51,7 @@ of the sprite. If there is, play with this and see if it helps.")
 			     :h *cell-height*)
 			    :surface image)
 	      (sdl:draw-surface-at-* image (/ *screen-width* 2) (/ *screen-height* 2))
-	      (if (< num-frames *current-cell*)
+	      (if (< (+ *pause-between-loops* num-frames) *current-cell*)
 		  (setf *current-cell* 0)
 		  (incf *current-cell*))
 	      (sdl:update-display)

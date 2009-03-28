@@ -11,11 +11,14 @@
 
 ;; SDL config variables
 (setf *frame-rate* 15)
-(setf *screen-width* 500)
-(setf *screen-height* 500)
+(setf *screen-width* 200)
+(setf *screen-height* 200)
 
+;; number of frames to pause before looping the sprite
+;; setting this to negative actually reduces the number of 
+;; frames of the sprite that are actually displayed
+(setf *pause-between-loops* 5) 
 
-(setf *bg-color* sdl:*black*)
 ;; You can set a custom color by replacing sdl:*color* with (sdl:color :r x :g y :b z :a w)
 ;; x y z and w being any int from 0-255.
 
@@ -23,3 +26,4 @@
 ;; ex: (sdl:color :b 255) is blue
 
 ;; Other colors: sdl:*red*, sdl:*blue*, sdl:*cyan*, sdl:*green*, sdl:*magenta*, sdl:*yellow*
+(setf *bg-color* sdl:*black*)
