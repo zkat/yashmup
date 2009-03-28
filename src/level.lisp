@@ -2,6 +2,9 @@
 
 ;; level.lisp
 ;;
+;; TODO - 
+;; * Get a better definition of what a level is, and refactor things accordingly.
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
@@ -9,15 +12,16 @@
 ;;; Level Class
 ;;;
 (defclass level ()
-  ((event-queue :initform (make-priority-queue :key #'exec-frame) :accessor event-queue)
-   (current-frame :initform 0 :accessor current-frame)
-   (background :initform (make-instance 'background) :accessor background)
-   (projectiles :initform nil :accessor projectiles)
-   (enemies :initform nil :accessor enemies)
-   (messages :initform nil :accessor messages)))
+  ((event-queue :initform (make-event-queue) :accessor event-queue) ;allows per-level event loading
+   (current-frame :initform 0 :accessor current-frame) ;useful on a per-level basis
+   (background :initform (make-instance 'background) :accessor background) ;level-specific
+   (projectiles :initform nil :accessor projectiles) ;level-specific
+   (enemies :initform nil :accessor enemies) ;also level-specific
+   (messages :initform nil :accessor messages))) ;why do these things even still exist, wtf
 
 (defun load-level (name)
-  ;; todo
+  ;; todo. This should handle loading of necessary resources.
+  ;; Note: This will almost definitely require a rewrite of the resource-loading system. Ugh.
   name
   )
 
@@ -57,4 +61,5 @@
 		      ((collided-p projectile (player level))
 		       (incf (damage-taken (player level)))
 		       (setf (projectiles level) (delete projectile (projectiles level))))
-		      (t (values))))))
+		      (t 
+		       (values))))))
