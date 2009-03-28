@@ -4,6 +4,7 @@
 (in-package :sprite-checker)
 
 (defparameter *filename* "explosion.gif")
+(defparameter *color-key* (sdl:color :r 255 :b 255))
 (defparameter *background-image-filename* nil)
 (defparameter *cell-width* 15)
 (defparameter *cell-height* 14)
@@ -34,7 +35,7 @@
     (sdl:clear-display *bg-color*)
     (let* ((image (sdl-image:load-image
 		   (namestring (merge-pathnames *filename*))
-		  :color-key (sdl:color :r 255 :b 255)))
+		  :color-key *color-key*))
 	   (background (when *background-image-filename*
 			 (sdl-image:load-image (namestring 
 						(merge-pathnames *background-image-filename*)))))
