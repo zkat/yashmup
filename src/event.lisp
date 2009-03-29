@@ -18,7 +18,7 @@
     :documentation "A function, that contains the code to be executed.")
    (exec-frame
     :initarg :exec-frame
-    :initform (current-frame *game*)
+    :initform (current-frame (current-level *game*))
     :accessor exec-frame
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
@@ -29,8 +29,8 @@ It also accepts a DELAY, in milliseconds, until the event is ready to go. Otherw
 ready immediately."
   (push-event (make-instance 'event
 			     :payload payload 
-			     :exec-frame (+ delay (current-frame *game*)))
-	      *game*))
+			     :exec-frame (+ delay (current-frame (current-level *game*))))
+	      (current-level *game*)))
 
 ;;;
 ;;; Event-queue
@@ -39,45 +39,45 @@ ready immediately."
   (make-priority-queue :key #'exec-frame))
 
 ;;; Generics
-(defgeneric push-event (event game)
-  (:documentation "Adds EVENT to GAME's event-queue"))
-(defgeneric peek-next-event (game)
-  (:documentation "Peeks at the next event in GAME's event-queue without removing it.
+(defgeneric push-event (event level)
+  (:documentation "Adds EVENT to LEVEL's event-queue"))
+(defgeneric peek-next-event (level)
+  (:documentation "Peeks at the next event in LEVEL's event-queue without removing it.
 Returns NIL if there are no queued events."))
-(defgeneric pop-next-event (game)
-  (:documentation "Returns the next available event, and removes it from GAME's event-queue.
+(defgeneric pop-next-event (level)
+  (:documentation "Returns the next available event, and removes it from LEVEL's event-queue.
 Returns NIL if there is nothing in the queue."))
-(defgeneric clear-events (game)
+(defgeneric clear-events (level)
   (:documentation "Clears all events off the event queue"))
 
 ;;; Methods
-(defmethod push-event ((event event) (game game))
-  (priority-queue-insert (event-queue game) event)
+(defmethod push-event ((event event) (level level))
+  (priority-queue-insert (event-queue level) event)
   t)
 
-(defmethod peek-next-event ((game game))
-  (priority-queue-minimum (event-queue game)))
+(defmethod peek-next-event ((level level))
+  (priority-queue-minimum (event-queue level)))
 
-(defmethod pop-next-event ((game game))
-  (priority-queue-extract-minimum (event-queue game)))
+(defmethod pop-next-event ((level level))
+  (priority-queue-extract-minimum (event-queue level)))
 
-(defmethod clear-events ((game game))
-  (let ((pause-state (paused-p game)))
-   (setf (event-queue game) (make-event-queue))
-   (setf (paused-p game) pause-state)))
+(defmethod clear-events ((level level))
+  (let ((pause-state (paused-p level)))
+   (setf (event-queue level) (make-event-queue))
+   (setf (paused-p level) pause-state)))
 
 ;;;
 ;;; Event processing
 ;;;
 
 ;;; Generics
-(defgeneric process-next-event (game)
-  (:documentation "Grabs the next event from GAME's event queue and executes it."))
+(defgeneric process-next-event (level)
+  (:documentation "Grabs the next event from LEVEL's event queue and executes it."))
 
-(defgeneric process-cooked-events (game)
-  (:documentation "Processes all cooked events in GAME"))
+(defgeneric process-cooked-events (level)
+  (:documentation "Processes all cooked events in LEVEL"))
 
-(defgeneric event-available-p (game)
+(defgeneric event-available-p (level)
   (:documentation "Is there a cooked event available?"))
 
 (defgeneric execute-event (event)
@@ -90,21 +90,21 @@ Returns NIL if there is nothing in the queue."))
 ;;; Methods
 
 ;; Why am I not using this in main.lisp? ffs.
-(defmethod process-next-event ((game game))
+(defmethod process-next-event ((level level))
   "Processes the next event in EVENT-QUEUE, executing it if it's 'baked'."
-  (when (event-available-p game)
-    (let ((event (pop-next-event game)))
+  (when (event-available-p level)
+    (let ((event (pop-next-event level)))
       (execute-event event))))
 
-(defmethod event-available-p ((game game))
+(defmethod event-available-p ((level level))
   "Simply peeks to see if there's an event in the queue, and if it's cooked."
-  (when (and (peek-next-event game)
-	     (cooked-p (peek-next-event game)))
+  (when (and (peek-next-event level)
+	     (cooked-p (peek-next-event level)))
     t))
 
 (defmethod cooked-p ((event event))
   "Simply checks that it doesn't shoot its load prematurely.."
-  (let  ((frame-difference (- (exec-frame event) (current-frame *game*))))
+  (let  ((frame-difference (- (exec-frame event) (current-frame (current-level *game*)))))
     (when (<= frame-difference 0)
       t)))
 
@@ -112,7 +112,7 @@ Returns NIL if there is nothing in the queue."))
   "Executes a standard event. Nothing fancy, just a funcall."
   (funcall (payload event)))
 
-(defmethod process-cooked-events ((game game))
+(defmethod process-cooked-events ((level level))
   (loop
-     while (event-available-p *game*)
-     do (process-next-event *game*)))
+     while (event-available-p level)
+     do (process-next-event level)))
