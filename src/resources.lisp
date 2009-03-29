@@ -7,7 +7,7 @@
 
 (defvar *resource-table* (make-hash-table))
 
-(defun load-image (name &key (ext ".bmp") color-key)
+(defun load-image (name &key (ext ".bmp") (color-key sdl:*magenta*))
   (let ((image-path (merge-pathnames (concatenate 'string name ext) *resource-path*)))
     (sdl-image:load-and-convert-image (namestring image-path) :alpha 255 :color-key color-key
 				      :image-type ".bmp")))
@@ -54,7 +54,7 @@
 	(load-image "golden-boss" :ext ".gif" :color-key (sdl:color)))
   (setf (gethash 'laser-sample *resource-table*)
 	(let ((sample (load-sample "pew")))
-	  (setf (sdl-mixer:sample-volume sample) 30)
+	  (setf (sdl-mixer:sample-volume sample) 5)
 	  sample))
   (setf (gethash 'explosion *resource-table*)
 	(load-image "explosion" :ext ".gif" :color-key (sdl:color :r 255 :b 255)))

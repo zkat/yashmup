@@ -40,3 +40,4 @@
       (sdl-mixer:free music))
     (when laser-sample
       (sdl-mixer:free laser-sample))))
+

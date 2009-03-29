@@ -17,11 +17,14 @@
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
-  (push enemy (enemies game)))
-
+  (attach enemy (current-level level)))
+(defmethod attach ((enemy enemy) (level level))
+  (push enemy (enemies level)))
+(defmethod detach ((enemy enemy) (level level))
+  (setf (enemies level)
+	(delete enemy (enemies level))))
 (defmethod detach ((enemy enemy) (game game))
-  (setf (enemies game)
-	(delete enemy (enemies game))))
+  (detach enemy (current-level game)))
 
 (defmethod update ((enemy enemy))
   (with-slots (x y angle damage-taken frames-since-last-shot) enemy
