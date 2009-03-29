@@ -13,8 +13,9 @@
 ;;;
 (defclass level ()
   ((event-queue :initform (make-event-queue) :accessor event-queue) ;allows per-level event loading
-   (resources :initform (make-hash-table :test #'equal) :accessor resources )
+   (resources :initform (make-hash-table :test #'equal) :accessor resources) ;holds level-specific resources
    (current-frame :initform 0 :accessor current-frame) ;useful on a per-level basis
+   (player :initform (make-instance 'player) :accessor player)
    (background :initform (make-instance 'background) :accessor background) ;level-specific
    (projectiles :initform nil :accessor projectiles) ;level-specific
    (enemies :initform nil :accessor enemies) ;also level-specific
@@ -37,11 +38,13 @@
 (defmethod update ((level level))
   "Takes care of calling UPDATE on all of LEVEL's member objects. Also, resolves collisions"
   ;; Should I really stuff collision resolution in here?... It seems out of place.
-  (with-slots (background projectiles enemies messages) level
+  (with-slots (background projectiles enemies messages current-frame) level
+    (unless (paused-p *game*)
+      (process-cooked-events level)
+      (incf current-frame))
     (update background)
     (mapc #'update projectiles)
     (mapc #'update enemies)
-    (update (player *game*))
     (mapc #'update messages)
     (resolve-collisions level)))
 

@@ -17,12 +17,16 @@
   ((velocity :initform 3)
    (image :initform (gethash 'laser2 *resource-table*))))
 
-(defmethod attach ((proj projectile) (game game))
-  (push proj (projectiles game)))
+(defmethod attach ((proj projectile) (level level))
+  (push proj (projectiles level)))
+(defmethod detach ((proj projectile) (level level))
+  (setf (projectiles level)
+	(delete proj (projectiles level))))
 
+(defmethod attach ((proj projectile) (game game))
+  (attach proj (current-level game)))
 (defmethod detach ((proj projectile) (game game))
-  (setf (projectiles game)
-	(delete proj (projectiles game))))
+  (detach proj (current-level game)))
 
 (defmethod update ((proj projectile))
   (with-slots (x y)

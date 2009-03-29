@@ -89,7 +89,6 @@ Returns NIL if there is nothing in the queue."))
 
 ;;; Methods
 
-;; Why am I not using this in main.lisp? ffs.
 (defmethod process-next-event ((level level))
   "Processes the next event in EVENT-QUEUE, executing it if it's 'baked'."
   (when (event-available-p level)

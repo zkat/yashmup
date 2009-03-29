@@ -20,10 +20,14 @@
    (hitbox-width :initform 3)))
 
 ;;; Player methods
+(defmethod attach ((player player) (level level))
+  (setf (player level) player))
+(defmethod detach ((player player) (level level))
+  (setf (player level) nil))
 (defmethod attach ((player player) (game game))
-  (setf (player game) player))
-(defmethod detach ((player player) (game game))
-  (setf (player game) nil))
+  (attach player (current-level game)))
+(defmethod detath ((player player) (game game))
+  (detach player (current-level game)))
 
 (defmethod update ((player player))
   (incf (frames-since-last-shot player))
