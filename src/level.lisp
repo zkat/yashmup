@@ -25,12 +25,18 @@
   name
   )
 
+
 ;;;
 ;;; Generic functions
 ;;;
+(defgeneric load-resources (level)
+  (:documentation "Takes care of loading all of LEVEL's resources into
+ memory, initializing them, etc."))
 
 ;;; Methods
 (defmethod update ((level level))
+  "Takes care of calling UPDATE on all of LEVEL's member objects. Also, resolves collisions"
+  ;; Should I really stuff collision resolution in here?... It seems out of place.
   (with-slots (background projectiles enemies messages) level
     (update background)
     (mapc #'update projectiles)

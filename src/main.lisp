@@ -30,7 +30,6 @@
        (:key-up-event (:key key)
 		      (handle-key-event key *game* :event-type :key-up))
        (:idle ()
-	      (process-cooked-events *game*)
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
 
