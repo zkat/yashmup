@@ -13,6 +13,7 @@
 ;;;
 (defclass level ()
   ((event-queue :initform (make-event-queue) :accessor event-queue) ;allows per-level event loading
+   (resources :initform (make-hash-table :test #'equal) :accessor resources )
    (current-frame :initform 0 :accessor current-frame) ;useful on a per-level basis
    (background :initform (make-instance 'background) :accessor background) ;level-specific
    (projectiles :initform nil :accessor projectiles) ;level-specific
@@ -24,7 +25,6 @@
   ;; Note: This will almost definitely require a rewrite of the resource-loading system. Ugh.
   name
   )
-
 
 ;;;
 ;;; Generic functions
