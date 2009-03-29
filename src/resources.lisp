@@ -33,9 +33,9 @@
 
 (defun init-resources ()
   (setf (gethash 'background *resource-table*)
-	(load-image "background"))
+	(load-image "bg" :ext ".png"))
   (setf (gethash 'player-ship *resource-table*)
-	(load-image "sweet-ship" :ext ".gif" :color-key (sdl:color :r 255 :g 255 :b 255)))
+	(load-image "gif/s1-magent" :ext ".gif" :color-key sdl:*magenta*))
   (setf (gethash 'laser1 *resource-table*)
 	(load-image "bullets/laser1" :ext ".gif"))
   (setf (gethash 'laser2 *resource-table*)
