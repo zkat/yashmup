@@ -14,7 +14,7 @@
     (let ((enemy (make-instance 'enemy :x -15 :y 30 :velocity 4)))
       (attach enemy level)
       (setf (angle enemy) 90)
-      (fork (:level level :delay 40)
+      (fork (:level level :delay 45)
 	(move-in-curve enemy :level level :num-frames 170 :angle-delta 3)
 	(fork (:level level :delay 50)
 	  (fork (:level level :delay 5 :repeat 20)
@@ -26,7 +26,7 @@
     (let ((enemy (make-instance 'enemy :x 515 :y 30 :velocity 4)))
       (attach enemy level)
       (setf (angle enemy) 270)
-      (fork (:level level :delay 40)
+      (fork (:level level :delay 45)
 	(move-in-curve enemy
 		       :level level :direction :counter-clockwise 
 		       :num-frames 170 :angle-delta 3)
