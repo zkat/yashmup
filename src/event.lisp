@@ -116,7 +116,7 @@ Returns NIL if there is nothing in the queue."))
      do (process-next-event level)))
 
 ;;; Helper Macro
-(defmacro fork ((&key (delay 0) (repeat 0)) &body body)
+(defmacro fork ((&key (level '(current-level *game*)) (delay 0) (repeat 0)) &body body)
   "Turns BODY into one or more event-loop events."
   `(labels ((recurse (times)
 	      (if (< times 0)
@@ -125,11 +125,11 @@ Returns NIL if there is nothing in the queue."))
 		    (push-event (make-instance 'event
 					       :payload (lambda ()
 							  ,@body)
-					       :exec-frame (+ ,delay (current-frame (current-level *game*))))
-				*game*)
+					       :exec-frame (+ ,delay (current-frame ,level)))
+				,level)
 		    (push-event (make-instance 'event
 					       :payload (lambda ()
 							  (recurse (1- times)))
-					       :exec-frame (+ ,delay (current-frame (current-level *game*))))
-				*game*)))))
+					       :exec-frame (+ ,delay (current-frame ,level)))
+				,level)))))
      (recurse ,repeat)))
