@@ -7,15 +7,15 @@
 
 (defclass projectile (sprite)
   ((shooter :initarg :shooter :accessor shooter)
-   (image :initform (gethash 'bullet1 *resource-table*))))
+   (image :initform (load-image "gif/bullet-3"))))
 
 (defclass laser (projectile)
   ((velocity :initform 30)
-   (image :initform (gethash 'laser1 *resource-table*))))
+   (image :initform (load-image "gif/bullet-4"))))
 
 (defclass enemy-laser (projectile)
   ((velocity :initform 3)
-   (image :initform (gethash 'laser2 *resource-table*))))
+   (image :initform (load-image "gif/bullet-5"))))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))

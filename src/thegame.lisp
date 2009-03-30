@@ -96,8 +96,8 @@
   (with-slots (x y times-displayed display-limit message-string) msg
     (if (and display-limit 
 	       (>= times-displayed display-limit))
-	(setf (messages *game*)
-	      (delete msg (messages *game*)))
+	(setf (messages (current-level *game*))
+	      (delete msg (messages (current-level *game*))))
 	(incf times-displayed))))
 
 (defmethod draw ((msg message))
@@ -106,5 +106,5 @@
 
 (defun display-message (message x y &optional display-limit)
   (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
-    (push msg (messages *game*))))
+    (push msg (messages (current-level *game*)))))
 

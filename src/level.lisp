@@ -13,7 +13,6 @@
 ;;;
 (defclass level ()
   ((event-queue :initform (make-event-queue) :accessor event-queue) ;allows per-level event loading
-   (resources :initform (make-hash-table :test #'equal) :accessor resources) ;holds level-specific resources
    (current-frame :initform 0 :accessor current-frame) ;useful on a per-level basis
    (player :initform (make-instance 'player) :accessor player)
    (background :initform (make-instance 'background) :accessor background) ;level-specific
