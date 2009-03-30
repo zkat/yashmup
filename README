@@ -1,15 +1,3 @@
 Building and running yashmup:
 
-On Linux/OSX:
-
-1. Install a lisp (or sbcl clisp ccl)
-2. cd /path/to/yashmup
-3. load make-image.lisp with your chosen lisp:
-   a. With SBCL: sbcl --script make-image.lisp
-   b. With CLISP: clisp make-image.lisp
-   c. With Clozure: ccl -l make-image.lisp ;; warning: this might not work
-4. ./yashmup
-
-On Windows:
-
-Lol i dunno. It works, but I can't be arsed atm.
+.... figure it out. You need to load lispbuilder-sdl. make-image.lisp should work after that.
