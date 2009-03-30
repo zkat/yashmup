@@ -28,21 +28,20 @@
 
 ;;; Game methods
 (defmethod update ((game game))
-  (update (player game))
   (update (current-level game)))
 
 (defmethod draw ((game game))
-  (draw (current-level game)))
+  (draw (current-level game))
+  (when (paused-p game)
+    (draw-pause-screen game)))
 
 (defmethod take-a-step ((game game))
   (unless (paused-p game)
-;    (process-cooked-events *game*)
+    ;; (process-cooked-events game)
     (update game))
-  (draw game)
-  (when (paused-p game)
-    (pause-screen game)))
+  (draw game))
 
-(defmethod pause-screen ((game game))
+(defmethod draw-pause-screen ((game game))
   (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
   (sdl:draw-string-shaded-* "PAUSED" 
 			    (/ *screen-width* 2)
