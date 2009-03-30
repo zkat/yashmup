@@ -18,7 +18,6 @@
     :documentation "A function, that contains the code to be executed.")
    (exec-frame
     :initarg :exec-frame
-    :initform (current-frame (current-level *game*))
     :accessor exec-frame
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
@@ -115,3 +114,22 @@ Returns NIL if there is nothing in the queue."))
   (loop
      while (event-available-p level)
      do (process-next-event level)))
+
+;;; Helper Macro
+(defmacro fork ((&key (delay 0) (repeat 0)) &body body)
+  "Turns BODY into one or more event-loop events."
+  `(labels ((recurse (times)
+	      (if (< times 0)
+		  nil
+		  (progn
+		    (push-event (make-instance 'event
+					       :payload (lambda ()
+							  ,@body)
+					       :exec-frame (+ ,delay (current-frame (current-level *game*))))
+				*game*)
+		    (push-event (make-instance 'event
+					       :payload (lambda ()
+							  (recurse (1- times)))
+					       :exec-frame (+ ,delay (current-frame (current-level *game*))))
+				*game*)))))
+     (recurse ,repeat)))

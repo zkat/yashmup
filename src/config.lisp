@@ -15,3 +15,8 @@
 		   #+ccl(concatenate 'string (ccl::current-directory-name) "/")
 		   #+sbcl(values *default-pathname-defaults*)
 		   #+clisp(ext:default-directory)))
+(defparameter *level-path*
+  (merge-pathnames "levels/"
+		   #+clisp(ext:default-directory)
+		   #+sbcl(values *default-pathname-defaults*)
+		   #+ccl(concatenate 'string (ccl::current-directory-name) "/")))

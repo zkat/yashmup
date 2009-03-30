@@ -22,10 +22,7 @@
    (messages :initform nil :accessor messages))) ;why do these things even still exist, wtf
 
 (defun load-level (name)
-  ;; todo. This should handle loading of necessary resources.
-  ;; Note: This will almost definitely require a rewrite of the resource-loading system. Ugh.
-  name
-  )
+  (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*)))
 
 ;;;
 ;;; Generic functions
