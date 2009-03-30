@@ -35,5 +35,5 @@
  ;;
  ;; Other colors: sdl:*red*, sdl:*blue*, sdl:*cyan*, sdl:*green*, sdl:*magenta*, sdl:*yellow*
  ;; This is ignored if *background-image-filename* is set.
- *bg-color* sdl:*white*
+ *bg-color* sdl:*black*
  )
