@@ -6,27 +6,6 @@
 (in-package :yashmup)
 
 ;;;
-;;; The Macro
-;;;
-(defmacro fork ((&key (delay 0) (repeat 0)) &body body)
-  "Turns BODY into one or more event-loop events."
-  `(labels ((recurse (times)
-	      (if (< times 0)
-		  nil
-		  (progn
-		    (push-event (make-instance 'event
-					       :payload (lambda ()
-							  ,@body)
-					       :exec-frame (+ ,delay (current-frame *game*)))
-				*game*)
-		    (push-event (make-instance 'event
-					       :payload (lambda ()
-							  (recurse (1- times)))
-					       :exec-frame (+ ,delay (current-frame *game*)))
-				*game*)))))
-     (recurse ,repeat)))
-
-;;;
 ;;; Useful scripts
 ;;;
 (defun move-in-curve (obj &key (angle-delta 1) (num-frames 1) starting-angle)

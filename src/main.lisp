@@ -16,6 +16,7 @@
     (sdl:clear-display *bg-color*)
     (init-resources)
     (setf *game* (make-instance 'game))
+    (load-level "test-level")
     (let ((music (find-resource 'music)))
       (when music
 	(sdl-mixer:play-music music :loop t)))

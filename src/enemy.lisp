@@ -17,7 +17,7 @@
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
-  (attach enemy (current-level level)))
+  (attach enemy (current-level game)))
 (defmethod attach ((enemy enemy) (level level))
   (push enemy (enemies level)))
 (defmethod detach ((enemy enemy) (level level))
