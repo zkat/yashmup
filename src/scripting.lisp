@@ -10,11 +10,16 @@
 ;;;
 (defun move-in-curve (obj &key (angle-delta 1) 
 		      (num-frames 1) (level (current-level *game*)) 
-		      starting-angle)
+		      starting-angle
+		      (direction :clockwise))
   (when starting-angle
     (setf (angle obj) starting-angle))
   (fork (:level level :delay 1 :repeat num-frames)
-    (incf (angle obj) angle-delta)))
+    (case direction
+      (:clockwise
+       (decf (angle obj) angle-delta))
+      (:counter-clockwise
+       (incf (angle obj) angle-delta)))))
 
 (defun chase (target obj &key (num-frames 100) (level (current-level *game*)))
   (fork (:level level :delay 1 :repeat num-frames)
