@@ -14,18 +14,12 @@
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
-    (init-resources)
     (setf *game* (make-instance 'game))
     (load-level "test-level")
-    (let ((music (find-resource 'music)))
-      (when music
-	(sdl-mixer:play-music music :loop t)))
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
-			 (sdl-mixer:halt-music)
-			 (free-audio)
-			 (sdl-mixer:close-audio)))
+			 (kill-audio)))
        (:key-down-event (:key key)
 			(handle-key-event key *game*))
        (:key-up-event (:key key)
@@ -33,6 +27,11 @@
        (:idle ()
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
+
+(defun kill-audio ()
+  (sdl-mixer:halt-music)
+  (free-audio)
+  (sdl-mixer:close-audio))
 
 (defun free-audio ()
   (let ((music (find-resource 'music))

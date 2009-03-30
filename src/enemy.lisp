@@ -13,7 +13,7 @@
    (y :initform -30)
    (velocity :initform 3)
    (angle :initform 0)
-   (image :initform (gethash 'enemy-small *resource-table*))))
+   (image :initform (load-image "gif/enemy-3.gif"))))
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
@@ -33,10 +33,10 @@
     (incf frames-since-last-shot)
     (when (> damage-taken 5)
       (explode! enemy))
-    (when (collided-p (player *game*)
+    (when (collided-p (player (current-level *game*))
 		      enemy)
-      (crashed! (player *game*) enemy)
-      (incf (score (player *game*))))))
+      (crashed! (player (current-level *game*)) enemy)
+      (incf (score (player (current-level *game*)))))))
 
 (defmethod fire! ((enemy enemy))
     (with-slots (x y) enemy
@@ -57,4 +57,4 @@
   (with-slots (x y) enemy
    (detach enemy *game*)
    (display-message "KABOOM" (- x 15) y 60)
-   (incf (score (player *game*)))))
+   (incf (score (player (current-level *game*))))))
