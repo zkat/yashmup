@@ -13,7 +13,8 @@
    (y :initform -30)
    (velocity :initform 3)
    (angle :initform 0)
-   (image :initform (load-image "gif/enemy-3"))))
+   (image :initform (load-image "gif/enemy-3"))
+   (destroyed-p :initform nil :accessor destroyed-p)))
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
@@ -39,22 +40,24 @@
       (incf (score (player (current-level *game*)))))))
 
 (defmethod fire! ((enemy enemy))
-    (with-slots (x y) enemy
-    (let ((lazors (list (make-instance 'enemy-laser
-				       :x (+ 15 x)
-				       :y (+ y 23)
-				       :velocity 5
-				       :shooter enemy)
-			(make-instance 'enemy-laser
-				       :x (+ x 8)
-				       :y (+ y 23)
-				       :velocity 5
-				       :shooter enemy))))
-      (dolist (lazor lazors) (attach lazor *game*))
-      (setf (frames-since-last-shot enemy) 0))))
+  (unless (destroyed-p enemy)
+   (with-slots (x y) enemy
+     (let ((lazors (list (make-instance 'enemy-laser
+					:x (+ 15 x)
+					:y (+ y 23)
+					:velocity 5
+					:shooter enemy)
+			 (make-instance 'enemy-laser
+					:x (+ x 8)
+					:y (+ y 23)
+					:velocity 5
+					:shooter enemy))))
+       (dolist (lazor lazors) (attach lazor *game*))
+       (setf (frames-since-last-shot enemy) 0)))))
 
 (defmethod explode! ((enemy enemy))
   (with-slots (x y) enemy
    (detach enemy *game*)
    (display-message "KABOOM" (- x 15) y 60)
+   (setf (destroyed-p enemy) t)
    (incf (score (player (current-level *game*))))))
