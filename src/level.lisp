@@ -37,38 +37,39 @@
 ;;; Methods
 (defmethod update ((level level))
   "Takes care of calling UPDATE on all of LEVEL's member objects. Also, resolves collisions"
-  ;; Should I really stuff collision resolution in here?... It seems out of place.
-  (with-slots (background projectiles enemies messages current-frame) level
-    (unless (paused-p *game*)
-      (process-cooked-events level)
-      (incf current-frame))
+  (with-slots (background player projectiles enemies messages current-frame) level
+    (process-cooked-events level)
+    (incf current-frame)
     (update background)
     (mapc #'update projectiles)
+    (update player)
     (mapc #'update enemies)
     (mapc #'update messages)
     (resolve-collisions level)))
 
 (defmethod draw ((level level))
-  (draw (background level))
-  (mapc #'draw (messages level))
-  (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player *game*)))
-			    5 5 sdl:*red* (sdl:color :a 0))
-  (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player *game*)))
-			    5 15 sdl:*red* (sdl:color :a 0))
-  (draw (player *game*))
-  (mapc #'draw (enemies level))
-  (mapc #'draw (projectiles level)))
+  (with-slots (background player projectiles enemies messages) level
+    (draw background)
+    (mapc #'draw messages)
+    (draw player)
+    (mapc #'draw enemies)
+    (mapc #'draw projectiles)
+    (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player level)))
+			      5 5 sdl:*red* (sdl:color :a 0))
+    (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player level)))
+			      5 15 sdl:*red* (sdl:color :a 0))))
 
 (defmethod resolve-collisions ((level level))
-  (loop for enemy in (enemies level)
-       do (loop for projectile in (projectiles level)
-	     do (cond ((and (eql (player level)
+  (with-slots (enemies projectiles player) level
+    (loop for enemy in enemies
+       do (loop for projectile in projectiles
+	     do (cond ((and (eql player
 				 (shooter projectile))
 			    (collided-p projectile enemy))
 		       (incf (damage-taken enemy))
-		       (setf (projectiles level) (delete projectile (projectiles level))))
-		      ((collided-p projectile (player level))
-		       (incf (damage-taken (player level)))
-		       (setf (projectiles level) (delete projectile (projectiles level))))
+		       (setf projectiles (delete projectile projectiles)))
+		      ((collided-p projectile player)
+		       (incf (damage-taken player))
+		       (setf projectiles (delete projectile projectiles)))
 		      (t 
-		       (values))))))
+		       (values)))))))
