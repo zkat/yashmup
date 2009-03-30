@@ -11,11 +11,11 @@
 
 (defclass laser (projectile)
   ((velocity :initform 30)
-   (image :initform (load-image "gif/bullet-4"))))
+   (image :initform (load-image "gif/bullet-8"))))
 
 (defclass enemy-laser (projectile)
-  ((velocity :initform 3)
-   (image :initform (load-image "gif/bullet-5"))))
+  ((velocity :initform 2)
+   (image :initform (load-image "gif/bullet-9"))))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))

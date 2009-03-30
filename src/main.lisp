@@ -14,6 +14,7 @@
 		:icon-caption "PEW PEW")
     (setf (sdl:frame-rate) 60)
     (sdl:clear-display *bg-color*)
+    (setup-paths)
     (setf *game* (make-instance 'game))
     (load-level "test-level")
     (sdl:with-events ()
@@ -27,6 +28,18 @@
        (:idle ()
 	      (take-a-step *game*)
 	      (sdl:update-display)))))
+
+(defun setup-paths ()
+  (setf *resource-path*
+	  (merge-pathnames "resources/" 
+		   #+ccl(concatenate 'string (ccl::current-directory-name) "/")
+		   #+sbcl(values *default-pathname-defaults*)
+		   #+clisp(ext:default-directory)))
+  (setf *level-path*
+	  (merge-pathnames "levels/"
+		   #+clisp(ext:default-directory)
+		   #+sbcl(values *default-pathname-defaults*)
+		   #+ccl(concatenate 'string (ccl::current-directory-name) "/"))))
 
 (defun kill-audio ()
   (sdl-mixer:halt-music)
