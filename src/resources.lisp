@@ -16,6 +16,8 @@
 	       (image (sdl-image:load-and-convert-image (namestring image-path) 
 							:alpha 255 :color-key color-key
 							:image-type ".bmp")))
+	  (unless image
+	    (error "Error loading image resource ~a" name))
 	  (setf (gethash name *resource-table*) image)
 	  image))))
 
@@ -26,6 +28,8 @@
 	value
 	(let* ((sound-path (merge-pathnames (concatenate 'string name ext) *resource-path*))
 	       (sample (sdl-mixer:load-sample (namestring sound-path))))
+	  (unless sample
+	    (error "Error loading sample ~a" name))
 	  (setf (gethash name *resource-table*) sample)
 	  sample))))
 

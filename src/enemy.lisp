@@ -13,7 +13,7 @@
    (y :initform -30)
    (velocity :initform 3)
    (angle :initform 0)
-   (image :initform (load-image "gif/enemy-3.gif"))))
+   (image :initform (load-image "gif/enemy-3"))))
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
