@@ -21,12 +21,16 @@
 	     (:file "level")
 	     (:file "event")
 	     (:file "resources")
-	     (:file "game-object")
-	     (:file "sprite")
-	     (:file "background")
-	     (:file "ships")
-	     (:file "player")
-	     (:file "enemy")
-	     (:file "projectile")
+	     (:module game-objects
+		      :serial t
+		      :components
+		      (
+		       (:file "game-object")
+		       (:file "sprite")
+		       (:file "background")
+		       (:file "ships")
+		       (:file "player")
+		       (:file "enemy")
+		       (:file "projectile")))
 	     (:file "scripting")
 	     (:file "main")))))
