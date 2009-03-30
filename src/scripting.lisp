@@ -8,18 +8,20 @@
 ;;;
 ;;; Useful scripts
 ;;;
-(defun move-in-curve (obj &key (angle-delta 1) (num-frames 1) starting-angle)
+(defun move-in-curve (obj &key (angle-delta 1) 
+		      (num-frames 1) (level (current-level *game*)) 
+		      starting-angle)
   (when starting-angle
     (setf (angle obj) starting-angle))
-  (fork (:delay 1 :repeat num-frames)
+  (fork (:level level :delay 1 :repeat num-frames)
     (incf (angle obj) angle-delta)))
 
-(defun chase (target obj &key (num-frames 100))
-  (fork (:delay 1 :repeat num-frames)
+(defun chase (target obj &key (num-frames 100) (level (current-level *game*)))
+  (fork (:level level :delay 1 :repeat num-frames)
     (setf (angle obj) (angle-from obj target))))
 
-(defun orbit (target obj &key (keep-distance 100) (num-frames 100))
-  (fork (:delay 1 :repeat num-frames)
+(defun orbit (target obj &key (keep-distance 100) (num-frames 100) (level (current-level *game*)))
+  (fork (:level level :delay 1 :repeat num-frames)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
       (cond ((> dist-difference (+  (velocity obj)))
