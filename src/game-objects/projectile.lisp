@@ -34,5 +34,5 @@
     (incf x (horiz-velocity proj))
     (incf y (vert-velocity proj))
     (when (or (< y -10)
-	      (> y 850))
+	      (> y 700))
       (detach proj *game*))))

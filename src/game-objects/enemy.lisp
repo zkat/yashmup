@@ -45,12 +45,10 @@
      (let ((lazors (list (make-instance 'enemy-laser
 					:x (+ 15 x)
 					:y (+ y 23)
-					:velocity 5
 					:shooter enemy)
 			 (make-instance 'enemy-laser
 					:x (+ x 8)
 					:y (+ y 23)
-					:velocity 5
 					:shooter enemy))))
        (dolist (lazor lazors) (attach lazor *game*))
        (setf (frames-since-last-shot enemy) 0)))))
