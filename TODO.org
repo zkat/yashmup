@@ -33,3 +33,4 @@
     to a special *level* variable declared inside load-level. There are issues with the way
     closing over the lexical environment works and stuff. Gahhh.
 
+** TODO Rewrite path-related stuff so that it loads in other computers
