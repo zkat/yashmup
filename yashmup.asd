@@ -24,13 +24,13 @@
 	     (:module game-objects
 		      :serial t
 		      :components
-		      (
-		       (:file "game-object")
+		      ((:file "game-object")
 		       (:file "sprite")
 		       (:file "background")
 		       (:file "ships")
 		       (:file "player")
 		       (:file "enemy")
-		       (:file "projectile")))
+		       (:file "projectile")
+		       (:file "generator")))
 	     (:file "scripting")
 	     (:file "main")))))
