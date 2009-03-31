@@ -2,9 +2,6 @@
 
 ;; level.lisp
 ;;
-;; TODO - 
-;; * Get a better definition of what a level is, and refactor things accordingly.
-;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
