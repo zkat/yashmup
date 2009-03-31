@@ -1,0 +1,19 @@
+* TODO Stuff to do:
+  
+** TODO Sprites
+   
+*** Animated Sprites
+
+*** Sprite zooming
+    This would be good both for fogo's thing and for the game itself
+
+
+** TODO Write bullet-generators
+   
+** TODO Clean up resources
+
+** TODO Improve level-scripting system
+
+*** Better macro(s)
+
+*** Is there a better way to load up the level scripts?
