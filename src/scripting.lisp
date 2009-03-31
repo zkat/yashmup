@@ -9,24 +9,29 @@
 ;;; Useful scripts
 ;;;
 (defun move-in-curve (obj &key (angle-delta 1) 
-		      (num-frames 1) (level (current-level *game*)) 
+		      (duration 1) (level (current-level *game*)) 
 		      starting-angle
 		      (direction :clockwise))
   (when starting-angle
     (setf (angle obj) starting-angle))
-  (fork (:level level :repeat-delay 1 :repetitions num-frames)
+  (fork (:level level :repeat-delay 1 :repetitions duration)
     (case direction
       (:clockwise
        (decf (angle obj) angle-delta))
       (:counter-clockwise
        (incf (angle obj) angle-delta)))))
 
-(defun chase (target obj &key (num-frames 100) (level (current-level *game*)))
-  (fork (:level level :repeat-delay 1 :repetitions num-frames)
+(defun move-in-angle (obj angle &key (duration 1) (level (current-level *game*)))
+  (setf (angle obj) angle)
+  (fork (:delay duration :level level)
+    (setf (velocity obj) 0)))
+
+(defun chase (target obj &key (duration 100) (level (current-level *game*)))
+  (fork (:level level :repeat-delay 1 :repetitions duration)
     (setf (angle obj) (angle-from obj target))))
 
-(defun orbit (target obj &key (keep-distance 100) (num-frames 100) (level (current-level *game*)))
-  (fork (:level level :repeat-delay 1 :repetitions num-frames)
+(defun orbit (target obj &key (keep-distance 100) (duration 100) (level (current-level *game*)))
+  (fork (:level level :repeat-delay 1 :repetitions duration)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
       (cond ((> dist-difference (+  (velocity obj)))

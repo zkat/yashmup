@@ -16,7 +16,7 @@
     (sdl:clear-display *bg-color*)
     (setup-paths)
     (setf *game* (make-instance 'game))
-    (load-level "test-level")
+    (setf (current-level *game*) (load-level "test-level"))
     (sdl:with-events ()
        (:quit-event () (prog1 t
 			 (setf (running-p *game*) nil)
@@ -30,6 +30,8 @@
 	      (sdl:update-display)))))
 
 (defun setup-paths ()
+  "This is necessary because compiling an image myself means the pathname
+objects are saved as my own :<"
   (setf *resource-path*
 	  (merge-pathnames "resources/" 
 		   #+ccl(concatenate 'string (ccl::current-directory-name) "/")

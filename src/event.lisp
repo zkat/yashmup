@@ -26,6 +26,7 @@ By default, all events are immediately cooked.")))
 		   &key (delay 0) start-frame
 		   (level (current-level *game*))
 		   repetitions (repeat-delay 0))
+  "Generates one or more events that execute PAYLOAD."
   (let ((target-frame (or start-frame (current-frame level))))
     (push-event (make-instance 'event
 			       :payload payload 
@@ -38,7 +39,7 @@ By default, all events are immediately cooked.")))
 			     (progn
 			       (push-event (make-instance 'event
 							  :payload payload 
-							  :exec-frame (+ delay target-frame))
+							  :exec-frame (+ repeat-delay target-frame))
 					   level)
 			       (push-event (make-instance 'event
 							  :payload (lambda ()
