@@ -12,15 +12,17 @@
 ;;; Level Class
 ;;;
 (defclass level ()
-  ((event-queue :initform (make-event-queue) :accessor event-queue) ;allows per-level event loading
-   (current-frame :initform 0 :accessor current-frame) ;useful on a per-level basis
+  ((event-queue :initform (make-event-queue) :accessor event-queue)
+   (current-frame :initform 0 :accessor current-frame)
    (player :initform (make-instance 'player) :accessor player)
-   (background :initform (make-instance 'background) :accessor background) ;level-specific
-   (projectiles :initform nil :accessor projectiles) ;level-specific
-   (enemies :initform nil :accessor enemies) ;also level-specific
-   (messages :initform nil :accessor messages))) ;why do these things even still exist, wtf
+   (background :initform (make-instance 'background) :accessor background) 
+   (projectiles :initform nil :accessor projectiles)
+   (enemies :initform nil :accessor enemies)
+   (messages :initform nil :accessor messages)))
 
 (defun load-level (name)
+  "Loads a level script and returns the configured LEVEL object."
+  ;; WHY DOES THIS SUCK SO MUCH? PLEASE EXPLAIN
   (let ((*level* (make-instance 'level)))
     (declare (special *level*))
     (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*))
