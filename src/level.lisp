@@ -53,7 +53,9 @@
     (sdl:draw-string-shaded-* (format nil "Player damage: ~a" (damage-taken (player level)))
 			      5 5 sdl:*red* (sdl:color :a 0))
     (sdl:draw-string-shaded-* (format nil "Enemies downed: ~a" (score (player level)))
-			      5 15 sdl:*red* (sdl:color :a 0))))
+			      5 15 sdl:*red* (sdl:color :a 0))
+    (sdl:draw-string-shaded-* (format nil "Current frame: ~a" (current-frame level))
+			      5 25 sdl:*red* (sdl:color :a 0))))
 
 (defmethod resolve-collisions ((level level))
   (with-slots (enemies projectiles player) level

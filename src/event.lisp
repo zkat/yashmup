@@ -22,14 +22,39 @@
     :documentation "The time of execution when this event will be considered 'cooked'. 
 By default, all events are immediately cooked.")))
 
-(defun make-event (payload &key (delay 0))
-  "Creates a new event, with PAYLOAD being a function that contains everything to be executed.
-It also accepts a DELAY, in milliseconds, until the event is ready to go. Otherwise, it's
-ready immediately."
-  (push-event (make-instance 'event
-			     :payload payload 
-			     :exec-frame (+ delay (current-frame (current-level *game*))))
-	      (current-level *game*)))
+(defun make-event (payload 
+		   &key (delay 0) start-frame
+		   (level (current-level *game*))
+		   repetitions (repeat-delay 0))
+  (let ((target-frame (or start-frame (current-frame level))))
+    (push-event (make-instance 'event
+			       :payload payload 
+			       :exec-frame (+ delay target-frame))
+		level)
+    (when repetitions
+      (labels ((recurse (times)
+			 (if (< times 0)
+			     nil
+			     (progn
+			       (push-event (make-instance 'event
+							  :payload payload 
+							  :exec-frame (+ delay target-frame))
+					   level)
+			       (push-event (make-instance 'event
+							  :payload (lambda ()
+								     (recurse (1- times)))
+							  :exec-frame (+ repeat-delay (current-frame level)))
+					   level)))))
+	(recurse repetitions)))))
+
+(defmacro fork ((&key level delay repetitions repeat-delay) 
+		&body body)
+  "Turns BODY into one or more event-loop events."
+  `(make-event (lambda () ,@body)
+	       ,@(when level `(:level ,level))
+	       ,@(when delay `(:delay ,delay))
+	       ,@(when repetitions `(:repetitions ,repetitions))
+	       ,@(when repeat-delay `(:repeat-delay ,repeat-delay))))
 
 ;;;
 ;;; Event-queue
@@ -116,20 +141,3 @@ Returns NIL if there is nothing in the queue."))
      do (process-next-event level)))
 
 ;;; Helper Macro
-(defmacro fork ((&key (level '(current-level *game*)) (delay 0) (repeat 0)) &body body)
-  "Turns BODY into one or more event-loop events."
-  `(labels ((recurse (times)
-	      (if (< times 0)
-		  nil
-		  (progn
-		    (push-event (make-instance 'event
-					       :payload (lambda ()
-							  ,@body)
-					       :exec-frame (+ ,delay (current-frame ,level)))
-				,level)
-		    (push-event (make-instance 'event
-					       :payload (lambda ()
-							  (recurse (1- times)))
-					       :exec-frame (+ ,delay (current-frame ,level)))
-				,level)))))
-     (recurse ,repeat)))
