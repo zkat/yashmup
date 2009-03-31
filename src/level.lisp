@@ -8,9 +8,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
-(defvar *level* nil
-  "This variable doesn't hold anything by default, but is used by the scripting system to target
-the level that is currently being scripted.")
 ;;;
 ;;; Level Class
 ;;;
@@ -25,6 +22,7 @@ the level that is currently being scripted.")
 
 (defun load-level (name)
   (let ((*level* (make-instance 'level)))
+    (declare (special *level*))
     (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*))
     *level*))
 
