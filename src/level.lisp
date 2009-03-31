@@ -8,6 +8,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
+(defvar *level* nil
+  "This variable doesn't hold anything by default, but is used by the scripting system to target
+the level that is currently being scripted.")
 ;;;
 ;;; Level Class
 ;;;
@@ -21,14 +24,13 @@
    (messages :initform nil :accessor messages))) ;why do these things even still exist, wtf
 
 (defun load-level (name)
-  (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*)))
+  (let ((*level* (make-instance 'level)))
+    (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*))
+    *level*))
 
 ;;;
 ;;; Generic functions
 ;;;
-(defgeneric load-resources (level)
-  (:documentation "Takes care of loading all of LEVEL's resources into
- memory, initializing them, etc."))
 
 ;;; Methods
 (defmethod update ((level level))
