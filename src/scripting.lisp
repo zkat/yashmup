@@ -14,7 +14,7 @@
 		      (direction :clockwise))
   (when starting-angle
     (setf (angle obj) starting-angle))
-  (fork (:level level :delay 1 :repeat num-frames)
+  (fork (:level level :repeat-delay 1 :repetitions num-frames)
     (case direction
       (:clockwise
        (decf (angle obj) angle-delta))
@@ -22,11 +22,11 @@
        (incf (angle obj) angle-delta)))))
 
 (defun chase (target obj &key (num-frames 100) (level (current-level *game*)))
-  (fork (:level level :delay 1 :repeat num-frames)
+  (fork (:level level :repeat-delay 1 :repetitions num-frames)
     (setf (angle obj) (angle-from obj target))))
 
 (defun orbit (target obj &key (keep-distance 100) (num-frames 100) (level (current-level *game*)))
-  (fork (:level level :delay 1 :repeat num-frames)
+  (fork (:level level :repeat-delay 1 :repetitions num-frames)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
       (cond ((> dist-difference (+  (velocity obj)))
