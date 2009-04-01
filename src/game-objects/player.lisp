@@ -12,7 +12,6 @@
   ((x :initform (/ *screen-width* 2))
    (y :initform (- *screen-height* 80))
    (image :initform (load-image "sweet-ship"))
-   (pew :initform (load-sample "pew") :accessor pew)
    (score :initform 0 :accessor score)
    (hitbox-x-offset :initform 24)
    (hitbox-y-offset :initform 35)
@@ -26,7 +25,7 @@
   (setf (player level) nil))
 (defmethod attach ((player player) (game game))
   (attach player (current-level game)))
-(defmethod detath ((player player) (game game))
+(defmethod detach ((player player) (game game))
   (detach player (current-level game)))
 
 (defmethod update ((player player))
@@ -78,5 +77,4 @@
 				       :angle 180
 				       :shooter player))))
       (dolist (lazor lazors) (attach lazor *game*))
-      (sdl-mixer:play-sample (pew player))
       (setf (frames-since-last-shot player) 0))))
