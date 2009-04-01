@@ -14,6 +14,5 @@
    (damage-taken :initform 0 :accessor damage-taken)))
 
 ;;; Generic functions
-(defgeneric fire! (ship))
 (defgeneric explode! (ship)
   (:documentation "Destroys the ship"))

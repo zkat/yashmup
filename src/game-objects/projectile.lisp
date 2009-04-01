@@ -7,7 +7,8 @@
 
 (defclass projectile (sprite)
   ((shooter :initarg :shooter :accessor shooter)
-   (image :initform (load-image "gif/bullet-3"))))
+   (image :initform (load-image "gif/bullet-3"))
+   (sfx :initform (load-sample "pew") :accessor sfx)))
 
 (defclass laser (projectile)
   ((velocity :initform 30)
