@@ -80,6 +80,7 @@
 	 (y2 (sdl:y s2-center)))
     (let ((x (- x1 x2))
 	  (y (- y1 y2)))
+      ;; I don't know why I had to do this, or why it worked.
       (- (radians-to-degrees (* -1 (atan y x)))
 	 90))))
 
@@ -97,11 +98,12 @@
 			    :color sdl:*red*))))
 
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
-  "Naive implementation of 'pixel-perfect' collision-detection, using sprite hitboxes"
+  "Checks whether two sprites have collided."
   (let* ((sprite-1-hitbox-x (+ (x sprite-1) (hitbox-x-offset sprite-1)))
 	 (sprite-1-hitbox-y (+ (y sprite-1) (hitbox-y-offset sprite-1)))
 	 (sprite-2-hitbox-x (+ (x sprite-2) (hitbox-x-offset sprite-2)))
 	 (sprite-2-hitbox-y (+ (y sprite-2) (hitbox-x-offset sprite-2))))
+    ;; This version naively loops through all coordinates of both hitboxes, and finds overlaps.
     (loop
        for x1 from sprite-1-hitbox-x upto (+ sprite-1-hitbox-x (hitbox-width sprite-1))
        do (loop for x2 from sprite-2-hitbox-x upto (+ sprite-2-hitbox-x (hitbox-width sprite-2))
