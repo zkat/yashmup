@@ -15,7 +15,7 @@
    (score :initform 0 :accessor score)
    (weapon :initarg :weapon :accessor weapon)
    (hitbox-x-offset :initform 25)
-   (hitbox-y-offset :initform 60)
+   (hitbox-y-offset :initform 36)
    (hitbox-height :initform 1)
    (hitbox-width :initform 1)))
 
@@ -26,6 +26,7 @@
 		       :y (y player)
 		       :firing-angle 180
 		       :owner player
+		       :sps 5
 		       :ammo-class (find-class 'laser))))
 
 
