@@ -6,7 +6,6 @@
 ;;
 ;; TODO -
 ;; * Clean up this file a bit.
-;; * Finish refactoring of LEVEL-related stuff. Make sure to update other dependent files.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
@@ -107,4 +106,5 @@
 (defun display-message (message x y &optional display-limit)
   (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))
     (push msg (messages (current-level *game*)))))
+
 

@@ -21,7 +21,7 @@
 	;; 50 frames after the curve-move is *started*...
 	(fork (:delay 40 :level level)
 	  ;; Shoot 20 times, with a 5-frame delay between each shot
-	  (fork (:level level :repeat-delay 8 :repetitions 80)
+	  (fork (:level level :repeat-delay 8 :repetitions 10)
 	    (fire! enemy)))
 	;; Once we're done, we detach the enemy from the *level*
 	(fork (:delay 500 :level level)
@@ -39,7 +39,7 @@
 	;; 50 frames after the curve-move is *started*...
 	(fork (:delay 40 :level level)
 	  ;; Shoot 20 times, with a 5-frame delay between each shot
-	  (fork (:level level :repeat-delay 8 :repetitions 80)
+	  (fork (:level level :repeat-delay 8 :repetitions 10)
 	    (fire! enemy)))
 	;; Once we're done, we detach the enemy from the *level*
 	(fork (:delay 500 :level level)

@@ -31,6 +31,7 @@
 		       (:file "player")
 		       (:file "enemy")
 		       (:file "projectile")
-		       (:file "generator")))
+		       (:file "generator")
+		       (:file "weapon")))
 	     (:file "scripting")
 	     (:file "main")))))

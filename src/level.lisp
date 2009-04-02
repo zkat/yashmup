@@ -17,11 +17,11 @@
    (enemies :initform nil :accessor enemies)
    (messages :initform nil :accessor messages)))
 
+(defvar *level*)
 (defun load-level (name)
   "Loads a level script and returns the configured LEVEL object."
   ;; WHY DOES THIS SUCK SO MUCH? PLEASE EXPLAIN
   (let ((*level* (make-instance 'level)))
-    (declare (special *level*))
     (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*))
     *level*))
 
@@ -60,7 +60,7 @@
   (with-slots (enemies projectiles player) level
     (loop for enemy in enemies
        do (loop for projectile in projectiles
-	     do (cond ((and (eql player
+	     do (cond ((and (eql (weapon player)
 				 (shooter projectile))
 			    (collided-p projectile enemy))
 		       (incf (damage-taken enemy))
