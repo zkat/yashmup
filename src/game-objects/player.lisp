@@ -13,22 +13,44 @@
    (y :initform (- *screen-height* 80))
    (image :initform (load-image "sweet-ship"))
    (score :initform 0 :accessor score)
-   (weapon :initarg :weapon :accessor weapon)
    (hitbox-x-offset :initform 25)
    (hitbox-y-offset :initform 36)
    (hitbox-height :initform 1)
    (hitbox-width :initform 1)))
 
 (defmethod initialize-instance :after ((player player) &key)
-  (setf (weapon player)
-	(make-instance 'generator
-		       :x (x player)
-		       :y (y player)
-		       :firing-angle 180
-		       :owner player
-		       :sps 5
-		       :ammo-class (find-class 'laser))))
-
+  (let* ((weapon (make-instance 'weapon
+				:owner player
+				:sps 10
+				:sfx (load-sample "pew")
+				:x-offset 25
+				:y-offset 36))
+	 (generators (list (make-instance 'generator
+					  :x-offset -15
+					  :y-offset -30
+					  :firing-angle 180
+					  :owner weapon
+					  :ammo-class (find-class 'laser))
+			   (make-instance 'generator
+					  :x-offset -6
+					  :y-offset -35
+					  :firing-angle 180
+					  :owner weapon
+					  :ammo-class (find-class 'laser))
+			   (make-instance 'generator
+					  :x-offset 4
+					  :y-offset -35
+					  :firing-angle 180
+					  :owner weapon
+					  :ammo-class (find-class 'laser))
+			   (make-instance 'generator
+					  :x-offset 14
+					  :y-offset -30
+					  :firing-angle 180
+					  :owner weapon
+					  :ammo-class (find-class 'laser)))))
+    (setf (generators weapon) generators)
+    (attach weapon player)))
 
 ;;; Player methods
 (defmethod attach ((player player) (level level))
@@ -41,7 +63,6 @@
   (detach player (current-level game)))
 
 (defmethod update ((player player))
-  (incf (frames-since-last-shot player))
   (update (weapon player))
   (with-slots (x y) player
     (when (key-down-p :sdl-key-left)

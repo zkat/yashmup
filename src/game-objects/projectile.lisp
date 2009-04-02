@@ -8,7 +8,6 @@
 (defclass projectile (sprite)
   ((shooter :initarg :shooter :accessor shooter)
    (image :initform (load-image "gif/bullet-3"))
-   (sfx :initform (load-sample "pew") :accessor sfx)
    (frames-left :initform 150 :accessor frames-left
 		:documentation "How many frames left until this bullet dies?")))
 
