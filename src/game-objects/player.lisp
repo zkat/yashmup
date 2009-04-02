@@ -13,11 +13,21 @@
    (y :initform (- *screen-height* 80))
    (image :initform (load-image "sweet-ship"))
    (score :initform 0 :accessor score)
-   (weapon :initform ())
-   (hitbox-x-offset :initform 24)
-   (hitbox-y-offset :initform 35)
-   (hitbox-height :initform 3)
-   (hitbox-width :initform 3)))
+   (weapon :initarg :weapon :accessor weapon)
+   (hitbox-x-offset :initform 25)
+   (hitbox-y-offset :initform 60)
+   (hitbox-height :initform 1)
+   (hitbox-width :initform 1)))
+
+(defmethod initialize-instance :after ((player player) &key)
+  (setf (weapon player)
+	(make-instance 'generator
+		       :x (x player)
+		       :y (y player)
+		       :firing-angle 180
+		       :owner player
+		       :ammo-class (find-class 'laser))))
+
 
 ;;; Player methods
 (defmethod attach ((player player) (level level))
@@ -31,6 +41,7 @@
 
 (defmethod update ((player player))
   (incf (frames-since-last-shot player))
+  (update (weapon player))
   (with-slots (x y) player
     (when (key-down-p :sdl-key-left)
       (unless (>= 0 x)
@@ -51,31 +62,8 @@
     (if (key-down-p :sdl-key-space)
   	(setf (firing-p player) t)
   	(setf (firing-p player) nil))
-    (when (and (firing-p player)
-  	       (> (frames-since-last-shot player) (shot-limit player)))
+    (when (firing-p player)
       (fire! player))))
 
 (defmethod fire! ((player player))
-  (with-slots (x y) player
-    (let ((lazors (list (make-instance 'laser
-				       :x (+ 17 x)
-				       :y (- y 3)
-				       :angle 180
-				       :shooter player)
-			(make-instance 'laser
-				       :x (+ x 8)
-				       :y (+ y 5)
-				       :angle 180
-				       :shooter player)
-			(make-instance 'laser
-				       :x (+ x 30)
-				       :y (- y 3)
-				       :angle 180
-				       :shooter player)
-			(make-instance 'laser
-				       :x (+ 40 x)
-				       :y (+ y 5)
-				       :angle 180
-				       :shooter player))))
-      (dolist (lazor lazors) (attach lazor *game*))
-      (setf (frames-since-last-shot player) 0))))
+  (fire! (weapon player)))
