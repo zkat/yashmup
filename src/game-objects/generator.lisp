@@ -13,7 +13,6 @@
    (owner :initarg :owner :initform (error "Bullet generator must belong to someone")
 	  :accessor owner)
    (firing-angle :initarg :firing-angle :initform 0 :accessor firing-angle)
-   (firing-p :initform nil :accessor firing-p)
    (shots-per-second :initform 5 :accessor shots-per-second)
    (frames-since-last-shot :initform 0 :accessor frames-since-last-shot)))
 
@@ -27,11 +26,11 @@
     (fire! gen)))
 
 (defmethod fire! ((gen generator))
-  (with-slots (x y angle ammo-limit) gen
+  (with-slots (x y angle) gen
     (let ((pew-pew (make-instance (ammo-class gen)
 				  :x x :y y
 				  :angle angle
-				  :owner gen)))
+				  :shooter gen)))
       (attach pew-pew *game*)
       (sdl-mixer:play-sample (sfx pew-pew))
       (setf (frames-since-last-shot gen) 0))))

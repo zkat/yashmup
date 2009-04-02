@@ -13,6 +13,7 @@
    (y :initform (- *screen-height* 80))
    (image :initform (load-image "sweet-ship"))
    (score :initform 0 :accessor score)
+   (weapon :initform ())
    (hitbox-x-offset :initform 24)
    (hitbox-y-offset :initform 35)
    (hitbox-height :initform 3)

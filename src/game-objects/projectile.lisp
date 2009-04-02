@@ -8,15 +8,19 @@
 (defclass projectile (sprite)
   ((shooter :initarg :shooter :accessor shooter)
    (image :initform (load-image "gif/bullet-3"))
-   (sfx :initform (load-sample "pew") :accessor sfx)))
+   (sfx :initform (load-sample "pew") :accessor sfx)
+   (frames-left :initform 150 :accessor frames-left
+		:documentation "How many frames left until this bullet dies?")))
 
 (defclass laser (projectile)
   ((velocity :initform 30)
-   (image :initform (load-image "gif/bullet-8"))))
+   (image :initform (load-image "gif/bullet-8"))
+   (frames-left :initform 20)))
 
 (defclass enemy-laser (projectile)
   ((velocity :initform 4)
-   (image :initform (load-image "gif/bullet-9"))))
+   (image :initform (load-image "gif/bullet-9"))
+   (frames-left :initform 150)))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))
@@ -30,10 +34,10 @@
   (detach proj (current-level game)))
 
 (defmethod update ((proj projectile))
-  (with-slots (x y)
+  (with-slots (x y frames-left)
       proj
     (incf x (horiz-velocity proj))
     (incf y (vert-velocity proj))
-    (when (or (< y -10)
-	      (> y 700))
+    (decf frames-left)
+    (when (<= frames-left 0)
       (detach proj *game*))))
