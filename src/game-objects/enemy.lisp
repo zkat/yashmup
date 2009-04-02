@@ -32,7 +32,7 @@
     (incf y (vert-velocity enemy))
     (incf x (horiz-velocity enemy))
     (incf frames-since-last-shot)
-    (when (> damage-taken 5)
+    (when (> damage-taken 1)
       (explode! enemy))
     (when (collided-p (player (current-level *game*))
 		      enemy)
