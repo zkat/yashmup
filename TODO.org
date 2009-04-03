@@ -44,3 +44,14 @@
    The background should be layered, with different layers at different speeds.
 
 ** TODO Document/comment more
+** TODO Level stuff
+   I'm still confused about how to handle levels, I think. Should there be multiple levels is a
+   single game? Should there be a globally accessible *level*? Should the level also be the game
+   frame?
+** TODO Create a game frame, adapt code
+   Right now, the game frame takes up the entire SDL screen. Some stuff inside the game gets
+   dimensions on where to go and what's what by directly accessing *screen-width* and
+   *screen-height*. This should be changed such that those variables are replaced by slots in the
+   game class that contain the dimensions of the game view frame. This will allow me to use the rest
+   of the screen as GUI/HUD space.
+   
