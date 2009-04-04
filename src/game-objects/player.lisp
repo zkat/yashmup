@@ -15,6 +15,7 @@
    (score :initform 0 :accessor score)
    (lives :initform 3 :accessor lives)
    (dead-p :initform nil :accessor dead-p)
+   (respawn-time :initform 2 :accessor respawn-time)
    (hitbox-x-offset :initform 25)
    (hitbox-y-offset :initform 36)
    (hitbox-height :initform 1)
@@ -96,7 +97,7 @@
   (decf (lives player))
   (setf (dead-p player) t)
   (if (>= (lives player) 0)
-      (fork (:delay 100)
+      (fork (:delay (* 60 (respawn-time player)))
 	(respawn player))
       (setf (game-over-p *game*) t)))
 
