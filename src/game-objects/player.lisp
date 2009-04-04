@@ -13,6 +13,8 @@
    (y :initform (- *screen-height* 80))
    (image :initform (load-image "sweet-ship"))
    (score :initform 0 :accessor score)
+   (lives :initform 3 :accessor lives)
+   (dead-p :initform nil :accessor dead-p)
    (hitbox-x-offset :initform 25)
    (hitbox-y-offset :initform 36)
    (hitbox-height :initform 1)
@@ -89,3 +91,17 @@
 
 (defmethod fire! ((player player))
   (fire! (weapon player)))
+
+(defmethod explode! ((player player))
+  (decf (lives player))
+  (setf (dead-p player) t)
+  (if (>= (lives player) 0)
+      (fork (:delay 100)
+	(respawn player))
+      (setf (game-over-p *game*) t)))
+
+(defgeneric respawn (obj))
+(defmethod respawn ((player player))
+  (setf (dead-p player) nil)
+  (setf (x player) (/ *screen-width* 2))
+  (setf (y player) (- *screen-height* 80)))

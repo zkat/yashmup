@@ -15,6 +15,7 @@
   ((running-p :initform t :accessor running-p)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
    (current-level :initarg :current-level :accessor current-level)
+   (game-over-p :initform nil :accessor game-over-p)
    (paused-p :initform nil :accessor paused-p)))
 
 ;;;
@@ -32,13 +33,24 @@
 (defmethod draw ((game game))
   (draw (current-level game))
   (when (paused-p game)
-    (draw-pause-screen game)))
+    (draw-pause-screen game))
+  (when (game-over-p game)
+    (draw-game-over-screen game)))
 
 (defmethod take-a-step ((game game))
   (unless (paused-p game)
     ;; (process-cooked-events game)
     (update game))
   (draw game))
+
+(defun draw-game-over-screen (game)
+  (declare (ignore game))
+  (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)
+  (sdl:draw-string-shaded-* "GAME OVER" 
+			    (/ *screen-width* 2)
+			    (/ *screen-height* 2)
+			    sdl:*red*
+			    (sdl:color :a 0)))
 
 (defmethod draw-pause-screen ((game game))
   (sdl:draw-box-* 0 0 *screen-width* *screen-height* :color (sdl:color) :alpha 150)

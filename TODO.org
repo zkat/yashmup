@@ -1,5 +1,4 @@
 * TODO The road to 0.1:
-
 ** DONE Write bullet-generators
   Right now, I think it might be a good idea for bullet-generators to just be invisible
   game objects that are configured to shoot *one* bullet, in *one* angle. The bullet storms
@@ -15,11 +14,6 @@
 ** TODO Rewrite path-related stuff so that it loads in other computers
    Update 4/1: What I have right now seems to solve the issue right now. Should be cleaned up.
    
-** TODO Level stuff
-   I'm still confused about how to handle levels, I think. Should there be multiple levels is a
-   single game? Should there be a globally accessible *level*? Should the level also be the game
-   frame?
-
 ** TODO Turn it into a game
 *** TODO Player needs to have lives
 *** TODO Something needs to happen when player dies
@@ -42,6 +36,11 @@
 ** TODO Background
     The background should be layered, with different layers at different speeds.
 
+** TODO Level stuff
+   I'm still confused about how to handle levels, I think. Should there be multiple levels is a
+   single game? Should there be a globally accessible *level*? Should the level also be the game
+   frame?
+   
 ** TODO Document/comment more
 ** TODO Create a game frame, adapt code
     Right now, the game frame takes up the entire SDL screen. Some stuff inside the game gets
