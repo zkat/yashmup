@@ -14,7 +14,7 @@
 (defclass game ()
   ((running-p :initform t :accessor running-p)
    (keys-held-down :initform (make-hash-table :test #'eq) :accessor keys-held-down)
-   (current-level :accessor current-level)
+   (current-level :initarg :current-level :accessor current-level)
    (paused-p :initform nil :accessor paused-p)))
 
 ;;;
