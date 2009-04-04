@@ -15,9 +15,9 @@
    Update 4/1: What I have right now seems to solve the issue right now. Should be cleaned up.
    
 ** TODO Turn it into a game
-*** TODO Player needs to have lives
-*** TODO Something needs to happen when player dies
-*** TODO Add game over menu
+*** DONE Player needs to have lives
+*** DONE Something needs to happen when player dies
+*** DONE Add game over menu
 *** TODO Add you win screen when player kills boss
 *** TODO Add mechanism for scoring
 *** TODO Add powerups
