@@ -116,6 +116,7 @@
 			 do (return-from collided-p t))))
        finally (return-from collided-p nil))))
 
+;; this shit has to go
 (defmethod crashed! ((obj1 sprite) (obj2 sprite))
   (incf (damage-taken obj1) 10)
   (incf (damage-taken obj2) 10))

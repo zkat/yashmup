@@ -52,11 +52,7 @@
     (incf x (horiz-velocity enemy))
     (update (weapon enemy))
     (when (> damage-taken 1)
-      (explode! enemy))
-    (when (collided-p (player (current-level *game*))
-		      enemy)
-      (crashed! (player (current-level *game*)) enemy)
-      (incf (score (player (current-level *game*)))))))
+      (explode! enemy))))
 
 (defmethod fire! ((enemy enemy))
   (unless (destroyed-p enemy)

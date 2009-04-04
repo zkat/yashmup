@@ -39,4 +39,9 @@
     (incf y (vert-velocity proj))
     (decf frames-left)
     (when (<= frames-left 0)
-      (detach proj *game*))))
+      (detach proj *game*))
+    (when (dead-p (player (current-level *game*)))
+      (explode! proj))))
+
+(defmethod explode! ((proj projectile))
+  (detach proj *game*))
