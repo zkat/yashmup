@@ -34,12 +34,12 @@ By default, all events are immediately cooked.")))
 		level)
     (when repetitions
       (labels ((recurse (times)
-			 (if (< times 0)
+			 (if (<= times 0)
 			     nil
 			     (progn
 			       (push-event (make-instance 'event
 							  :payload payload 
-							  :exec-frame (+ repeat-delay target-frame))
+							  :exec-frame (+ repeat-delay (current-frame level)))
 					   level)
 			       (push-event (make-instance 'event
 							  :payload (lambda ()
