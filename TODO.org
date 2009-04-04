@@ -10,16 +10,26 @@
    I want to something sane, and putting them into appropriate folders. Since the
    resource loading mechanism accepts a string, I can always prepend resources with
    directory/foo.gif, etc.
+   Update 4/3: Fogo said he'd do this by tomorrow.
 
 ** TODO Rewrite path-related stuff so that it loads in other computers
    Update 4/1: What I have right now seems to solve the issue right now. Should be cleaned up.
-   
+   Update 4/3: This seems mostly done -- just send a binary to fogo and make sure shit runs.
+
 ** TODO Turn it into a game
 *** DONE Player needs to have lives
 *** DONE Something needs to happen when player dies
 *** DONE Add game over menu
+*** TODO Script a full level
+**** Play through first level of ikaruga
+**** First set of waves
+**** Mid boss ;; Do I -want- a midboss at all?
+**** Second set of waves
+**** Boss
+  
 *** TODO Add you win screen when player kills boss
 *** TODO Add mechanism for scoring
+    This probably requires a simple multiplier, and a score assigned to each enemy type.
 *** TODO Add powerups
 * TODO Beyond 0.1:
 ** TODO Sprites
