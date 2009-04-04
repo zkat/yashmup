@@ -20,10 +20,10 @@
 (defvar *level*)
 (defun load-level (name)
   "Loads a level script and returns the configured LEVEL object."
-  ;; WHY DOES THIS SUCK SO MUCH? PLEASE EXPLAIN
-  (let ((*level* (make-instance 'level)))
+  (let ((*game* (make-instance 'game
+			       :current-level (make-instance 'level))))
     (load (merge-pathnames (concatenate 'string name ".lisp") *level-path*))
-    *level*))
+    (current-level *game*)))
 
 ;;;
 ;;; Generic functions
