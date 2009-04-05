@@ -25,7 +25,7 @@
   (let* ((weapon (make-instance 'weapon
 				:owner player
 				:sps 10
-				:sfx (load-sample "pew")
+				:sfx (load-sample "sfx/pew")
 				:x-offset 25
 				:y-offset 36))
 	 (generators (list (make-instance 'generator
