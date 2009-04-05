@@ -13,7 +13,7 @@
    (y :initform -30)
    (velocity :initform 3)
    (angle :initform 0)
-   (image :initform (load-image "gif/enemy-3"))
+   (image :initform (load-image "enemies/medium-enemy-01"))
    (destroyed-p :initform nil :accessor destroyed-p)))
 
 (defmethod initialize-instance :after ((enemy enemy) &key)

@@ -7,7 +7,7 @@
 
 (defclass background (sprite)
   ((y :initform -1600)
-   (image :initform (load-image "bg" :ext ".png"))
+   (image :initform (load-image "backgrounds/background-01" :ext ".png"))
    (scroll-speed :initform 1 :accessor scroll-speed)))
 
 (defmethod update ((bg background))
