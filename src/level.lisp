@@ -32,6 +32,8 @@
 (defmethod update ((level level))
   "Takes care of calling UPDATE on all of LEVEL's member objects. Also, resolves collisions"
   (with-slots (background player projectiles enemies messages current-frame) level
+    (unless (dead-p player)
+      (resolve-collisions level))
     (process-cooked-events level)
     (incf current-frame)
     (update background)
@@ -39,9 +41,7 @@
     (unless (dead-p player)
       (update player))
     (mapc #'update enemies)
-    (mapc #'update messages)
-    (unless (dead-p player)
-     (resolve-collisions level))))
+    (mapc #'update messages)))
 
 (defmethod draw ((level level))
   (with-slots (background player projectiles enemies messages) level

@@ -38,10 +38,10 @@
     (draw-game-over-screen game)))
 
 (defmethod take-a-step ((game game))
+  (draw game)
   (unless (paused-p game)
     ;; (process-cooked-events game)
-    (update game))
-  (draw game))
+    (update game)))
 
 (defun draw-game-over-screen (game)
   (declare (ignore game))
