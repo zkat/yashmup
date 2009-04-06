@@ -10,7 +10,7 @@
   ((velocity :initform 5)
    (firing-p :initform nil :accessor firing-p)
    (weapon :initarg :weapon :accessor weapon)
-   (damage-taken :initform 0 :accessor damage-taken)))
+   (hp :initform 5 :accessor hp)))
 
 ;;; Generic functions
 (defgeneric explode! (ship)

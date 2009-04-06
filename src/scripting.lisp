@@ -21,10 +21,11 @@
       (:counter-clockwise
        (incf (angle obj) angle-delta)))))
 
-(defun move-in-angle (obj angle &key (duration 1) (level (current-level *game*)))
+(defun move-in-angle (obj angle &key duration (level (current-level *game*)))
   (setf (angle obj) angle)
-  (fork (:delay duration :level level)
-    (setf (velocity obj) 0)))
+  (when duration
+   (fork (:delay duration :level level)
+     (setf (velocity obj) 0))))
 
 (defun chase (target obj &key (duration 100) (level (current-level *game*)))
   (fork (:level level :repeat-delay 1 :repetitions duration)
@@ -41,3 +42,9 @@
 	    (t
 	     (setf (angle obj) (+ (angle-from obj target) 90)))))))
 
+(defun shoot-in-angle (obj angle)
+  (let ((generators (generators (weapon obj))))
+    (mapc (lambda (gen)
+	    (setf (firing-angle gen) angle))
+	  generators)
+    (fire! obj)))

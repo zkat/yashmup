@@ -14,7 +14,25 @@
    (velocity :initform 3)
    (angle :initform 0)
    (image :initform (load-image "enemies/medium-enemy-01"))
+   (hp :initform 5)
    (destroyed-p :initform nil :accessor destroyed-p)))
+
+(defclass small-enemy (enemy)
+  ((image :initform (load-image "enemies/small-enemy-03"))
+   (hp :initform 3)))
+
+(defmethod initialize-instance :after ((enemy small-enemy) &key)
+  (let* ((weapon (make-instance 'weapon
+				:owner enemy
+				:sps 50
+				:x-offset 20
+				:y-offset 20))
+	 (generators (list (make-instance 'generator
+					  :ammo-class (find-class 'enemy-laser)
+					  :firing-angle 0
+					  :owner weapon))))
+    (setf (generators weapon) generators)
+    (attach weapon enemy)))
 
 (defmethod initialize-instance :after ((enemy enemy) &key)
   (let* ((weapon (make-instance 'weapon
@@ -47,11 +65,11 @@
   (detach enemy (current-level game)))
 
 (defmethod update ((enemy enemy))
-  (with-slots (x y angle damage-taken) enemy
+  (with-slots (x y angle hp) enemy
     (incf y (vert-velocity enemy))
     (incf x (horiz-velocity enemy))
     (update (weapon enemy))
-    (when (> damage-taken 1)
+    (when (<= hp 0)
       (explode! enemy))))
 
 (defmethod fire! ((enemy enemy))
