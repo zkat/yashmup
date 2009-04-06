@@ -87,9 +87,6 @@
     (if (key-down-p :sdl-key-space)
   	(setf (firing-p player) t)
   	(setf (firing-p player) nil))
-    (if (key-down-p :sdl-key-lshift)
-	(setf (sdl:frame-rate) (/ *default-framerate* 2))
-	(setf (sdl:frame-rate) *default-framerate*))
     (when (firing-p player)
       (fire! player))))
 

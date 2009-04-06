@@ -3,7 +3,7 @@
 ;;;
 ;;; First wave
 ;;;
-(fork (:delay 2000)
+(fork (:delay 100)
   
  (fork (:repeat-delay 30 :repetitions 3)
    (let ((enemy (make-instance 'small-enemy :x -25 :y 50 :velocity 4)))
@@ -63,7 +63,7 @@
 ;;; Second wave
 ;;;
 
-(fork (:delay 100)
+(fork (:delay 700)
   (let* ((boss (make-instance 'small-enemy :x (- (/ *screen-width* 2) 100)
 			     :y -200
 			     :hp 1000
@@ -75,19 +75,19 @@
 				:sps 50))
 	 (generators (append (loop for i upto 34
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'enemy-laser)
+						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
 						       :owner weapon
 						       :x-offset 50))
 			     (loop for i upto 34
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'enemy-laser)
+						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
 						       :owner weapon
 						       :x-offset -50))
 			       (loop for i upto 34
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'enemy-laser)
+						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
 						       :owner weapon
 						       :y-offset 70)))))
