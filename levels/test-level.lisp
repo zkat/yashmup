@@ -3,7 +3,7 @@
 ;;;
 ;;; First wave
 ;;;
-(fork ()
+(fork (:delay 2000)
   
  (fork (:repeat-delay 30 :repetitions 3)
    (let ((enemy (make-instance 'small-enemy :x -25 :y 50 :velocity 4)))
@@ -63,9 +63,53 @@
 ;;; Second wave
 ;;;
 
-(fork (:delay 600)
-  
-  )
+(fork (:delay 100)
+  (let* ((boss (make-instance 'small-enemy :x (- (/ *screen-width* 2) 100)
+			     :y -200
+			     :hp 1000
+			     :image (load-image "bosses/small-boss-01")))
+	 (weapon (make-instance 'weapon
+				:x-offset 100
+				:y-offset 100
+				:owner boss
+				:sps 50))
+	 (generators (append (loop for i upto 34
+				collect (make-instance 'generator
+						       :ammo-class (find-class 'enemy-laser)
+						       :firing-angle (* i 10)
+						       :owner weapon
+						       :x-offset 50))
+			     (loop for i upto 34
+				collect (make-instance 'generator
+						       :ammo-class (find-class 'enemy-laser)
+						       :firing-angle (* i 10)
+						       :owner weapon
+						       :x-offset -50))
+			       (loop for i upto 34
+				collect (make-instance 'generator
+						       :ammo-class (find-class 'enemy-laser)
+						       :firing-angle (* i 10)
+						       :owner weapon
+						       :y-offset 70)))))
+    (setf (generators weapon) generators)
+    (attach weapon boss)
+    (attach boss *game*)
+    (setf (velocity boss) 1)
+    (move-in-angle boss 0 :duration 200)
+    (fork (:delay 300)
+      (setf (angle boss) 90)
+      (fork (:repeat-delay 150 :repetitions 5)
+	(setf (velocity boss) 1)
+	(setf (angle boss) (* (angle boss) -1))))
+    (fork (:delay 250)
+      (fork (:repetitions 40 :repeat-delay 15)
+	(fire! boss)))
+    (fork (:delay 850)
+      (setf (velocity boss) 1)
+      (move-in-angle boss 180 :duration 200))
+    (fork (:delay 1150)
+      (detach boss *game*))))
+
 
 
 ;;;

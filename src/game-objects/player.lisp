@@ -87,6 +87,9 @@
     (if (key-down-p :sdl-key-space)
   	(setf (firing-p player) t)
   	(setf (firing-p player) nil))
+    (if (key-down-p :sdl-key-lshift)
+	(setf (sdl:frame-rate) (/ *default-framerate* 2))
+	(setf (sdl:frame-rate) *default-framerate*))
     (when (firing-p player)
       (fire! player))))
 
@@ -106,3 +109,21 @@
   (setf (dead-p player) nil)
   (setf (x player) (/ *screen-width* 2))
   (setf (y player) (- *screen-height* 80)))
+
+(defmethod collided-p ((sprite-1 sprite) (sprite-2 player))
+  "Checks whether two sprites have collided."
+  (let* ((sprite-1-hitbox-x (+ (x sprite-1) (hitbox-x-offset sprite-1)))
+	 (sprite-1-hitbox-y (+ (y sprite-1) (hitbox-y-offset sprite-1)))
+	 (sprite-2-hitbox-x (+ (x sprite-2) (hitbox-x-offset sprite-2)))
+	 (sprite-2-hitbox-y (+ (y sprite-2) (hitbox-x-offset sprite-2))))
+    ;; This version naively loops through all coordinates of both hitboxes, and finds overlaps.
+    (when (and (< sprite-1-hitbox-x sprite-2-hitbox-x)
+	       (> (+ (hitbox-width sprite-1) sprite-1-hitbox-x)
+		  sprite-2-hitbox-x)
+	       (< sprite-1-hitbox-y sprite-2-hitbox-y)
+	       (> (+ (hitbox-height sprite-1) sprite-1-hitbox-y)
+		  sprite-2-hitbox-y))
+      t)))
+
+(defmethod collided-p ((sprite-1 player) (sprite-2 sprite))
+  (collided-p sprite-2 sprite-1))
