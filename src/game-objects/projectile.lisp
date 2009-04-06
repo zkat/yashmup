@@ -8,7 +8,7 @@
 (defclass projectile (sprite)
   ((shooter :initarg :shooter :accessor shooter)
    (image :initform (load-image "bullets/7x7-bullet-01"))
-   (frames-left :initform 150 :accessor frames-left
+   (frames-left :initform 300 :accessor frames-left
 		:documentation "How many frames left until this bullet dies?")))
 
 (defclass laser (projectile)
@@ -19,7 +19,7 @@
 (defclass enemy-laser (projectile)
   ((velocity :initform 4)
    (image :initform (load-image "bullets/8x8-bullet-01"))
-   (frames-left :initform 150)))
+   (frames-left :initform 300)))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))

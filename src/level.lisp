@@ -65,7 +65,7 @@
 	     do (cond ((and (eql (weapon player)
 				 (shooter projectile))
 			    (collided-p projectile enemy))
-		       (incf (damage-taken enemy))
+		       (decf (hp enemy))
 		       (setf projectiles (delete projectile projectiles)))
 		      ((collided-p projectile player)
 		       (explode! player)
