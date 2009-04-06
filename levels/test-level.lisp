@@ -12,7 +12,7 @@
      (fork (:delay 50 :repeat-delay 40 :repetitions 5)
        (fire! enemy))
      (fork (:delay 80)
-       (move-in-curve enemy :angle-delta 2 :duration 200)
+       (move-in-curve enemy :angle-delta 1.5 :duration 200)
        (fork (:repeat-delay 40 :repetitions 15)
 	 (fire! enemy)))
      (fork (:delay 350)
@@ -25,7 +25,7 @@
      (fork (:delay 50 :repeat-delay 40 :repetitions 5)
        (fire! enemy))
      (fork (:delay 80)
-       (move-in-curve enemy :angle-delta 2 :duration 200 :direction :counter-clockwise)
+       (move-in-curve enemy :angle-delta 1.5 :duration 200 :direction :counter-clockwise)
        (fork (:repeat-delay 40 :repetitions 15)
 	 (fire! enemy)))
      (fork (:delay 350)
@@ -37,7 +37,7 @@
 			       :y -30 :velocity 3)))
      (attach enemy *game*)
      (move-in-angle enemy 0 :duration 30)
-     (fork (:delay 32 :repeat-delay 30 :repetitions 10)
+     (fork (:delay 32 :repeat-delay 60 :repetitions 5)
        (shoot-in-angle enemy (angle-from enemy (player (current-level *game*)))))
      (fork (:delay 300)
        (setf (velocity enemy) 3)
@@ -51,7 +51,7 @@
 			       :y -30 :velocity 3)))
      (attach enemy *game*)
      (move-in-angle enemy 0 :duration 30)
-     (fork (:delay 32 :repeat-delay 30 :repetitions 10)
+     (fork (:delay 32 :repeat-delay 60 :repetitions 5)
        (shoot-in-angle enemy (angle-from enemy (player (current-level *game*)))))
      (fork (:delay 300)
        (setf (velocity enemy) 3)
@@ -89,6 +89,7 @@
 ;;;
 ;;; Boss
 ;;;
+
 
 ;;; First pattern:
 

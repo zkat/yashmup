@@ -17,6 +17,25 @@
    (hp :initform 5)
    (destroyed-p :initform nil :accessor destroyed-p)))
 
+(defmethod initialize-instance :after ((enemy enemy) &key)
+  (let* ((weapon (make-instance 'weapon
+				:owner enemy
+				:sps 50
+				:x-offset 20
+				:y-offset 20))
+	 (generators (list (make-instance 'generator
+					  :ammo-class (find-class 'enemy-laser)
+					  :x-offset -5
+					  :firing-angle 0
+					  :owner weapon)
+			   (make-instance 'generator
+					  :ammo-class (find-class 'enemy-laser)
+					  :x-offset 5
+					  :firing-angle 0
+					  :owner weapon))))
+    (setf (generators weapon) generators)
+    (attach weapon enemy)))
+
 (defclass small-enemy (enemy)
   ((image :initform (load-image "enemies/small-enemy-03"))
    (hp :initform 3)))
@@ -34,7 +53,11 @@
     (setf (generators weapon) generators)
     (attach weapon enemy)))
 
-(defmethod initialize-instance :after ((enemy enemy) &key)
+(defclass boss (enemy)
+  ((image :initform (load-image "bosses/small-boss-01.gif"))
+   (hp :initform 10000)))
+
+(defmethod initialize-instance :after ((enemy small-enemy) &key)
   (let* ((weapon (make-instance 'weapon
 				:owner enemy
 				:sps 50
@@ -42,12 +65,6 @@
 				:y-offset 20))
 	 (generators (list (make-instance 'generator
 					  :ammo-class (find-class 'enemy-laser)
-					  :x-offset -5
-					  :firing-angle 0
-					  :owner weapon)
-			   (make-instance 'generator
-					  :ammo-class (find-class 'enemy-laser)
-					  :x-offset 5
 					  :firing-angle 0
 					  :owner weapon))))
     (setf (generators weapon) generators)
