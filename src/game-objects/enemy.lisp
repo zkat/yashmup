@@ -53,23 +53,6 @@
     (setf (generators weapon) generators)
     (attach weapon enemy)))
 
-(defclass boss (enemy)
-  ((image :initform (load-image "bosses/small-boss-01.gif"))
-   (hp :initform 10000)))
-
-(defmethod initialize-instance :after ((enemy small-enemy) &key)
-  (let* ((weapon (make-instance 'weapon
-				:owner enemy
-				:sps 50
-				:x-offset 20
-				:y-offset 20))
-	 (generators (list (make-instance 'generator
-					  :ammo-class (find-class 'enemy-laser)
-					  :firing-angle 0
-					  :owner weapon))))
-    (setf (generators weapon) generators)
-    (attach weapon enemy)))
-
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))
   (attach enemy (current-level game)))
