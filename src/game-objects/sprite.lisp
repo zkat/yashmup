@@ -10,10 +10,10 @@
 ;;;
 (defclass sprite (game-object)
   ((image :initarg :image :initform (error "Must provide an image for this sprite") :accessor image)
-   (hitbox-x-offset :initform 0 :accessor hitbox-x-offset)
-   (hitbox-y-offset :initform 0 :accessor hitbox-y-offset)
+   (hitbox-x-offset :accessor hitbox-x-offset)
+   (hitbox-y-offset :accessor hitbox-y-offset)
    (hitbox-radius :accessor hitbox-radius)
-   (draw-hitbox-p :initform nil :accessor draw-hitbox-p)))
+   (draw-hitbox-p :initform t :accessor draw-hitbox-p)))
 
 (defclass animated-sprite (sprite)
   ((frame-x-size :accessor frame-x-size)
@@ -26,7 +26,21 @@
 ;;     ))
 
 (defmethod initialize-instance :after ((sprite sprite) 
-				       &key hitbox-radius)
+				       &key hitbox-radius 
+				       hitbox-x-offset
+				       hitbox-y-offset)
+  (if hitbox-x-offset
+      (setf (hitbox-x-offset sprite) hitbox-x-offset)
+      (unless (slot-boundp sprite 'hitbox-x-offset)
+	(setf (hitbox-x-offset sprite) (- (floor (+ (x sprite)
+						    (/ (width sprite) 2)))
+					  (x sprite)))))
+  (if hitbox-y-offset
+      (setf (hitbox-y-offset sprite) hitbox-y-offset)
+      (unless (slot-boundp sprite 'hitbox-y-offset)
+	(setf (hitbox-y-offset sprite) (- (floor (+ (y sprite)
+						    (/ (height sprite) 2)))
+					  (y sprite)))))
   (if hitbox-radius
       (setf (hitbox-radius sprite) hitbox-radius)
       (unless (slot-boundp sprite 'hitbox-radius)
@@ -88,16 +102,17 @@
 	  (hitbox-y (+ (y sprite) (hitbox-y-offset sprite))))
       (sdl:draw-circle-* hitbox-x
 			 hitbox-y
-			 (hitbox-radius sprite)
+			 (floor (/ (hitbox-radius sprite) 2))
 			 :color sdl:*red*))))
 
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
+  ;; Something is not right...
   "Checks whether two sprites have collided."
   (with-slots ((sp1-r hitbox-radius)) sprite-1
     (with-slots ((sp2-r hitbox-radius)) sprite-2
       (let ((distance (distance sprite-1 sprite-2)))
-	(unless (< (+ sp1-r sp2-r)
-		 distance)
+	(unless (> distance
+		   (+ sp1-r sp2-r))
 	  t)))))
 
 ;; this shit has to go
