@@ -5,6 +5,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (in-package :yashmup)
 
+(defparameter *draw-hitbox-p* nil)
 ;;;
 ;;; Sprite classes
 ;;;
@@ -13,7 +14,7 @@
    (hitbox-x-offset :accessor hitbox-x-offset)
    (hitbox-y-offset :accessor hitbox-y-offset)
    (hitbox-radius :accessor hitbox-radius)
-   (draw-hitbox-p :initform t :accessor draw-hitbox-p)))
+   (draw-hitbox-p :initform *draw-hitbox-p* :accessor draw-hitbox-p)))
 
 (defclass animated-sprite (sprite)
   ((frame-x-size :accessor frame-x-size)
