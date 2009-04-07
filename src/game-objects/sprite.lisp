@@ -44,7 +44,7 @@
   (if hitbox-radius
       (setf (hitbox-radius sprite) hitbox-radius)
       (unless (slot-boundp sprite 'hitbox-radius)
-	(setf (hitbox-radius sprite) (width sprite)))))
+	(setf (hitbox-radius sprite) (floor (/ (width sprite) 2))))))
 
 ;;;
 ;;; Generic functions
@@ -102,7 +102,7 @@
 	  (hitbox-y (+ (y sprite) (hitbox-y-offset sprite))))
       (sdl:draw-circle-* hitbox-x
 			 hitbox-y
-			 (floor (/ (hitbox-radius sprite) 2))
+			 (hitbox-radius sprite)
 			 :color sdl:*red*))))
 
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
