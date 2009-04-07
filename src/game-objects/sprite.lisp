@@ -69,8 +69,8 @@
 (defmethod center ((sprite sprite))
   (with-slots (image x y)
       sprite
-    (sdl:point :x (floor (+ x (/ (hitbox-x-offset sprite) 2)))
-	       :y (floor (+ y (/ (hitbox-y-offset sprite) 2))))))
+    (sdl:point :x (floor (+ x (hitbox-x-offset sprite)))
+	       :y (floor (+ y (hitbox-y-offset sprite))))))
 
 (defmethod distance ((sprite1 sprite) (sprite2 sprite))
   (let* ((s1-center (center sprite1))
