@@ -12,8 +12,7 @@
   ((image :initarg :image :initform (error "Must provide an image for this sprite") :accessor image)
    (hitbox-x-offset :initform 0 :accessor hitbox-x-offset)
    (hitbox-y-offset :initform 0 :accessor hitbox-y-offset)
-   (hitbox-width :accessor hitbox-width)
-   (hitbox-height :accessor hitbox-height)
+   (hitbox-radius :accessor hitbox-radius)
    (draw-hitbox-p :initform nil :accessor draw-hitbox-p)))
 
 (defclass animated-sprite (sprite)
@@ -27,15 +26,11 @@
 ;;     ))
 
 (defmethod initialize-instance :after ((sprite sprite) 
-				       &key hitbox-width hitbox-height)
-  (if hitbox-width
-      (setf (hitbox-width sprite) hitbox-width)
-      (unless (slot-boundp sprite 'hitbox-width)
-	(setf (hitbox-width sprite) (width sprite))))
-  (if hitbox-height
-      (setf (hitbox-height sprite) hitbox-height)
-      (unless (slot-boundp sprite 'hitbox-height)
-	(setf (hitbox-height sprite) (height sprite)))))
+				       &key hitbox-radius)
+  (if hitbox-radius
+      (setf (hitbox-radius sprite) hitbox-radius)
+      (unless (slot-boundp sprite 'hitbox-radius)
+	(setf (hitbox-radius sprite) (width sprite)))))
 
 ;;;
 ;;; Generic functions
@@ -91,32 +86,21 @@
   (when (draw-hitbox-p sprite)
     (let ((hitbox-x (+ (x sprite) (hitbox-x-offset sprite)))
 	  (hitbox-y (+ (y sprite) (hitbox-y-offset sprite))))
-      (sdl:draw-rectangle-* hitbox-x
-			    hitbox-y
-			    (hitbox-width sprite)
-			    (hitbox-height sprite)
-			    :color sdl:*red*))))
+      (sdl:draw-circle-* hitbox-x
+			 hitbox-y
+			 (hitbox-radius sprite)
+			 :color sdl:*red*))))
 
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
   "Checks whether two sprites have collided."
-  (let* ((sprite-1-hitbox-x (+ (x sprite-1) (hitbox-x-offset sprite-1)))
-	 (sprite-1-hitbox-y (+ (y sprite-1) (hitbox-y-offset sprite-1)))
-	 (sprite-2-hitbox-x (+ (x sprite-2) (hitbox-x-offset sprite-2)))
-	 (sprite-2-hitbox-y (+ (y sprite-2) (hitbox-x-offset sprite-2))))
-    ;; This version naively loops through all coordinates of both hitboxes, and finds overlaps.
-    (loop
-       for x1 from sprite-1-hitbox-x upto (+ sprite-1-hitbox-x (hitbox-width sprite-1))
-       do (loop for x2 from sprite-2-hitbox-x upto (+ sprite-2-hitbox-x (hitbox-width sprite-2))
-	     when (= x1 x2)
-	     do (loop
-		   for y1 from sprite-1-hitbox-y upto (+ sprite-1-hitbox-y (hitbox-height sprite-1))
-		   do (loop
-			 for y2 from sprite-2-hitbox-y upto (+ sprite-2-hitbox-y (hitbox-height sprite-2))
-			 when (= y1 y2)
-			 do (return-from collided-p t))))
-       finally (return-from collided-p nil))))
+  (with-slots ((sp1-r hitbox-radius)) sprite-1
+    (with-slots ((sp2-r hitbox-radius)) sprite-2
+      (let ((distance (distance sprite-1 sprite-2)))
+	(unless (< (+ sp1-r sp2-r)
+		 distance)
+	  t)))))
 
 ;; this shit has to go
 (defmethod crashed! ((obj1 sprite) (obj2 sprite))
-  (incf (damage-taken obj1) 10)
-  (incf (damage-taken obj2) 10))
+  (decf (hp obj1))
+  (decf (hp obj2)))

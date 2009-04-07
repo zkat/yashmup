@@ -18,8 +18,7 @@
    (respawn-time :initform 2 :accessor respawn-time)
    (hitbox-x-offset :initform 25)
    (hitbox-y-offset :initform 36)
-   (hitbox-height :initform 1)
-   (hitbox-width :initform 1)))
+   (hitbox-radius :initform 1)))
 
 (defmethod initialize-instance :after ((player player) &key)
   (let* ((weapon (make-instance 'weapon
@@ -106,10 +105,3 @@
   (setf (dead-p player) nil)
   (setf (x player) (/ *screen-width* 2))
   (setf (y player) (- *screen-height* 80)))
-
-(defmethod collided-p ((sprite-1 sprite) (sprite-2 player))
-  "Checks whether two sprites have collided."
-)
-
-(defmethod collided-p ((sprite-1 player) (sprite-2 sprite))
-  (collided-p sprite-2 sprite-1))
