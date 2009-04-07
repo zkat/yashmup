@@ -105,7 +105,7 @@
 	(setf (velocity boss) 1)
 	(setf (angle boss) (* (angle boss) -1))))
     (fork (:delay 250)
-      (fork (:repetitions 40 :repeat-delay 15)
+      (fork (:repetitions 15 :repeat-delay 40)
 	(fire! boss)))
     (fork (:delay 850)
       (setf (velocity boss) 1)
