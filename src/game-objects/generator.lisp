@@ -8,9 +8,9 @@
 (in-package :yashmup)
 
 (defclass generator (game-object)
-  ((ammo-class :initform (find-class 'projectile)
-	       :initarg :ammo-class
-	       :accessor ammo-class)
+  ((ammo-sprite :initform (load-image "bullets/7x7-bullet-01")
+		:initarg :ammo-sprite
+		:accessor ammo-sprite)
    (owner :initarg :owner :initform (error "Bullet generator must belong to someone")
 	  :accessor owner)
    (muzzle-velocity :initarg :muzzle-velocity :initform 4 :accessor muzzle-velocity)
@@ -27,9 +27,10 @@
     (setf y (+ (y owner) y-offset))))
 
 (defmethod fire! ((gen generator))
-  (with-slots (x y firing-angle owner muzzle-velocity) gen
-    (let ((pew-pew (make-instance (ammo-class gen)
+  (with-slots (ammo-sprite x y firing-angle owner muzzle-velocity) gen
+    (let ((pew-pew (make-instance 'projectile
 				  :x x :y y
+				  :image ammo-sprite
 				  :angle firing-angle
 				  :velocity muzzle-velocity
 				  :shooter owner)))

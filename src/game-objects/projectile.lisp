@@ -6,25 +6,10 @@
 (in-package :yashmup)
 
 (defclass projectile (sprite)
-  ((shooter :initarg :shooter :accessor shooter)
-   (image :initform (load-image "bullets/7x7-bullet-01"))
+  ((shooter :initform (error "projectiles must have a shooter associated with them")
+	    :initarg :shooter :accessor shooter)
    (frames-left :initform 300 :accessor frames-left
 		:documentation "How many frames left until this bullet dies?")))
-
-(defclass laser (projectile)
-  ((velocity :initform 30)
-   (image :initform (load-image "bullets/2x10-bullet-01"))
-   (frames-left :initform 20)))
-
-(defclass enemy-laser (projectile)
-  ((velocity :initform 4)
-   (image :initform (load-image "bullets/7x7-bullet-01"))
-   (frames-left :initform 300)))
-
-(defclass boss-laser (projectile)
-  ((velocity :initform 2)
-   (image :initform (load-image "bullets/8x8-bullet-01"))
-   (frames-left :initform 250)))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))
