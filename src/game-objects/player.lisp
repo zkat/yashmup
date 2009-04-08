@@ -31,23 +31,27 @@
 					  :x-offset -15
 					  :y-offset -30
 					  :firing-angle 180
+					  :muzzle-velocity 30
 					  :owner weapon
 					  :ammo-class (find-class 'laser))
 			   (make-instance 'generator
 					  :x-offset -6
 					  :y-offset -35
 					  :firing-angle 180
+					  :muzzle-velocity 30
 					  :owner weapon
 					  :ammo-class (find-class 'laser))
 			   (make-instance 'generator
 					  :x-offset 4
 					  :y-offset -35
+					  :muzzle-velocity 30
 					  :firing-angle 180
 					  :owner weapon
 					  :ammo-class (find-class 'laser))
 			   (make-instance 'generator
 					  :x-offset 14
 					  :y-offset -30
+					  :muzzle-velocity 30
 					  :firing-angle 180
 					  :owner weapon
 					  :ammo-class (find-class 'laser)))))

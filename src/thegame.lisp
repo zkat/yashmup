@@ -113,7 +113,7 @@
 
 (defmethod draw ((msg message))
   (with-slots (x y message-string) msg
-   (sdl:draw-string-shaded-* message-string x y sdl:*red* (sdl:color :a 0))))
+   (sdl:draw-string-shaded-* message-string (floor x) (floor y) sdl:*red* (sdl:color :a 0))))
 
 (defun display-message (message x y &optional display-limit)
   (let ((msg (make-instance 'message :x x :y y :msg message :limit display-limit)))

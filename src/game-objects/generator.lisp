@@ -13,6 +13,7 @@
 	       :accessor ammo-class)
    (owner :initarg :owner :initform (error "Bullet generator must belong to someone")
 	  :accessor owner)
+   (muzzle-velocity :initarg :muzzle-velocity :initform 4 :accessor muzzle-velocity)
    (firing-angle :initarg :firing-angle :initform 0 :accessor firing-angle)
    (x-offset :initform 0 :initarg :x-offset :accessor x-offset)
    (y-offset :initform 0 :initarg :y-offset :accessor y-offset)))
@@ -26,9 +27,10 @@
     (setf y (+ (y owner) y-offset))))
 
 (defmethod fire! ((gen generator))
-  (with-slots (x y firing-angle owner) gen
+  (with-slots (x y firing-angle owner muzzle-velocity) gen
     (let ((pew-pew (make-instance (ammo-class gen)
 				  :x x :y y
 				  :angle firing-angle
+				  :velocity muzzle-velocity
 				  :shooter owner)))
       (attach pew-pew *game*))))

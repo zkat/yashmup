@@ -15,7 +15,7 @@
        (move-in-curve enemy :angle-delta 1.5 :duration 200)
        (fork (:repeat-delay 40 :repetitions 15)
 	 (fire! enemy)))
-     (fork (:delay 350)
+     (fork (:delay 500)
        (detach enemy *game*))))
 
  (fork (:repeat-delay 30 :repetitions 3)
@@ -28,10 +28,10 @@
        (move-in-curve enemy :angle-delta 1.5 :duration 200 :direction :counter-clockwise)
        (fork (:repeat-delay 40 :repetitions 15)
 	 (fire! enemy)))
-     (fork (:delay 350)
+     (fork (:delay 500)
        (detach enemy *game*))))
 
- (fork (:delay 100)
+ (fork (:delay 200)
    (let ((enemy (make-instance 'enemy
 			       :x (- (/ *screen-width* 2) 100)
 			       :y -30 :velocity 3)))
@@ -45,7 +45,7 @@
      (fork (:delay 400)
        (detach enemy *game*))))
 
- (fork (:delay 100)
+ (fork (:delay 200)
    (let ((enemy (make-instance 'enemy
 			       :x (+ (/ *screen-width* 2) 100)
 			       :y -30 :velocity 3)))
@@ -73,43 +73,48 @@
 				:y-offset 100
 				:owner boss
 				:sps 50))
-	 (generators (append (loop for i upto 34
+	 (generators (append (loop for i upto 35
 				collect (make-instance 'generator
 						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
+						       :muzzle-velocity 3
 						       :owner weapon
 						       :x-offset 50))
-			     (loop for i upto 34
+			     (loop for i upto 35
 				collect (make-instance 'generator
 						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
+						       :muzzle-velocity 3
 						       :owner weapon
 						       :x-offset -50))
-			       (loop for i upto 34
+			     (loop for i upto 35
 				collect (make-instance 'generator
 						       :ammo-class (find-class 'boss-laser)
 						       :firing-angle (* i 10)
+						       :muzzle-velocity 2
 						       :owner weapon
 						       :y-offset 70)))))
     (setf (generators weapon) generators)
     (attach weapon boss)
     (attach boss *game*)
-    (setf (velocity boss) 1)
-    (move-in-angle boss 0 :duration 200)
-    (fork (:delay 250)
+    (setf (velocity boss) 2)
+    (move-in-angle boss 0 :duration 150)
+    (fork (:delay 175)
       (setf (angle boss) -90)
       (setf (velocity boss) 1))
     (fork (:delay 300)
       (fork (:repeat-delay 150 :repetitions 5)
 	(setf (velocity boss) 1)
-	(setf (angle boss) (* (angle boss) -1))))
+	(setf (angle boss) (* (angle boss) -1)))
+      (fork (:delay 800)
+	(setf (velocity boss) 0)))
     (fork (:delay 250)
-      (fork (:repetitions 15 :repeat-delay 40)
+      (fork (:repetitions 30 :repeat-delay 30)
 	(fire! boss)))
-    (fork (:delay 950)
+    (fork (:delay 2000)
       (setf (velocity boss) 1)
       (move-in-angle boss 180 :duration 200))
-    (fork (:delay 1150)
+    (fork (:delay 2300)
       (detach boss *game*))))
 
 

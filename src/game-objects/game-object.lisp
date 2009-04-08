@@ -36,7 +36,7 @@
   (sdl:point :x (x obj) :y (y obj)))
 
 (defmethod horiz-velocity ((obj game-object))
-  (floor (+ (* (velocity obj) (sin (degrees-to-radians (angle obj)))) 1/2)))
+  (* (velocity obj) (sin (degrees-to-radians (angle obj)))))
 
 (defmethod vert-velocity ((obj game-object))
-  (floor (+ (* (velocity obj) (cos (degrees-to-radians (angle obj)))) 1/2)))
+  (* (velocity obj) (cos (degrees-to-radians (angle obj)))))
