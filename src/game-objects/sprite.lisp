@@ -99,8 +99,8 @@
       sprite
     (sdl:draw-surface-at-* image (floor x) (floor y)))
   (when (draw-hitbox-p sprite)
-    (let ((hitbox-x (+ (x sprite) (hitbox-x-offset sprite)))
-	  (hitbox-y (+ (y sprite) (hitbox-y-offset sprite))))
+    (let ((hitbox-x (floor (+ (x sprite) (hitbox-x-offset sprite))))
+	  (hitbox-y (floor (+ (y sprite) (hitbox-y-offset sprite)))))
       (sdl:draw-circle-* hitbox-x
 			 hitbox-y
 			 (hitbox-radius sprite)
