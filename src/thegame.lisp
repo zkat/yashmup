@@ -40,7 +40,6 @@
 (defmethod take-a-step ((game game))
   (draw game)
   (unless (paused-p game)
-    ;; (process-cooked-events game)
     (update game)))
 
 (defun draw-game-over-screen (game)
@@ -71,7 +70,6 @@
 
 ;;; Key event handling
 (defmethod handle-key-event (key (game game) &key (event-type :key-down))
-  ;; This seems a bit ugly. I'll think about it...
   (cond ((eql event-type :key-down)
 	 (register-key-press key game))
 	((eql event-type :key-up)
