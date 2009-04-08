@@ -6,7 +6,7 @@
 (in-package :yashmup)
 
 (defclass weapon (game-object)
-  ((owner :initform (error "Must provide an owner") :initarg :owner :accessor owner)
+  ((owner :initarg :owner :accessor owner)
    (x-offset :initarg :x-offset :initform 0 :accessor x-offset)
    (y-offset :initarg :y-offset :initform 0 :accessor y-offset)
    (shots-per-second :initarg :sps :initform 10 :accessor shots-per-second)
