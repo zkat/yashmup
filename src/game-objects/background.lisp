@@ -19,5 +19,5 @@
 (defmethod draw ((bg background))
   (with-slots (image x y)
       bg
-    (sdl:draw-surface-at-* image x (+ y 1600)))
-  (call-next-method))
+    (sdl:draw-surface-at-* image (floor x) (floor (+ y 1600)))
+    (sdl:draw-surface-at-* image (floor x) (floor y))))
