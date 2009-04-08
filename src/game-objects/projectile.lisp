@@ -18,12 +18,12 @@
 
 (defclass enemy-laser (projectile)
   ((velocity :initform 4)
-   (image :initform (load-image "bullets/8x8-bullet-01"))
+   (image :initform (load-image "bullets/7x7-bullet-01"))
    (frames-left :initform 300)))
 
 (defclass boss-laser (projectile)
   ((velocity :initform 2)
-   (image :initform (load-image "bullets/7x7-bullet-01"))
+   (image :initform (load-image "bullets/8x8-bullet-01"))
    (frames-left :initform 300)))
 
 (defmethod attach ((proj projectile) (level level))

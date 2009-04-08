@@ -97,7 +97,7 @@
 (defmethod draw ((sprite sprite))
   (with-slots (image x y)
       sprite
-    (sdl:draw-surface-at-* image x y))
+    (sdl:draw-surface-at-* image (floor x) (floor y)))
   (when (draw-hitbox-p sprite)
     (let ((hitbox-x (+ (x sprite) (hitbox-x-offset sprite)))
 	  (hitbox-y (+ (y sprite) (hitbox-y-offset sprite))))
