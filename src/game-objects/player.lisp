@@ -24,7 +24,9 @@
   (let* ((weapon (make-instance 'weapon
 				:owner player
 				:sps 10
-				:sfx (load-sample "sfx/pew")
+				:sfx (let ((sample (load-sample "sfx/pew")))
+				       (setf (sdl-mixer:sample-volume sample) 20)
+				       sample)
 				:x-offset 25
 				:y-offset 36))
 	 (generators (list (make-instance 'generator

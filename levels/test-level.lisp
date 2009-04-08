@@ -112,7 +112,7 @@
       (fork (:delay 800)
 	(setf (velocity boss) 0)))
     (fork (:delay 250)
-      (fork (:repetitions 45 :repeat-delay 30)
+      (fork (:repetitions 40 :repeat-delay 40)
 	(fire! boss)))
     (fork (:delay 2000)
       (setf (velocity boss) 0.5)

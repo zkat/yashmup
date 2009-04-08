@@ -24,7 +24,7 @@
 (defclass boss-laser (projectile)
   ((velocity :initform 2)
    (image :initform (load-image "bullets/8x8-bullet-01"))
-   (frames-left :initform 300)))
+   (frames-left :initform 250)))
 
 (defmethod attach ((proj projectile) (level level))
   (push proj (projectiles level)))
