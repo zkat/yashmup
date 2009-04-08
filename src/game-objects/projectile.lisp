@@ -8,6 +8,7 @@
 (defclass projectile (sprite)
   ((shooter :initform (error "projectiles must have a shooter associated with them")
 	    :initarg :shooter :accessor shooter)
+   ;; This should be configurable by generators, and weapons.
    (frames-left :initform 300 :accessor frames-left
 		:documentation "How many frames left until this bullet dies?")))
 

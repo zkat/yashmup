@@ -63,6 +63,32 @@
 ;;; Second wave
 ;;;
 
+
+
+
+
+;;;
+;;; Third wave
+;;;
+
+;;; Pattern description:
+
+;;;
+;;; Fourth wave
+;;;
+
+;;; Pattern description:
+
+;;;
+;;; Fifth wave
+;;;
+
+;;; Pattern description:
+
+;;;
+;;; Boss
+;;;
+
 (fork (:delay 700)
   (let* ((boss (make-instance 'small-enemy :x (- (/ *screen-width* 2) 100)
 			     :y -200
@@ -89,10 +115,10 @@
 						       :owner weapon
 						       :x-offset -50
 						       :y-offset -40))
-			     (loop for i upto 35
+			     (loop for i upto 71
 				collect (make-instance 'generator
 						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
-						       :firing-angle (+ 7 (* i 10))
+						       :firing-angle (+ 7 (* i 5))
 						       :muzzle-velocity 1.8
 						       :owner weapon
 						       :x-offset -50
@@ -105,7 +131,9 @@
     (fork (:delay 175)
       (setf (angle boss) -90)
       (setf (velocity boss) 0.5))
-    (fork (:delay 300)
+
+;;; First pattern:
+    (fork (:delay 250)
       (fork (:repeat-delay 150 :repetitions 5)
 	(setf (velocity boss) 0.5)
 	(setf (angle boss) (* (angle boss) -1)))
@@ -120,32 +148,6 @@
     (fork (:delay 2600)
       (detach boss *game*))))
 
-
-
-;;;
-;;; Third wave
-;;;
-
-;;; Pattern description:
-
-;;;
-;;; Fourth wave
-;;;
-
-;;; Pattern description:
-
-;;;
-;;; Fifth wave
-;;;
-
-;;; Pattern description:
-
-;;;
-;;; Boss
-;;;
-
-
-;;; First pattern:
 
 ;;; Second pattern:
 
