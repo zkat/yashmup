@@ -18,40 +18,42 @@
    (destroyed-p :initform nil :accessor destroyed-p)))
 
 (defmethod initialize-instance :after ((enemy enemy) &key)
-  (let* ((weapon (make-instance 'weapon
-				:owner enemy
-				:sps 50
-				:x-offset 20
-				:y-offset 20))
-	 (generators (list (make-instance 'generator
-					  :ammo-class (find-class 'enemy-laser)
-					  :x-offset -5
-					  :firing-angle 0
-					  :owner weapon)
-			   (make-instance 'generator
-					  :ammo-class (find-class 'enemy-laser)
-					  :x-offset 5
-					  :firing-angle 0
-					  :owner weapon))))
-    (setf (generators weapon) generators)
-    (attach weapon enemy)))
+  (unless (slot-boundp enemy 'weapon)
+    (let* ((weapon (make-instance 'weapon
+				  :owner enemy
+				  :sps 50
+				  :x-offset 20
+				  :y-offset 20))
+	   (generators (list (make-instance 'generator
+					    :ammo-sprite (load-image "bullets/7x7-bullet-01")
+					    :x-offset -5
+					    :firing-angle 0
+					    :owner weapon)
+			     (make-instance 'generator
+					    :ammo-sprite (load-image "bullets/7x7-bullet-01")
+					    :x-offset 5
+					    :firing-angle 0
+					    :owner weapon))))
+      (setf (generators weapon) generators)
+      (attach weapon enemy))))
 
 (defclass small-enemy (enemy)
   ((image :initform (load-image "enemies/small-enemy-03"))
    (hp :initform 3)))
 
 (defmethod initialize-instance :after ((enemy small-enemy) &key)
-  (let* ((weapon (make-instance 'weapon
-				:owner enemy
-				:sps 50
-				:x-offset 20
-				:y-offset 20))
-	 (generators (list (make-instance 'generator
-					  :ammo-class (find-class 'enemy-laser)
-					  :firing-angle 0
-					  :owner weapon))))
-    (setf (generators weapon) generators)
-    (attach weapon enemy)))
+  (unless (slot-boundp enemy 'weapon)
+    (let* ((weapon (make-instance 'weapon
+				  :owner enemy
+				  :sps 50
+				  :x-offset 20
+				  :y-offset 20))
+	   (generators (list (make-instance 'generator
+					    :ammo-sprite (load-image "bullets/7x7-bullet-01")
+					    :firing-angle 0
+					    :owner weapon))))
+      (setf (generators weapon) generators)
+      (attach weapon enemy))))
 
 ;;; Enemy methods
 (defmethod attach ((enemy enemy) (game game))

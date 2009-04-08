@@ -21,44 +21,45 @@
    (hitbox-radius :initform 1)))
 
 (defmethod initialize-instance :after ((player player) &key)
-  (let* ((weapon (make-instance 'weapon
-				:owner player
-				:sps 10
-				:sfx (let ((sample (load-sample "sfx/pew")))
-				       (setf (sdl-mixer:sample-volume sample) 20)
-				       sample)
-				:x-offset 25
-				:y-offset 36))
-	 (generators (list (make-instance 'generator
-					  :x-offset -15
-					  :y-offset -30
-					  :firing-angle 180
-					  :muzzle-velocity 30
-					  :owner weapon
-					  :ammo-class (find-class 'laser))
-			   (make-instance 'generator
-					  :x-offset -6
-					  :y-offset -35
-					  :firing-angle 180
-					  :muzzle-velocity 30
-					  :owner weapon
-					  :ammo-class (find-class 'laser))
-			   (make-instance 'generator
-					  :x-offset 4
-					  :y-offset -35
-					  :muzzle-velocity 30
-					  :firing-angle 180
-					  :owner weapon
-					  :ammo-class (find-class 'laser))
-			   (make-instance 'generator
-					  :x-offset 14
-					  :y-offset -30
-					  :muzzle-velocity 30
-					  :firing-angle 180
-					  :owner weapon
-					  :ammo-class (find-class 'laser)))))
-    (setf (generators weapon) generators)
-    (attach weapon player)))
+  (unless (slot-boundp player 'weapon)
+    (let* ((weapon (make-instance 'weapon
+				  :owner player
+				  :sps 10
+				  :sfx (let ((sample (load-sample "sfx/pew")))
+					 (setf (sdl-mixer:sample-volume sample) 20)
+					 sample)
+				  :x-offset 25
+				  :y-offset 36))
+	   (generators (list (make-instance 'generator
+					    :x-offset -15
+					    :y-offset -30
+					    :firing-angle 180
+					    :muzzle-velocity 30
+					    :owner weapon
+					    :ammo-sprite (load-image "bullets/2x10-bullet-01"))
+			     (make-instance 'generator
+					    :x-offset -6
+					    :y-offset -35
+					    :firing-angle 180
+					    :muzzle-velocity 30
+					    :owner weapon
+					    :ammo-sprite (load-image "bullets/2x10-bullet-01"))
+			     (make-instance 'generator
+					    :x-offset 4
+					    :y-offset -35
+					    :muzzle-velocity 30
+					    :firing-angle 180
+					    :owner weapon
+					    :ammo-sprite (load-image "bullets/2x10-bullet-01"))
+			     (make-instance 'generator
+					    :x-offset 14
+					    :y-offset -30
+					    :muzzle-velocity 30
+					    :firing-angle 180
+					    :owner weapon
+					    :ammo-sprite (load-image "bullets/2x10-bullet-01")))))
+      (setf (generators weapon) generators)
+      (attach weapon player))))
 
 ;;; Player methods
 (defmethod attach ((player player) (level level))

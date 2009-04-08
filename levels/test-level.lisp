@@ -75,23 +75,23 @@
 				:sps 50))
 	 (generators (append (loop for i upto 35
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'boss-laser)
+						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
 						       :firing-angle (* i 10)
 						       :muzzle-velocity 3
 						       :owner weapon
 						       :x-offset -50
 						       :y-offset -40))
-			     (loop for i upto 35
+			     (loop for i upto 10
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'boss-laser)
-						       :firing-angle (+ 3.5 (* i 10))
-						       :muzzle-velocity 2.5
+						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
+						       :firing-angle (+ 3.5 (* i 34))
+						       :muzzle-velocity 4
 						       :owner weapon
 						       :x-offset -50
 						       :y-offset -40))
 			     (loop for i upto 35
 				collect (make-instance 'generator
-						       :ammo-class (find-class 'boss-laser)
+						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
 						       :firing-angle (+ 7 (* i 10))
 						       :muzzle-velocity 1.8
 						       :owner weapon
