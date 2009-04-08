@@ -54,8 +54,6 @@
   (:documentation "Draws OBJ and whatever it has attached to it that should be drawn."))
 (defgeneric collided-p (obj1 obj2)
   (:documentation "Performs a collision check between two objects. Returns T or NIL"))
-(defgeneric crashed! (obj1 obj2)
-  (:documentation "Runs whatever happens when obj1 and obj2 crash"))
 (defgeneric distance (sprite1 sprite2))
 (defgeneric angle-from (sprite1 sprite2))
 
@@ -107,16 +105,10 @@
 			 :color sdl:*red*))))
 
 (defmethod collided-p ((sprite-1 sprite) (sprite-2 sprite))
-  ;; Something is not right...
-  "Checks whether two sprites have collided."
+  "This is a very simple collision-testing algorithm that uses a circular 'hitbox'."
   (with-slots ((sp1-r hitbox-radius)) sprite-1
     (with-slots ((sp2-r hitbox-radius)) sprite-2
       (let ((distance (distance sprite-1 sprite-2)))
 	(unless (> distance
 		   (+ sp1-r sp2-r))
 	  t)))))
-
-;; this shit has to go
-(defmethod crashed! ((obj1 sprite) (obj2 sprite))
-  (decf (hp obj1))
-  (decf (hp obj2)))

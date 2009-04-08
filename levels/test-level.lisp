@@ -79,21 +79,24 @@
 						       :firing-angle (* i 10)
 						       :muzzle-velocity 3
 						       :owner weapon
-						       :x-offset 50))
+						       :x-offset -50
+						       :y-offset -40))
 			     (loop for i upto 35
 				collect (make-instance 'generator
 						       :ammo-class (find-class 'boss-laser)
-						       :firing-angle (* i 10)
-						       :muzzle-velocity 3
+						       :firing-angle (+ 3.5 (* i 10))
+						       :muzzle-velocity 2.5
 						       :owner weapon
-						       :x-offset -50))
+						       :x-offset -50
+						       :y-offset -40))
 			     (loop for i upto 35
 				collect (make-instance 'generator
 						       :ammo-class (find-class 'boss-laser)
-						       :firing-angle (* i 10)
-						       :muzzle-velocity 2
+						       :firing-angle (+ 7 (* i 10))
+						       :muzzle-velocity 1.8
 						       :owner weapon
-						       :y-offset 70)))))
+						       :x-offset -50
+						       :y-offset -40)))))
     (setf (generators weapon) generators)
     (attach weapon boss)
     (attach boss *game*)
@@ -101,20 +104,20 @@
     (move-in-angle boss 0 :duration 150)
     (fork (:delay 175)
       (setf (angle boss) -90)
-      (setf (velocity boss) 1))
+      (setf (velocity boss) 0.5))
     (fork (:delay 300)
       (fork (:repeat-delay 150 :repetitions 5)
-	(setf (velocity boss) 1)
+	(setf (velocity boss) 0.5)
 	(setf (angle boss) (* (angle boss) -1)))
       (fork (:delay 800)
 	(setf (velocity boss) 0)))
     (fork (:delay 250)
-      (fork (:repetitions 30 :repeat-delay 30)
+      (fork (:repetitions 45 :repeat-delay 30)
 	(fire! boss)))
     (fork (:delay 2000)
-      (setf (velocity boss) 1)
+      (setf (velocity boss) 0.5)
       (move-in-angle boss 180 :duration 300))
-    (fork (:delay 2300)
+    (fork (:delay 2600)
       (detach boss *game*))))
 
 
