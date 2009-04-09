@@ -110,7 +110,7 @@
 			     (loop for i upto 10
 				collect (make-instance 'generator
 						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
-						       :firing-angle (+ 3.5 (* i 34))
+						       :firing-angle (* i 35)
 						       :muzzle-velocity 4
 						       :owner weapon
 						       :x-offset -50
@@ -147,8 +147,8 @@
 	(fire! boss)))
     (fork (:delay 2000)
       (setf (velocity boss) 0.5)
-      (move-in-angle boss 180 :duration 300))
-    (fork (:delay 2600)
+      (move-in-angle boss 180 :duration 600))
+    (fork (:delay 2700)
       (detach boss *game*))))
 
 

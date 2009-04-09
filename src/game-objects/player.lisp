@@ -16,6 +16,7 @@
    (lives :initform 3 :accessor lives)
    (dead-p :initform nil :accessor dead-p)
    (respawn-time :initform 2 :accessor respawn-time)
+   (velocity :initform 4)
    (hitbox-x-offset :initform 25)
    (hitbox-y-offset :initform 36)
    (hitbox-radius :initform 1)))
