@@ -63,7 +63,29 @@
 ;;; Second wave
 ;;;
 
+;; Death circle
+(fork (:delay 600)
+  (fork (:repeat-delay 30 :repetitions 10)
+    (let ((enemy (make-instance 'small-enemy
+				:x 0
+				:y -10)))
+      (attach enemy *game*)
+      (orbit (player (current-level *game*)) enemy :duration 500 :keep-distance 200)
+      (fork (:repeat-delay 50 :repetitions 20)
+	(shoot-in-angle enemy (angle-from enemy (player (current-level *game*)))))
+      (fork (:delay 800)
+	(detach enemy *game*))))
 
+  (fork (:repeat-delay 30 :repetitions 10)
+    (let ((enemy (make-instance 'small-enemy
+				:x *screen-width*
+				:y -10)))
+      (attach enemy *game*)
+      (orbit (player (current-level *game*)) enemy :duration 500 :keep-distance 200)
+      (fork (:repeat-delay 50 :repetitions 20)
+	(shoot-in-angle enemy (angle-from enemy (player (current-level *game*)))))
+      (fork (:delay 800)
+	(detach enemy *game*)))))
 
 
 
@@ -89,7 +111,7 @@
 ;;; Boss
 ;;;
 
-(fork (:delay 700)
+(fork (:delay 1700)
   (let* ((boss (make-instance 'small-enemy :x (- (/ *screen-width* 2) 100)
 			     :y -200
 			     :hp 1000
@@ -107,10 +129,10 @@
 						       :owner weapon
 						       :x-offset -50
 						       :y-offset -40))
-			     (loop for i upto 10
+			     (loop for i upto 20
 				collect (make-instance 'generator
 						       :ammo-sprite (load-image "bullets/8x8-bullet-01")
-						       :firing-angle (* i 35)
+						       :firing-angle (* i 18)
 						       :muzzle-velocity 4
 						       :owner weapon
 						       :x-offset -50

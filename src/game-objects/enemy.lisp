@@ -39,7 +39,7 @@
 
 (defclass small-enemy (enemy)
   ((image :initform (load-image "enemies/small-enemy-03"))
-   (hp :initform 3)))
+   (hp :initform 1)))
 
 (defmethod initialize-instance :after ((enemy small-enemy) &key)
   (unless (slot-boundp enemy 'weapon)
