@@ -7,8 +7,7 @@
 
 ;;; Ships
 (defclass ship (sprite) 
-  ((velocity :initform 5)
-   (firing-p :initform nil :accessor firing-p)
+  ((firing-p :initform nil :accessor firing-p)
    (weapon :initarg :weapon :accessor weapon)
    (hp :initform 5 :initarg :hp :accessor hp)))
 
