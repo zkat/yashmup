@@ -32,6 +32,6 @@
 				  :x x :y y
 				  :image ammo-sprite
 				  :angle firing-angle
-				  :velocity muzzle-velocity
+				  :max-velocity muzzle-velocity
 				  :shooter owner)))
       (attach pew-pew *game*))))
