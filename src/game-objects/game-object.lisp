@@ -11,6 +11,9 @@
 (defclass game-object ()
   ((x :initarg :x :initform 0 :accessor x)
    (y :initarg :y :initform 0 :accessor y)
+   (acceleration :initarg :acceleration :initform 1 :accessor acceleration)
+   (friction :initarg :friction :initform 0.5 :accessor friction)
+   (max-velocity :initarg :max-velocity :initform 0 :accessor max-velocity)
    (velocity :initarg :velocity :initform 0 :accessor velocity)
    (angle :initarg :angle :initform 0 :accessor angle :documentation "Movement angle, in degrees")))
 
@@ -22,6 +25,8 @@
  should be used as OBJ's center point"))
 (defgeneric update (obj)
   (:documentation "Run once per frame, this function does a one-step update OBJ"))
+(defgeneric accelerate (obj)
+  (:documentation "Increases OBJ's velocity by its acceleration."))
 (defgeneric attach (obj game)
   (:documentation "Registers OBJ with GAME"))
 (defgeneric detach (obj game)
@@ -40,3 +45,17 @@
 
 (defmethod vert-velocity ((obj game-object))
   (* (velocity obj) (cos (degrees-to-radians (angle obj)))))
+
+(defmethod accelerate ((obj game-object))
+  (incf (velocity obj) (acceleration obj)))
+
+(defmethod update ((obj game-object))
+  (with-slots (x y angle friction acceleration max-velocity velocity) obj
+    (decf velocity friction)
+    (accelerate obj)
+    (when (> velocity max-velocity)
+      (setf velocity max-velocity))
+    (when (<= velocity 0)
+      (setf velocity 0))
+    (incf y (vert-velocity obj))
+    (incf x (horiz-velocity obj))))
