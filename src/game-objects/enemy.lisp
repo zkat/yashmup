@@ -11,7 +11,7 @@
 (defclass enemy (ship)
   ((x :initform (random 450))
    (y :initform -30)
-   (max-velocity :initform 3)
+   (velocity :initform 3)
    (angle :initform 0)
    (image :initform (load-image "enemies/medium-enemy-01"))
    (hp :initform 5)
@@ -66,9 +66,11 @@
 (defmethod detach ((enemy enemy) (game game))
   (detach enemy (current-level game)))
 
-(defmethod update :after ((enemy enemy))
-  (with-slots (hp weapon) enemy
-    (update weapon)
+(defmethod update ((enemy enemy))
+  (with-slots (x y angle hp) enemy
+    (incf y (vert-velocity enemy))
+    (incf x (horiz-velocity enemy))
+    (update (weapon enemy))
     (when (<= hp 0)
       (explode! enemy))))
 

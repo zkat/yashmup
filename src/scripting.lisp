@@ -25,7 +25,7 @@
   (setf (angle obj) angle)
   (when duration
    (fork (:delay duration :level level)
-     (setf (max-velocity obj) 0))))
+     (setf (velocity obj) 0))))
 
 (defun chase (target obj &key (duration 100) (level (current-level *game*)))
   (fork (:level level :repeat-delay 1 :repetitions duration)
@@ -35,7 +35,7 @@
   (fork (:level level :repeat-delay 1 :repetitions duration)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
-      (cond ((> dist-difference (+  (max-velocity obj)))
+      (cond ((> dist-difference (+  (velocity obj)))
 	     (setf (angle obj) (+ 30 (angle-from obj target))))
 	    ((< dist-difference 0)
 	     (setf (angle obj) (- (angle-from target obj) 30)))
