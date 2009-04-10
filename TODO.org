@@ -12,35 +12,30 @@
    directory/foo.gif, etc.
    Update 4/3: Fogo said he'd do this by tomorrow.
 
-** TODO Rewrite path-related stuff so that it loads in other computers
+** DONE Rewrite path-related stuff so that it loads in other computers
    Update 4/1: What I have right now seems to solve the issue right now. Should be cleaned up.
    Update 4/3: This seems mostly done -- just send a binary to fogo and make sure shit runs.
 
-** TODO Turn it into a game
+** DONE Turn it into a game
 *** DONE Player needs to have lives
 *** DONE Something needs to happen when player dies
 *** DONE Add game over menu
-*** TODO Script a full level
-**** Play through first level of ikaruga
-**** First set of waves
-**** Mid boss ;; Do I -want- a midboss at all?
-**** Second set of waves
-**** Boss
-  
-*** TODO Add you win screen when player kills boss
-*** TODO Add mechanism for scoring
+*** DONE Script a level
+*** DONE Add you win screen when player kills boss
+*** DONE Add mechanism for scoring
     This probably requires a simple multiplier, and a score assigned to each enemy type.
 *** TODO Add powerups
+    fuck this
 * TODO Beyond 0.1:
 ** TODO Sprites
-*** Animated Sprites
+*** TODO Animated Sprites
      Implement an animated-sprite class first. Test it thoroughly, then consider
      integrating the changes directly into the regular sprite class.
 
-*** Sprite zooming
+*** TODO Sprite zooming
      This would be good both for fogo's thing and for the game itself.
 
-*** Improve collision detection
+*** TODO Improve collision detection
      Collision detection is horrible and slow right now. Fix that shit.
 
 ** TODO Background
@@ -60,16 +55,17 @@
     of the screen as GUI/HUD space.
     
 ** TODO Improve level-scripting system
-*** Better macro(s)
+*** TODO Better macro(s)
     I improved the fork macro a bit, but it may need to be wrapped in another macro,
     or partially rewritten, if it's going to not suck balls. The *level* thing is really
     annoying, and definitely not the nice way to do it.
 
-*** Is there a better way to load up the level scripts?
+*** DONE Is there a better way to load up the level scripts?
     So far, I'm sort of stuck on this. The problem is that load-level simply LOADs a file
     right now, but load-level needs to actually returned a full level object. READing and EVALing
     each line is a possible option, but that's pretty nasty, and not horribly different from
     LOADing. The current approach is to have all the FORKs inside the level script send the events
     to a special *level* variable declared inside load-level. There are issues with the way
     closing over the lexical environment works and stuff. Gahhh.
-    
+    Update 4/9: Seems that what I have is probably as good as it gets, apart from writing a parser
+    and doing a bunch of weird stuff. This will do.
