@@ -73,7 +73,7 @@
 		       (return-from resolve-collisions))
 		      ((collided-p player enemy)
 		       (explode! player)
-		       (explode! enemy)
+		       (decf (hp enemy) 5)
 		       (return-from resolve-collisions))
 		      (t 
 		       (values)))))))

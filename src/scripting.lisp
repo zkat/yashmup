@@ -31,7 +31,10 @@
   (fork (:level level :repeat-delay 1 :repetitions duration)
     (setf (angle obj) (angle-from obj target))))
 
-(defun orbit (target obj &key (keep-distance 100) (duration 100) (level (current-level *game*)))
+(defun orbit (target obj
+	      &key (keep-distance 100)
+	      (duration 100)
+	      (level (current-level *game*)))
   (fork (:level level :repeat-delay 1 :repetitions duration)
     (let ((dist-difference (- (distance obj target)
 			      keep-distance)))
